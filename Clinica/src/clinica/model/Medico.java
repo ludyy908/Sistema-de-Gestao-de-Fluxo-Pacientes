@@ -5,15 +5,18 @@ package clinica.model;
 
 public class Medico extends Funcionario {
     private String especialidade; 
-    private String agenda[][]; 
-    public Medico(String nome, int idFuncionario, String especialidade){
-        super(nome, idFuncionario);
-        this.especialidade = especialidade; 
-       agenda = preecherAgenda(); 
+    private String[][] agenda;
+
+    public Medico(String especialidade, String nome, int idFuncionario, String sexo, String conct, String morada, String nacio, String dept) {
+        super(nome, idFuncionario, sexo, conct, morada, nacio, dept);
+        this.especialidade = especialidade;
     }
 
+   
+    
+
     public Medico() {
-        this("", 0, "");
+        this("","", 0, "","","","","");
     }
 
     public String getEspecialidade() {

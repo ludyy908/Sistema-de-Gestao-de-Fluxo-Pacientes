@@ -12,7 +12,7 @@ import clinica.view.Menu;
  *
  * @author Ludmila Mucavele
  */
-public class Clinica {
+public class Clinica  {
 
     /**
      * @param args the command line arguments

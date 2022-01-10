@@ -3,14 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.PacController;
+import clinica.model.Paciente;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 /**
  *
- * @author Ludmila Mucavele
+ * @author Ludmila Mucavele Celestino
  */
 public class ListaPac extends JDialog implements ActionListener {
     JPanel p1, p2;
@@ -27,8 +30,9 @@ public class ListaPac extends JDialog implements ActionListener {
         p1 = new JPanel();
         p1.setLayout(null);
 
+        setModal(true);
         setSize(1150, 600);
-        setLocation(175, 100);
+        setLocation(115, 75);
         setTitle("Lista de Pacientes");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Pacientes da Clinica:");
@@ -36,11 +40,11 @@ public class ListaPac extends JDialog implements ActionListener {
         l0.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l0.setForeground(Color.GRAY);
         
-       String [] nomeColuna = {"Codigo", "Nome", "Genero", "Idade", "Nacionalidade", "BI", "Estado Civil", "Telefone", "Endereco/Morada"};
+       String [] nomeColuna = {"Codigo", "Apelido","Nome", "Genero", "Idade", "Nacionalidade", "BI", "Estado Civil", "Telefone", "Endereco/Morada"};
       
         
         DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
-        tb.setColumnCount(9);
+        tb.setColumnCount(10);
         tb.setRowCount(30);
        
         tabela = new JTable(tb);
@@ -48,6 +52,7 @@ public class ListaPac extends JDialog implements ActionListener {
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80, 1100,400);
+        inserirDadosTabela(tb);
         
         b1 = new JButton("Fechar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -63,7 +68,33 @@ public class ListaPac extends JDialog implements ActionListener {
        add(p1);
        setVisible(true);
        setResizable(false);
-   }   
+   } 
+   
+   
+    //metodo para adcionar os dados na tabela
+   public void inserirDadosTabela(  DefaultTableModel modelo){
+       modelo.setNumRows(0);
+       PacController pc = new PacController();
+        ArrayList<Paciente> p = pc.getDados();
+       for(int i=0;i<pc.getDados().size();i++){
+           //String [] pac =  pc.getDados().get(i);
+           modelo.addRow(new String[]{String.valueOf(p.get(i).getIdPaciente()),
+                                p.get(i).getApelido(),
+                                p.get(i).getNome(),
+                                p.get(i).getSexo(),
+                                String.valueOf(p.get(i).getIdade()),
+                                p.get(i).getNacionalidade(),
+                                p.get(i).getBi(),
+                                p.get(i).getEstadoCivil(),                            
+                                p.get(i).getTel1(),
+                                p.get(i).getEndereco()});
+                             
+                               
+                                
+                                //p.get(i).getTel2()});
+       }
+   
+   }
     
     
     @Override
@@ -73,7 +104,7 @@ public class ListaPac extends JDialog implements ActionListener {
             ab = (byte) JOptionPane.showConfirmDialog(null, "Deseja Fechar A Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (ab == JOptionPane.YES_OPTION) {
                 dispose();
-                new Menu("paciente");
+                //new Menu("paciente");
                 
             }
         }

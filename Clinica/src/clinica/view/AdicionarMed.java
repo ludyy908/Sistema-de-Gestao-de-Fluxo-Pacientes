@@ -39,7 +39,7 @@ public class AdicionarMed extends JDialog implements ActionListener{
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             new Menu("medico");
         }
-        
+          setModal(true);
         setTitle("Registo de Medico");
         getContentPane().setBackground(new Color(0,250,220));
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
@@ -200,7 +200,7 @@ public class AdicionarMed extends JDialog implements ActionListener{
            }else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");
            }else {
                 JOptionPane.showMessageDialog(null,"Salvo Com Sucesso. \n Codigo de Enfermeiro: ");
-                new Menu("medico");
+                //new Menu("medico");
                 dispose();
                 
            }
@@ -210,7 +210,7 @@ public class AdicionarMed extends JDialog implements ActionListener{
            int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Message", JOptionPane.YES_NO_OPTION);
             if (op == JOptionPane.YES_OPTION) {
-                new Menu("medico");
+                //new Menu("medico");
                 this.dispose();
                 
             }

@@ -20,6 +20,7 @@ public class EnfActivo extends JDialog implements ActionListener {
     private JLabel l1;
     
     public EnfActivo() {
+          setModal(true);
         setLayout(new FlowLayout());
         String[] columns = {"Codigo", "Nome", "Categoria", "Departamento"};
         
@@ -82,7 +83,7 @@ public class EnfActivo extends JDialog implements ActionListener {
             ab = (byte) JOptionPane.showConfirmDialog(null, "Deseja Fechar A Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (ab == JOptionPane.YES_OPTION) {
                 dispose();
-                new Menu("enfermeiro");
+                //new Menu("enfermeiro");
                 
             }
         }

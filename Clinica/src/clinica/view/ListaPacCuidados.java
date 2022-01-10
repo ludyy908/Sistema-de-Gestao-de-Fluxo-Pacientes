@@ -29,6 +29,7 @@ public class ListaPacCuidados extends JDialog implements ActionListener {
         p1 = new JPanel();
         p2 = new JPanel();
         
+          setModal(true);
         setSize(640, 300);
         setLocation(350, 150);
         setTitle("Pacientes em Cuidados");
@@ -89,7 +90,7 @@ public class ListaPacCuidados extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == b1){
             
-            new Menu("enfermeiro");
+            //new Menu("enfermeiro");
             dispose();
             
         }

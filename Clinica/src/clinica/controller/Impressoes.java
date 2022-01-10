@@ -89,10 +89,10 @@ public class Impressoes {
                         pac[j][0] = p.getNome();
                         pac[j][1] = Integer.toString(p.getIdPaciente());
                         pac[j][2] = Integer.toString(p.getIdade());
-                        pac[j][3] = Character.toString(p.getSexo());
+                       // pac[j][3] = Character.toString(p.getSexo());
                         pac[j][4] = p.getBI();
                         pac[j][5] = p.getEndereco();
-                        pac[j][6] = p.getTelefone();
+                        pac[j][6] = p.getTel1();
                         pac[j][7] = p.getEstado();
                         pac[j][8] = (p.getDoenca()).getNome();
                         j++;
@@ -148,7 +148,7 @@ public class Impressoes {
                 f = (Funcionario) lista.elementAt(i);
                 if (f instanceof Medico){
                         m = (Medico) f;
-                        med[j][0] = m.getFuncionario();
+                        med[j][0] = m.getNomeFunc();
                         med[j][1] = Integer.toString(m.getIdFuncionario());
                         med[j][2] = m.getEspecialidade();
                         j++;
@@ -178,7 +178,7 @@ public class Impressoes {
                 f = (Funcionario)lista.elementAt(i);
                     if(f instanceof Medico){
                         m = (Medico) f;
-                        if(m.getFuncionario().equalsIgnoreCase(nome)){
+                        if(m.getNomeFunc().equalsIgnoreCase(nome)){
                             agenda= m.getAgenda();
                             dtHoras = imprimeAgenda(agenda);
                             ex = true;
@@ -224,7 +224,7 @@ public class Impressoes {
                             ex = true;}
                     }    
                     if(c > 0)
-                        t += "\n\t-"+e.getFuncionario();   
+                        t += "\n\t-"+e.getNomeFunc();   
             }}
         } 
         if(ex == false){
@@ -241,7 +241,7 @@ public class Impressoes {
                 f = (Funcionario) lista.elementAt(i);
                 if (f instanceof Enfermeiro){
                     e = (Enfermeiro) f;
-                        enf[j][0] = e.getFuncionario();
+                        enf[j][0] = e.getNomeFunc();
                         enf[j][1] = Integer.toString(e.getIdFuncionario());
                         enf[j][2] = e.getCategoria();
                         j++;
@@ -271,8 +271,8 @@ public class Impressoes {
                 f = (Funcionario)lista.elementAt(i);
                 if(f instanceof Enfermeiro){
                     e = (Enfermeiro) f;
-                    if(e.getFuncionario().equalsIgnoreCase(nome)){
-                        System.out.println(e.getFuncionario() +" - Codigo de Funcionario: " +e.getIdFuncionario());
+                    if(e.getNomeFunc().equalsIgnoreCase(nome)){
+                        System.out.println(e.getNomeFunc() +" - Codigo de Funcionario: " +e.getIdFuncionario());
                         enf = true;}}}}
         if (enf == true){
             id = validar.validarInt(100, 999, "Introduza o Codigo de Funcionario:");
@@ -281,7 +281,7 @@ public class Impressoes {
                 f = (Funcionario)lista.elementAt(i);
                 if(f instanceof Enfermeiro){
                     e = (Enfermeiro) f;
-                    if(e.getFuncionario().equalsIgnoreCase(nome) && id == e.getIdFuncionario()){
+                    if(e.getNomeFunc().equalsIgnoreCase(nome) && id == e.getIdFuncionario()){
                         p = e.getCuidados();
                         pacientes = imprimeCuidados(p);
                         for(int k = 0; k < p.length; k++)

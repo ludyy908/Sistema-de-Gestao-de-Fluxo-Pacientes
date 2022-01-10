@@ -22,6 +22,8 @@ public class CancelarReg  extends JDialog implements ActionListener {
     private JButton b1, b2;
     
     public CancelarReg(){
+        
+          setModal(true);
         setTitle("Cancelar Registo");
         setSize (500, 500); setLocation (300, 150);
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
@@ -167,7 +169,7 @@ public class CancelarReg  extends JDialog implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == b1){
 
-                new Menu("enfermeiro");
+                //new Menu("enfermeiro");
                 dispose();
 
             }
@@ -178,7 +180,7 @@ public class CancelarReg  extends JDialog implements ActionListener {
                 else {
                     dispose();
                     JOptionPane.showMessageDialog(null, "Dados Actualizados Com Sucesso.");
-                    new Menu("registo");
+                    //new Menu("registo");
 
                 }
             }

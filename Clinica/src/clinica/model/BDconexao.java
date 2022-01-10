@@ -15,9 +15,9 @@ public class BDconexao {
     private String host,bd,user,password,porta;
     
     public BDconexao(){
-        this.host="127.0.0.1";
+        this.host="localhost";
         this.bd="clinicapoo";
-        this.password="";
+        this.password="847689409";
         this.user="root";
         this.porta="3306";
     }

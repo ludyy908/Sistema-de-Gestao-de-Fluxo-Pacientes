@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.SecretarioControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,13 +12,14 @@ import java.awt.event.*;
  * @author Ludmila Mucavele
  */
 
+//Nvo Menu
 
 public class Menu implements MouseListener, ActionListener {
     
     final private JFrame frame;
     private JButton home, registo, paciente, medico, enfermagem, logOut1, logOut2;
     private JButton btnPaciente, btnRegisto, btnMedico, btnEnfermeiro;
-    private JButton btnAdicionarPaciente, btnPacienteRecuperado, btnListaPaciente;
+    private JButton btnAdicionarPaciente, btnPacienteInternado, btnPacienteRecuperado, btnListaPaciente;
     private JButton btnAdicionarMedico, btnMedicoConsulta, btnMedicoCirurgia, btnAgendaMedico, btnListaMedico;
     private JButton btnAdicionarEnfermeiro, btnEnfermeiroActivo, btnListaEnfermeiro, btnPacienteDeEnfermeiro;
     private JButton btnMarcar, btnCancelar, btnListar;
@@ -26,7 +28,7 @@ public class Menu implements MouseListener, ActionListener {
     Menu(){
         frame = new JFrame("Menu");
         frame.setSize(1200, 700);
-        frame.setIconImage((new ImageIcon(("Icone 1 - logo.png"))).getImage());
+        frame.setIconImage((new ImageIcon(("iconeprincipal.png"))).getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -52,7 +54,7 @@ public class Menu implements MouseListener, ActionListener {
     public Menu(String menu){
         frame = new JFrame("Menu");
         frame.setSize(1200, 700);
-        frame.setIconImage((new ImageIcon(("Icone 1 - logo.png"))).getImage());
+        frame.setIconImage((new ImageIcon(("iconeprincipal.png"))).getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -211,6 +213,10 @@ public class Menu implements MouseListener, ActionListener {
     
     private void menuPrincipal(){
         
+        SecretarioControl sc = new SecretarioControl();
+         String [] dados = sc.dadosSecretario(202001).toArray(new String [sc.dadosSecretario(202001).size()]);
+         //dificuldades em pegar a palavra passe introduzida pelo secretario que faz login
+        
         JLabel usuario = new JLabel("Dados Pessoais", new ImageIcon("Icon 2 - User.png"), JLabel.CENTER);
         usuario.setFont(new Font("Segoe UI", 3, 24));
         usuario.setForeground(new Color(255, 255, 255));;
@@ -229,8 +235,8 @@ public class Menu implements MouseListener, ActionListener {
         JLabel idUser = new JLabel("xxxx");
         idUser.setForeground(Color.lightGray);
         idUser.setFont(new Font("Segoe UI", 3, 14));
-        idUser.setBounds(105, 270, 130, 20);
-        
+        idUser.setBounds(100, 270, 130, 20);
+        idUser.setText(dados[0]);
         
         JLabel name = new JLabel("Nome:");
         name.setForeground(Color.white);
@@ -239,16 +245,17 @@ public class Menu implements MouseListener, ActionListener {
         JLabel userName = new JLabel("Nome Próprio");
         userName.setForeground(Color.lightGray);
         userName.setFont(new Font("Segoe UI", 3, 14));
-        userName.setBounds(105, 308, 130, 20);
+        userName.setBounds(100, 308, 130, 20);
+        userName.setText(dados[1]);
         
-        JLabel surname = new JLabel("Apelido:");
+        /*JLabel surname = new JLabel("Apelido:");
         surname.setForeground(Color.white);
         surname.setFont(new Font("Segoe UI", 1, 14));
         surname.setBounds(27, 346, 62, 20);
         JLabel userSurname = new JLabel("Apelido do Usuario");
         userSurname.setForeground(Color.lightGray);
         userSurname.setFont(new Font("Segoe UI", 3, 14));
-        userSurname.setBounds(105, 346, 130, 20);
+        userSurname.setBounds(105, 346, 130, 20);*/
         
         JLabel cargo = new JLabel("Cargo:");
         cargo.setForeground(Color.white);
@@ -257,16 +264,18 @@ public class Menu implements MouseListener, ActionListener {
         JLabel userJob = new JLabel("Cargo Ocupado");
         userJob.setForeground(Color.lightGray);
         userJob.setFont(new Font("Segoe UI", 3, 14));
-        userJob.setBounds(105, 384, 130, 20);
+        userJob.setBounds(100, 384, 130, 20);
+        userJob.setText(dados[3]);
         
         JLabel email = new JLabel("E-mail:");
         email.setForeground(Color.white);
         email.setFont(new Font("Segoe UI", 1, 14));        
-        email.setBounds(27, 422, 62, 20);
+        email.setBounds(27, 346, 62, 20);
         JLabel userEmail = new JLabel("E-mail do Usuário");
         userEmail.setForeground(Color.lightGray);
         userEmail.setFont(new Font("Segoe UI", 3, 14));
-        userEmail.setBounds(105, 422, 130, 20);
+        userEmail.setBounds(100, 346, 170, 20);
+        userEmail.setText(dados[2]);
         
         logOut1 = new JButton("Log Out", new ImageIcon("Icone - LogOut 48px.png"));
         logOut1.setBounds(53, 566, 148, 58);
@@ -286,8 +295,8 @@ public class Menu implements MouseListener, ActionListener {
         leftPanel.add(idUser);
         leftPanel.add(name);
         leftPanel.add(userName);
-        leftPanel.add(surname);
-        leftPanel.add(userSurname);
+       // leftPanel.add(surname);
+        //leftPanel.add(userSurname);
         leftPanel.add(cargo);
         leftPanel.add(userJob);
         leftPanel.add(email);
@@ -413,17 +422,21 @@ public class Menu implements MouseListener, ActionListener {
     }
     
     private void menuPaciente(){
-
+        
         btnAdicionarPaciente = new JButton("Adicionar Paciente", new ImageIcon("Icone - Adicionar 187px.png"));
-        btnAdicionarPaciente.setBounds(30, 215, 253, 247);
+        btnAdicionarPaciente.setBounds(150, 121, 265, 247);
         configurarBotaoDireiro(btnAdicionarPaciente);
+        
+        btnPacienteInternado = new JButton("Adicionar Paciente Internado", new ImageIcon("Icone - PacienteInternado 187px.png"));
+        btnPacienteInternado.setBounds(525, 121, 280, 247);
+        configurarBotaoDireiro(btnPacienteInternado);
                 
-        btnPacienteRecuperado = new JButton("Pacientes Recuperados", new ImageIcon("Icone - PacienteRecuperado 187px.png"));
-        btnPacienteRecuperado.setBounds(344, 215, 253, 247);
+        btnPacienteRecuperado = new JButton("Registar Alta", new ImageIcon("Icone - PacienteRecuperado 187px.png"));
+        btnPacienteRecuperado.setBounds(150, 390, 265, 247);
         configurarBotaoDireiro(btnPacienteRecuperado);
         
         btnListaPaciente = new JButton("Lista de Pacientes", new ImageIcon("Icone - Lista 187px.png"));
-        btnListaPaciente.setBounds(652, 215, 253, 247);
+        btnListaPaciente.setBounds(525, 390, 265, 247);
         configurarBotaoDireiro(btnListaPaciente);
         
         painelPaciente = new JPanel();
@@ -432,6 +445,7 @@ public class Menu implements MouseListener, ActionListener {
         painelPaciente.setBackground(new Color(255, 255, 255));
         cabecalho(painelPaciente, "MENU PACIENTE");
         painelPaciente.add(btnAdicionarPaciente);
+        painelPaciente.add(btnPacienteInternado);
         painelPaciente.add(btnPacienteRecuperado);
         painelPaciente.add(btnListaPaciente);
         frame.add(painelPaciente);
@@ -614,85 +628,87 @@ public class Menu implements MouseListener, ActionListener {
         
         if(e.getSource()== btnAdicionarPaciente){
             new CadastroPac();
-            frame.dispose();
-            
-                
+            //frame.dispose();                          
+        }
+        
+        if(e.getSource() ==  btnPacienteInternado){
+            new CadastroInternamento();
         }
         
         if(e.getSource()== btnPacienteRecuperado){
             new RegistoAlta();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnListaPaciente){
             new ListaPac();
-            frame.dispose();
+            //frame.dispose();
         }
         
         
         if(e.getSource()== btnAdicionarMedico){
             new AdicionarMed();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnMedicoConsulta){
             ListaMed lista = new ListaMed();
             lista.MedConCir("Consulta");
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnMedicoCirurgia){
             ListaMed lista = new ListaMed();
             lista.MedConCir("Cirurgia");
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnListaMedico){
             ListaMed lista = new ListaMed();
             lista.getMedicos();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnAgendaMedico){
             new AgendaMed();
-            frame.dispose();
+            //frame.dispose();
         }
         
         
         if(e.getSource()== btnAdicionarEnfermeiro){
             new AdicionarEnf();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnEnfermeiroActivo){
             new EnfActivo();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnPacienteDeEnfermeiro){
             new ListaPacCuidados();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnListaEnfermeiro){
             new ListaEnf();
-            frame.dispose();
+            //frame.dispose();
         }
         
         
         if(e.getSource()== btnMarcar){
             new Registo();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnCancelar){
             new CancelarReg();
-            frame.dispose();
+            //frame.dispose();
         }
         
         if(e.getSource()== btnListar){
             new ListaReg();
-            frame.dispose();
+            //frame.dispose();
         }
     }
 
@@ -721,6 +737,9 @@ public class Menu implements MouseListener, ActionListener {
         // Botões do Menu Paciente    
         }else if(button==btnAdicionarPaciente){
             configurarBotaoDireitoEntradaMouse(btnAdicionarPaciente, new ImageIcon("Icone - Adicionar 200px.png"));
+            
+        }else if(button==btnPacienteInternado){
+            configurarBotaoDireitoEntradaMouse(btnPacienteInternado, new ImageIcon("Icone - PacienteInternado 200px.png"));
             
         }else if(button==btnPacienteRecuperado){
             configurarBotaoDireitoEntradaMouse(btnPacienteRecuperado, new ImageIcon("Icone - PacienteRecuperado 200px.png"));
@@ -806,6 +825,9 @@ public class Menu implements MouseListener, ActionListener {
         // Botões do Menu Paciente
         }else if(button==btnAdicionarPaciente){
             configurarBotaoDireitolSaidaMouse(btnAdicionarPaciente, new ImageIcon("Icone - Adicionar 187px.png"));
+            
+        }else if(button==btnPacienteInternado){
+            configurarBotaoDireitolSaidaMouse(btnPacienteInternado, new ImageIcon("Icone - PacienteInternado 187px.png"));
             
         }else if(button==btnPacienteRecuperado){
             configurarBotaoDireitolSaidaMouse(btnPacienteRecuperado, new ImageIcon("Icone - PacienteRecuperado 187px.png"));

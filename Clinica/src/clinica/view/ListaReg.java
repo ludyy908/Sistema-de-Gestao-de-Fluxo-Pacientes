@@ -23,6 +23,7 @@ public class ListaReg extends JDialog implements ActionListener{
     
     public ListaReg(){
         
+          setModal(true);
         setTitle("Lista de Registos");
         l1 = new JLabel ("Lista de:");
         l1.setBounds(20, 10, 300, 30);
@@ -83,7 +84,7 @@ public class ListaReg extends JDialog implements ActionListener{
             op = JOptionPane.showConfirmDialog(null, "Deseja Fechar a Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (op == JOptionPane.YES_OPTION) {
                 dispose();
-                new Menu("registo");
+               // new Menu("registo");
             }
         }
         

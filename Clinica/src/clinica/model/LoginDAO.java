@@ -17,7 +17,7 @@ public class LoginDAO{
         public LoginDAO(){
 
             try{
-                conexao=BDconexao.getConnection();
+                conexao = BDconexao.getConnection();
             }catch(SQLException|ClassNotFoundException ex){
                 System.out.println("Erro de conexao: "+ex.getMessage());
             }

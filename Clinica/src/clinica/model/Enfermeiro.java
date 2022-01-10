@@ -6,15 +6,15 @@ package clinica.model;
 public class Enfermeiro extends Funcionario{
     private String categoria;
     private String cuidados[]; //o enfermeiro pode cuidar no maximo de 5 pacientes, dai um array unidimensional [5] para cada enfermeiro
-    
-    public Enfermeiro (String nome, int idFuncionario, String Categoria){
-        super(nome, idFuncionario);
+
+    public Enfermeiro(String categoria, String nome, int idFuncionario, String sexo, String conct, String morada, String nacio, String dept) {
+        super(nome, idFuncionario, sexo, conct, morada, nacio, dept);
         this.categoria = categoria;
-         preecherPacientes();
     }
     
+   
     public Enfermeiro(){
-        this("", 0, "");
+        this("","", 0, "","","","","");
     }
     
     public String getCategoria() {

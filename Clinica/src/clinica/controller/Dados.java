@@ -113,7 +113,7 @@ public class Dados {
                     if (f instanceof Medico){
                         c1++; 
                         m = (Medico) f;
-                        if (m.getFuncionario().equalsIgnoreCase(nome))
+                        if (m.getNomeFunc().equalsIgnoreCase(nome))
                             existencia = true;
                         else
                             c2++; }} 
@@ -137,7 +137,7 @@ public class Dados {
                     f = (Funcionario) lista.elementAt(i);
                    if(f instanceof Enfermeiro){
                        e = (Enfermeiro) f;
-                       if(e.getFuncionario().equalsIgnoreCase(nomeEnf)){
+                       if(e.getNomeFunc().equalsIgnoreCase(nomeEnf)){
                            exis = true;
                        }
                     }  
@@ -320,13 +320,15 @@ public class Dados {
         System.out.println("Paciente Nao Registado no Sistema.");
         pac.setNome(validar.validarString(3, 20, "Introduza o Nome Do Novo Paciente:"));
         pac.setIdPaciente(Id("p"));
-        pac.setSexo(validar.validarChar('M', 'F', "Sexo do Paciente (M/F)"));
-        pac.setTelefone(validar.validarTelefone());
+        pac.setSexo(validar.validarString(10, 15, "Sexo do Paciente (M/F)"));
+       // pac.setTelefone(validar.validarTelefone());
         pac.setEndereco(validar.validarString(5, 30, "Endereco do Paciente:"));
         pac.setBI(validar.validarString(8, 12, "Numero de BI do Paciente:"));
         pac.setIdade(validar.validarByte((byte)0,(byte) 100, "Idade da Paciente:"));
         System.out.println("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
     }
+    
+    //Metodo usado na classe de cadastro de paciente
     
     public int Id(String tipo){
         Random r = new Random(); boolean igual = false;
@@ -414,7 +416,7 @@ public class Dados {
                             f = (Funcionario) lista.elementAt(j);
                             if (f instanceof Enfermeiro){
                                 e = (Enfermeiro) f;
-                                if(e.getFuncionario().equalsIgnoreCase(enfermeiro)){
+                                if(e.getNomeFunc().equalsIgnoreCase(enfermeiro)){
                                     pacientes = e.getCuidados(); 
                                     for (int k = 0; k < pacientes.length; k++)
                                         if(pacientes[k].isBlank() && c == 0){  
@@ -437,7 +439,7 @@ public class Dados {
         enf.setIdFuncionatio(Id("f"));
         enf.setCategoria(validar.validarString(3, 20, "Introduza a Categoria do Endermeiro:"));
         lista.addElement(enf); lista.trimToSize();
-        System.out.println("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getFuncionario());
+        System.out.println("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getNomeFunc());
     }  
     
     public void agenda() throws IOException{

@@ -8,6 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
+import clinica.controller.PacController;
+import clinica.controller.Dados;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -28,6 +33,7 @@ public class CadastroPac extends JDialog implements ActionListener{
     JButton bSalvar, bClean,bCancelar,bClose;
     JSpinner idade;
     JProgressBar progresso;
+    
 
     public CadastroPac() {
   
@@ -37,7 +43,9 @@ public class CadastroPac extends JDialog implements ActionListener{
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             new Menu("paciente");
         }
-        setBounds(250,10, 870, 590);
+        
+        setModal(true);
+        setBounds(250,70, 870, 590);
         setResizable(false);
         
         //Inicilaizacaco e layouts dos paineis
@@ -63,13 +71,6 @@ public class CadastroPac extends JDialog implements ActionListener{
        
         painel2.add(imgPac);
     
-        //Iniciaizacao dos lebels       
-        //lTitulo.setBounds(30,0,400,50);
-        //imgPac  = 
-        //lTitulo.setForeground(Color.white);
-        //lTitulo.setFont(new Font(lTtitulo.getName(), Font.ROMAN_BASELINE,30));
-       // painel2.add(lTitulo);
-        
         
         lApelido = new JLabel("Apelido:");
         lApelido.setBounds(60, 100,70,30);
@@ -247,16 +248,45 @@ public class CadastroPac extends JDialog implements ActionListener{
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Cadastro?", "Message", JOptionPane.YES_NO_OPTION);
             if(op == JOptionPane.YES_OPTION){
                 dispose();
-                new Menu("paciente");
+               // new Menu("paciente");
             }
         }
         if(e.getSource() == bSalvar){
+            Random r = new Random();
+       
+            
+            int id = r.nextInt(999);
+            String nome = tNome.getText();
+            String nacionalidade = tNacionalidade.getText();
+            String apelido = tApelido.getText();
+            String end =  tend.getText();
+            String bi = tBi.getText();
+            int idad = (Integer) idade.getValue();
+            String estadoCivil = comboEstado.getSelectedItem().toString();
+            String tel1 = tTel.getText();
+            String tel2 = tTelAlt.getText();
+            String genero;
+            
+           
+            if(radioF.isSelected()){
+                 genero = "Femenino";
+            } else{
+                genero = "Masculino";
+            }
+            
             if(tNome.getText().isEmpty() || tApelido.getText().isEmpty()|| tBi.getText().isEmpty() ||   tTel.getText().isEmpty() || 
                  tNacionalidade.getText().isEmpty() || tTelAlt.getText().isEmpty() || tend.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
             }else{
                 //Chamar o metodo que grava os dados na base de dados
+                try{
+                    PacController pc = new PacController(id,nome,nacionalidade, apelido, genero, end, bi, idad,estadoCivil, tel1, tel2);
+                    
+                }catch (Exception ex) {
+                      Logger.getLogger(CadastroPac.class.getName()).log(Level.SEVERE, null, ex);
+                }
                  JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
+                 
                  tNome.setText("");
                  tApelido.setText("");
                  tBi.setText("");

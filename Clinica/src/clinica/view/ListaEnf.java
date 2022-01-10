@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.EnfControl;
+import clinica.model.Enfermeiro;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -26,8 +29,9 @@ public class ListaEnf extends JDialog implements ActionListener{
         }
        p1 = new JPanel(null);
 
+         setModal(true);
         setSize(1020, 600);
-        setLocation(300, 100);
+        setLocation(135, 70);
         setTitle("Lista de Enfermeiros");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Enfermeiros na Clinica:");
@@ -39,15 +43,16 @@ public class ListaEnf extends JDialog implements ActionListener{
       
         
         DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
-        tb.setColumnCount(8);
-        tb.setRowCount(30);
+        //tb.setColumnCount(8);
+        //tb.setRowCount(30);
        
         tabela = new JTable(tb);
         tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
-        scrol.setBounds(20,80, 960,400);
-        
+        scrol.setBounds(20,80, 960,300);
+        inserirDadosTabela(tb);
+          
         b1 = new JButton("Fechar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b1.setForeground(Color.WHITE);
@@ -64,6 +69,23 @@ public class ListaEnf extends JDialog implements ActionListener{
        setResizable(false);
    }   
     
+   public void inserirDadosTabela(  DefaultTableModel modelo){
+       modelo.setNumRows(0);
+       EnfControl ec = new EnfControl();
+       ArrayList<Enfermeiro> lista = ec.getDados();
+       for(int i=0;i<lista.size();i++){
+          // String [] enf =  ec.getDados().get(i);
+           modelo.addRow(new String[]{String.valueOf(lista.get(i).getIdFuncionario()),
+                                        lista.get(i).getNomeFunc(), 
+                                        lista.get(i).getSexo(),
+                                        lista.get(i).getContacto(),
+                                        lista.get(i).getMorada(),
+                                        lista.get(i).getNacionalidade(),
+                                        lista.get(i).getDepartamento(),
+                                        lista.get(i).getCategoria()});
+        }
+   
+   }
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -72,7 +94,7 @@ public class ListaEnf extends JDialog implements ActionListener{
             ab = (byte) JOptionPane.showConfirmDialog(null, "Deseja Fechar A Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (ab == JOptionPane.YES_OPTION) {
                 dispose();
-                new Menu("enfermeiro");
+               // new Menu("enfermeiro");
                 
             }
         }

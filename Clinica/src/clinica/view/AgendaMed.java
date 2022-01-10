@@ -29,7 +29,7 @@ public class AgendaMed  extends JDialog implements ActionListener{
         p2 = new JPanel();
         
         
-       
+         setModal(true);
         setSize(550, 300);
         setLocation(350, 150);
         setTitle("Agenda de Médico");
@@ -90,7 +90,7 @@ public class AgendaMed  extends JDialog implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == b1){
             
-            new Menu("medico");
+           // new Menu("medico");
             dispose();
             
         }

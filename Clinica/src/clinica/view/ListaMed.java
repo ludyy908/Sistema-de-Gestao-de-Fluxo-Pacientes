@@ -25,7 +25,7 @@ public class ListaMed extends JDialog implements ActionListener{
             new Menu("medico");
         }
        p1 = new JPanel(null);
-       
+         setModal(true);
      
    }
      public void MedConCir(String tipo){ //tipo vem como parametro no metodo. pode ser Cirurgia ou Consulta
@@ -124,7 +124,7 @@ public class ListaMed extends JDialog implements ActionListener{
             ab = (byte) JOptionPane.showConfirmDialog(null, "Deseja Fechar A Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (ab == JOptionPane.YES_OPTION) {
                 dispose();
-                new Menu("medico");
+                //new Menu("medico");
                 
             }
         }

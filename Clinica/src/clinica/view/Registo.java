@@ -27,6 +27,8 @@ public class Registo extends JDialog implements ActionListener {
    
     
     public Registo(){
+        
+    setModal(true);
     setTitle("Registo");
     setSize (500, 500); setLocation (300, 150);
     setIconImage(new ImageIcon("iconeprincipal.png").getImage());
@@ -314,7 +316,7 @@ public class Registo extends JDialog implements ActionListener {
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Message", JOptionPane.YES_NO_OPTION);
             if(op == JOptionPane.YES_OPTION)
-                new Menu("registo");
+               // new Menu("registo");
                 dispose();
             
         }

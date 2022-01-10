@@ -4,9 +4,15 @@
  */
 package clinica.view;
 
+import clinica.controller.EnfControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+//import java.lang.System.Logger;
+//import java.lang.System.Logger.Level;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Random;
 
 
 public class AdicionarEnf extends JDialog implements ActionListener {
@@ -21,6 +27,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     JRadioButton[] r;
     ButtonGroup g;
     Font f = new Font("Segoe UI",Font.BOLD,15);
+    Random random;
     
     BorderFactory br;
      String s[] = new String[2];
@@ -41,14 +48,13 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         
       
 
-        
+          setModal(true);
         setTitle("Registo de Enfermeiro");
         getContentPane().setBackground(new Color(0,250,220));
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         setSize(800,680);
-        setLocation(150, 30);
-        
-        
+        setLocation(290, 30);
+       
         
         p2.setFont(f);
         p2.setBackground(Color.WHITE);
@@ -60,7 +66,9 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         caixa1.addItem("Auxiliar de Enfermagem");
         caixa1.addItem("Parteira");
         caixa1.addItem("Tecnico de enfermagem");
-       
+        caixa1.setFocusable(false);
+        caixa1.setForeground(Color.WHITE);
+        caixa1.setBackground(null);
      
         l2 = new JLabel("Nome de Enfermeiro:");l2.setFont(f);
         l2.setForeground(Color.GRAY);
@@ -89,19 +97,19 @@ public class AdicionarEnf extends JDialog implements ActionListener {
 
 
         t1.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t1.setForeground(Color.GRAY);
+        //t1.setForeground(Color.GRAY);
         t2.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t2.setForeground(Color.GRAY);
+        //t2.setForeground(Color.GRAY);
         t3.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t2.setForeground(Color.GRAY);
+       // t2.setForeground(Color.GRAY);
         t4.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t4.setForeground(Color.GRAY);
+       // t4.setForeground(Color.GRAY);
         t5.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t5.setForeground(Color.GRAY);
+        //t5.setForeground(Color.GRAY);
         t6.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t5.setForeground(Color.GRAY);
+        //t5.setForeground(Color.GRAY);
         t7.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t7.setForeground(Color.GRAY);
+       //s t7.setForeground(Color.GRAY);
 
         b3 = new JButton("Salvar");
         b3.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -131,14 +139,11 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         r[1].setFocusable(false);
 
 
-        r[0].addActionListener(this);
-        r[1].addActionListener(this);
-
-
+        //r[0].addActionListener(this);
+        //r[1].addActionListener(this);
 
         b2.addActionListener(this);
         b3.addActionListener(this);
-
 
         p1.setBounds(0,0,870,75);
         p1.setBackground(new Color(8,84, 121));
@@ -152,13 +157,11 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         p2.setLayout(null);
         
 
-
-
         l2.setBounds(100, 100, 200, 27); t2.setBounds(100, 130, 380, 25);t2.setFont(f);
         l4.setBounds(100, 170, 250, 27); t3.setBounds(100, 200, 380, 25);t3.setFont(f);
         l5.setBounds(100, 240, 250, 27); t4.setBounds(100, 270, 380, 25);t4.setFont(f);
         l6.setBounds(100, 310, 200, 27); t5.setBounds(100, 340, 380, 25);t5.setFont(f);
-        l7.setBounds(100, 380, 200, 27); caixa1.setBounds(100, 410, 200, 27);
+        l7.setBounds(100, 380, 200, 27); caixa1.setBounds(100, 410, 380, 30);
         l8.setBounds(100, 450, 200, 27); t7.setBounds(100,480, 380, 25);t7.setFont(f);
         l9.setBounds(550, 100, 100, 27);
 
@@ -179,8 +182,6 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         p2.add(l2); p2.add(caixa1);
         
         
-        
-        
         if (this.getDefaultCloseOperation() == 0){
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             new Menu("enfermeiro");
@@ -191,40 +192,67 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         this.setVisible(true);
 
         
-
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = ""; 
         boolean b = false;
-        if(e.getSource() == b3){
+        /*if(e.getSource() == b3){
             if( e.getSource() == r[0]) {s = "Feminino"; b = true;}
             else if( e.getSource() == r[1]) {s = "Masculino"; b = true;}
             
-        }
+        }*/
        
-       if(e.getSource() == b3){
-           if(t1.getText().isEmpty() || t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||
-                   t5.getText().isEmpty() || t6.getText().isEmpty() || t7.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null,"Por Favor, Preencha os Espacos em Branco.");
-               
-           }else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");
-           }else{
-                JOptionPane.showMessageDialog(null,"Salvo Com Sucesso. \n Codigo de Enfermeiro: ");
-                new Menu("enfermeiro");
-                dispose();
-                
-           }
-       }if(e.getSource() == b2){
+        if(e.getSource() == b2){
            int op = 0;
-            op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Tela de registro", JOptionPane.YES_NO_OPTION);
+            op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Messagem de confimacao", JOptionPane.YES_NO_OPTION);
             if (op == JOptionPane.YES_OPTION) {
-                new Menu("enfermeiro");
+               // new Menu("enfermeiro");
                 dispose();
                
             }
         }
+        
+       if(e.getSource() == b3){          
+             if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t7.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
+              //else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");             
+             }else{
+                    
+               random = new Random();
+               
+               String nome,sexo, end,nacio, dpt, tel, categoria;
+               int id = random.nextInt(999);
+               
+               categoria = caixa1.getSelectedItem().toString();
+               nome = t2.getText();
+               nacio = t3.getText();
+               tel = t4.getText();
+               end = t5.getText();
+               dpt = t7.getText();
+
+                if(r[0].isSelected()){
+                     sexo = "Femenino";
+                } else{
+                     sexo = "Masculino";
+                }
+                
+                EnfControl ec = new EnfControl(id, nome, sexo,tel, end, nacio,dpt, categoria);
+                   
+                JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso!!!!");
+                t2.setText("");   
+                t3.setText("");  
+                t4.setText("");  
+                t5.setText("");  
+                t7.setText("");  
+                r[0].setSelected(false);
+                r[1].setSelected(false);
+           }
+       }   
+       
           
     }
 
