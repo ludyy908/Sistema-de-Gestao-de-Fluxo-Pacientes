@@ -15,9 +15,37 @@ import java.util.*;
 public class MedController {
     
      MedicoDAO md = new MedicoDAO();
+     Medico med = new Medico();
+     Medico med2 = new Medico();
 
     public MedController() {
         
+    }
+    
+    //inserir enfermeiros
+    public MedController(int cod, String nome, String s, String contact, String morada, String nacio, String dpt, String esp){
+        
+        med.setIdFuncionatio(cod);
+        med.setNomeFunc(nome);
+        med.setSexo(s);
+        med.setContacto(contact);
+        med.setMorada(morada);
+        med.setNacionalidade(nacio);
+        med.setDepartamento(dpt);
+        
+        med2.setIdFuncionatio(cod);
+        med2.setEspecialidade(esp);
+        
+        md.inserirMed(med);
+        md.inserirMed2(med2);
+    
+    }
+
+
+    //dados de todos os medicos da clinica
+    
+    public ArrayList<Medico> getdDadosMed(){
+        return md.lerDadosMed();  
     }
     
     //lista so com nomes dos medicos para tela resgito Alta

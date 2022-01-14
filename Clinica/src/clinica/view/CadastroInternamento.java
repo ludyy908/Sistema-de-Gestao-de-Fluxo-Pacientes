@@ -79,7 +79,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         painel1.add(ldata);
         
         lMedico = new JLabel("Enfermeiro ResponsavelPpelo Paciente Internado:");
-        lMedico.setBounds(70,290,450,20);
+        lMedico.setBounds(70,290,450,35);
         lMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lMedico.setForeground(Color.GRAY);
         painel1.add(lMedico);
@@ -213,11 +213,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
             }
         }
         if(e.getSource() == bSalvar){
-            if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.");
-            }else{
-                
-                int idP, idF;
+            int idP, idF;
                 String data, doenca, nomeEnf;
                 
                 String day = dia.getValue().toString();
@@ -230,7 +226,11 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
                 
                 nomeEnf = comboMedico.getSelectedItem().toString();
                 idF = ec.getIdEnf(nomeEnf);
-                
+
+            if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.");
+            }else{
+                                               
                 InterControl ic = new InterControl(data,idP, 0, idF, doenca);
 
                  JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");

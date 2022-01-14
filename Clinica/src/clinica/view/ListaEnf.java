@@ -49,8 +49,9 @@ public class ListaEnf extends JDialog implements ActionListener{
         tabela = new JTable(tb);
         tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
         tabela.setForeground(Color.GRAY);
+        tabela.setRowHeight(1, 30);
         JScrollPane scrol = new JScrollPane(tabela);
-        scrol.setBounds(20,80, 960,300);
+        scrol.setBounds(20,80, 960,350);
         inserirDadosTabela(tb);
           
         b1 = new JButton("Fechar");

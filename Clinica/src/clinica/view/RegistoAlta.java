@@ -104,7 +104,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         
         comboMedico = new JComboBox(medico);
         comboMedico.setBackground(null);
-        comboMedico.setBounds(70,320,270,30);
+        comboMedico.setBounds(70,320,270,35);
         comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboMedico.setForeground(Color.GRAY);
         painel1.add(comboMedico);
@@ -116,7 +116,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         
         comboId = new JComboBox(pacId);
         comboId.setBackground(null);        
-        comboId.setBounds(70, 110,130,30);
+        comboId.setBounds(70, 110,130,31);
         comboId.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboId.setForeground(Color.GRAY);
         comboId.addItemListener(this);
@@ -206,11 +206,8 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
             }
         }
         if(e.getSource() == bSalvar){
-            if(tfPac.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
-            }else{
-                             
-                int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
+            
+            int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
                 int codFunc, idAlta = 0;
                 String day = dia.getValue().toString(), nomeMed;
                 String mes = sMes.getValue().toString();
@@ -221,6 +218,11 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
                 //Date dataFormatada = (Date) formato.parse(data);
                 nomeMed = comboMedico.getSelectedItem().toString();
                 codFunc = mc.getIdMed(nomeMed);
+
+            if(tfPac.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
+            }else{
+                             
                 AltaPacienteControl apc = new AltaPacienteControl(0,data,codPac, codFunc);
                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
                 tfPac.setText("");

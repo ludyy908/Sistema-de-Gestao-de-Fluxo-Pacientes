@@ -51,8 +51,9 @@ public class ListaPac extends JDialog implements ActionListener {
         tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
-        scrol.setBounds(20,80, 1100,400);
+        
         inserirDadosTabela(tb);
+        scrol.setBounds(20,80, 1100,400);
         
         b1 = new JButton("Fechar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -73,6 +74,7 @@ public class ListaPac extends JDialog implements ActionListener {
    
     //metodo para adcionar os dados na tabela
    public void inserirDadosTabela(  DefaultTableModel modelo){
+       int count = 0;
        modelo.setNumRows(0);
        PacController pc = new PacController();
         ArrayList<Paciente> p = pc.getDados();
@@ -88,14 +90,13 @@ public class ListaPac extends JDialog implements ActionListener {
                                 p.get(i).getEstadoCivil(),                            
                                 p.get(i).getTel1(),
                                 p.get(i).getEndereco()});
-                             
+                             count ++;
                                
                                 
                                 //p.get(i).getTel2()});
        }
-   
-   }
-    
+       
+   }      
     
     @Override
     public void actionPerformed(ActionEvent e) {

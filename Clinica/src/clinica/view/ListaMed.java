@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.*;
+import clinica.controller.*;
+import clinica.model.*;
 /**
  *
  * @author Ludmila Mucavele
@@ -30,7 +33,7 @@ public class ListaMed extends JDialog implements ActionListener{
    }
      public void MedConCir(String tipo){ //tipo vem como parametro no metodo. pode ser Cirurgia ou Consulta
         setSize(650, 600);
-        setLocation(300, 100);
+        setLocation(105, 55);
         setTitle("Lista de Medicos");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Medicos Com "+tipo +":");
@@ -75,11 +78,11 @@ public class ListaMed extends JDialog implements ActionListener{
     
     public void getMedicos(){
         setSize(1020, 600);
-        setLocation(300, 100);
+        setLocation(150, 55);
         setTitle("Lista de Medicos");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Medicos na Clinica:");
-        l0.setBounds(20, 10, 300, 30);
+        l0.setBounds(50, 10, 300, 30);
         l0.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l0.setForeground(Color.GRAY);
         
@@ -94,8 +97,9 @@ public class ListaMed extends JDialog implements ActionListener{
         tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
-        scrol.setBounds(20,80, 960,400);
-        
+        scrol.setBounds(20,80, 960,350);
+        inserirDadosTabela(tb);
+                
         b1 = new JButton("Fechar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b1.setForeground(Color.WHITE);
@@ -116,6 +120,26 @@ public class ListaMed extends JDialog implements ActionListener{
        setResizable(false);
        
     }
+    
+    
+    public void inserirDadosTabela(  DefaultTableModel modelo){
+       modelo.setNumRows(0);
+       MedController mc = new MedController();
+       ArrayList<Medico> lista = mc.getdDadosMed();
+       for(int i=0;i<lista.size();i++){
+          // String [] enf =  ec.getDados().get(i);
+           modelo.addRow(new String[]{String.valueOf(lista.get(i).getIdFuncionario()),
+                                        lista.get(i).getNomeFunc(), 
+                                        lista.get(i).getSexo(),
+                                        lista.get(i).getContacto(),
+                                        lista.get(i).getMorada(),
+                                        lista.get(i).getNacionalidade(),
+                                        lista.get(i).getDepartamento(),
+                                        lista.get(i).getEspecialidade()});
+        }
+   
+   }
+    
     
     @Override
     public void actionPerformed(ActionEvent e) {

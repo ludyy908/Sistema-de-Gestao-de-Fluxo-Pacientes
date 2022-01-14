@@ -22,6 +22,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     JTextField t1, t2, t3, t4, t5, t6, t7, t0[];
     JButton b1, b2, b3, b[];
     JTable t;
+    String [] categ = {" -- Categoria --", "Auxiliar De Enfermagem","Tecnico(a) De Dnfermagem"};
     JComboBox c1, c2;
     JComboBox <String> caixa1;
     JRadioButton[] r;
@@ -62,10 +63,10 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         
         p2.setBounds(0, 5, 800, 650);
         
-        caixa1 = new JComboBox<>();
-        caixa1.addItem("Auxiliar de Enfermagem");
-        caixa1.addItem("Parteira");
-        caixa1.addItem("Tecnico de enfermagem");
+        caixa1 = new JComboBox(categ);
+        //caixa1.addItem("Auxiliar de Enfermagem");
+       // caixa1.addItem("Parteira");
+        //caixa1.addItem("Tecnico de enfermagem");
         caixa1.setFocusable(false);
         caixa1.setForeground(Color.WHITE);
         caixa1.setBackground(null);
@@ -161,7 +162,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         l4.setBounds(100, 170, 250, 27); t3.setBounds(100, 200, 380, 25);t3.setFont(f);
         l5.setBounds(100, 240, 250, 27); t4.setBounds(100, 270, 380, 25);t4.setFont(f);
         l6.setBounds(100, 310, 200, 27); t5.setBounds(100, 340, 380, 25);t5.setFont(f);
-        l7.setBounds(100, 380, 200, 27); caixa1.setBounds(100, 410, 380, 30);
+        l7.setBounds(100, 380, 200, 27); caixa1.setBounds(100, 410, 380, 35);
         l8.setBounds(100, 450, 200, 27); t7.setBounds(100,480, 380, 25);t7.setFont(f);
         l9.setBounds(550, 100, 100, 27);
 
@@ -216,12 +217,8 @@ public class AdicionarEnf extends JDialog implements ActionListener {
             }
         }
         
-       if(e.getSource() == b3){          
-             if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t7.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
-              //else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");             
-             }else{
-                    
+       if(e.getSource() == b3){  
+                 
                random = new Random();
                
                String nome,sexo, end,nacio, dpt, tel, categoria;
@@ -239,7 +236,12 @@ public class AdicionarEnf extends JDialog implements ActionListener {
                 } else{
                      sexo = "Masculino";
                 }
-                
+
+             if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t7.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
+              //else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");             
+             }else{
+                              
                 EnfControl ec = new EnfControl(id, nome, sexo,tel, end, nacio,dpt, categoria);
                    
                 JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso!!!!");
@@ -247,9 +249,12 @@ public class AdicionarEnf extends JDialog implements ActionListener {
                 t3.setText("");  
                 t4.setText("");  
                 t5.setText("");  
-                t7.setText("");  
+                t7.setText("");
+                
                 r[0].setSelected(false);
                 r[1].setSelected(false);
+                Object ob = categ[0];                
+                caixa1.setSelectedItem(ob);
            }
        }   
        

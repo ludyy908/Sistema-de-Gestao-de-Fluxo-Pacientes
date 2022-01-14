@@ -26,7 +26,7 @@ public class CadastroPac extends JDialog implements ActionListener{
     JLabel lNome, lIdade, lBi, lTel,lTelAlt, lNacionalidade,lApelido, lSexo, lEstado, imgPac, lEnd, lTitulo;
     JTextArea end;
     JComboBox comboEstado;
-    String[] estado = {"Solteiro(a)", "Casado(a)", "Viuvo(a)"};
+    String[] estado = {"-- Estado Civil -- ", "Solteiro(a)", "Casado(a)", "Viuvo(a)"};
     JRadioButton radioF, radioM; 
     ButtonGroup grupoRadio;
     JPanel painel1, painel2, painel3;
@@ -127,7 +127,7 @@ public class CadastroPac extends JDialog implements ActionListener{
         painel1.add(lEstado);
         
        comboEstado = new JComboBox(estado);
-       comboEstado.setBounds(190,300,230,25);
+       comboEstado.setBounds(190,300,232,35);
        comboEstado.setFocusable(true);
        comboEstado.setBackground(null);
        comboEstado.setFocusable(false);
@@ -180,7 +180,7 @@ public class CadastroPac extends JDialog implements ActionListener{
         painel1.add(tNacionalidade);
         
         idade = new JSpinner(new SpinnerNumberModel(1,1,100,1));  
-        idade.setBounds(610,100,70,23);
+        idade.setBounds(610,100,70,30);
         idade.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         painel1.add(idade);
         
@@ -255,7 +255,7 @@ public class CadastroPac extends JDialog implements ActionListener{
             Random r = new Random();
        
             
-            int id = r.nextInt(999);
+            int id = r.nextInt(999), index;
             String nome = tNome.getText();
             String nacionalidade = tNacionalidade.getText();
             String apelido = tApelido.getText();
@@ -294,6 +294,18 @@ public class CadastroPac extends JDialog implements ActionListener{
                  tNacionalidade.setText("");
                  tTelAlt.setText(""); 
                  tend.setText("") ;
+                 
+                 Object ob,SpinerIdade;
+                 ob = estado[0];                
+                 comboEstado.setSelectedItem(ob);
+                 //pinerIdade = "1";
+                 //idade.setValue(SpinerIdade);
+                 
+                 if(radioF.isSelected()){
+                     radioF.setSelected(false);
+                } else{
+                     radioM.setSelected(false);
+                }
             }
        
         }

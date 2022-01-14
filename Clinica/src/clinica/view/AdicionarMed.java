@@ -7,6 +7,9 @@ package clinica.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import clinica.controller.MedController;
+import clinica.model.Medico;
 
 public class AdicionarMed extends JDialog implements ActionListener{
    JPanel p1, p2, p3;
@@ -17,10 +20,11 @@ public class AdicionarMed extends JDialog implements ActionListener{
    JComboBox c1, c2;
    JRadioButton[] r;
    ButtonGroup g;
-   Font f = new Font("Segoe UI",Font.BOLD,15);
-   Font f1 = new Font("Segoe UI",Font.PLAIN,17); 
+   Font f = new Font("Segoe UI",Font.PLAIN,17);
+   Font f1 = new Font("Segoe UI",Font.BOLD,17); 
    BorderFactory br;
-    String s[] = new String[2];
+   String s[] = new String[2];
+   Random random;
     
     public AdicionarMed(){
       
@@ -44,10 +48,9 @@ public class AdicionarMed extends JDialog implements ActionListener{
         getContentPane().setBackground(new Color(0,250,220));
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         setSize(800,680);
-        setLocation(150, 30);
+        setLocation(290, 30);
         
-        
-        
+          
         p2.setFont(f);
         p2.setBackground(new Color(255,255,255));
         
@@ -55,19 +58,19 @@ public class AdicionarMed extends JDialog implements ActionListener{
         p2.setBounds(0, 200, 460, 220);
         
      
-      l2 = new JLabel("Nome do Médico:");l2.setFont(f);
+      l2 = new JLabel("Nome do Médico:");l2.setFont(f1);
       l2.setForeground(Color.GRAY);
-      l4 = new JLabel("Nacionalidade:");l4.setFont(f);
+      l4 = new JLabel("Nacionalidade:");l4.setFont(f1);
       l4.setForeground(Color.GRAY);
-      l5 = new JLabel("Telefone:");l5.setFont(f);
+      l5 = new JLabel("Telefone:");l5.setFont(f1);
       l5.setForeground(Color.GRAY);
-      l6 = new JLabel("Morada:");l6.setFont(f);
+      l6 = new JLabel("Morada:");l6.setFont(f1);
       l6.setForeground(Color.GRAY);
-      l7 = new JLabel("Especialidade do Médico:");l7.setFont(f);
+      l7 = new JLabel("Especialidade do Médico:");l7.setFont(f1);
       l7.setForeground(Color.GRAY);
-      l8 = new JLabel("Departamento:");l8.setFont(f);
+      l8 = new JLabel("Departamento:");l8.setFont(f1);
       l8.setForeground(Color.GRAY);
-      l9 = new JLabel("Gênero:");l9.setFont(f);
+      l9 = new JLabel("Gênero:");l9.setFont(f1);
       l9.setForeground(Color.GRAY);
       
       
@@ -80,19 +83,19 @@ public class AdicionarMed extends JDialog implements ActionListener{
       
       
       t1.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t1.setForeground(Color.GRAY);
+      //t1.setForeground(Color.GRAY);
       t2.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t2.setForeground(Color.GRAY);
+      //t2.setForeground(Color.GRAY);
       t3.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t2.setForeground(Color.GRAY);
+      //t2.setForeground(Color.GRAY);
       t4.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t4.setForeground(Color.GRAY);
+      //t4.setForeground(Color.GRAY);
       t5.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t5.setForeground(Color.GRAY);
+      //t5.setForeground(Color.GRAY);
       t6.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t5.setForeground(Color.GRAY);
+      //t5.setForeground(Color.GRAY);
       t7.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-      t7.setForeground(Color.GRAY);
+      //t7.setForeground(Color.GRAY);
       
       b3 = new JButton("Salvar");
         b3.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -186,24 +189,55 @@ public class AdicionarMed extends JDialog implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String s = ""; 
         boolean b = false;
-        if(e.getSource() == b3){
-            if( e.getSource() == r[0]) {s = "Feminino"; b = true;}
-            else if( e.getSource() == r[1]) {s = "Masculino"; b = true;}
-            
-        }
-       
+        
        if(e.getSource() == b3){
-           if(t1.getText().isEmpty() || t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||
-                   t5.getText().isEmpty() || t6.getText().isEmpty() || t7.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null,"Por Favor, Preencha os Espacos em Branco.");
-               
-           }else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");
-           }else {
-                JOptionPane.showMessageDialog(null,"Salvo Com Sucesso. \n Codigo de Enfermeiro: ");
-                //new Menu("medico");
-                dispose();
-                
-           }
+           random = new Random();
+
+            String nome,sexo, end,nacio, dpt, tel, esp;
+            int id = random.nextInt(999);
+
+            nome = t2.getText();
+            nacio = t3.getText();
+            tel = t4.getText();
+            end = t5.getText();
+            esp = t6.getText();
+            dpt = t7.getText();
+
+             if(r[0].isSelected()){
+                  sexo = "Femenino";
+             } else{
+                  sexo = "Masculino";
+             }
+           
+           //if(r[0].isSelected() == false ||  r[1].isSelected() == false){
+                //JOptionPane.showMessageDialog(null,"Selecione o Genero.");
+            //}else{
+           
+                if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t6.getText().isEmpty() || 
+                        t7.getText().isEmpty()){
+                   JOptionPane.showMessageDialog(null,"Por Favor, Preencha os Espacos em Branco.");
+
+                }else {
+
+                    MedController ec = new MedController(id, nome, sexo,tel, end, nacio,dpt, esp);
+
+                     JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso!!!!");
+                     t2.setText("");   
+                     t3.setText("");  
+                     t4.setText("");  
+                     t5.setText(""); 
+                     t6.setText("");
+                     t7.setText("");
+
+                     r[0].setSelected(false);
+                     r[1].setSelected(false);
+
+                     JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso");
+                     //new Menu("medico");
+                     dispose();
+
+                }
+       //}    
        }
        
        if(e.getSource() == b2){

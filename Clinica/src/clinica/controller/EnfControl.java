@@ -20,6 +20,7 @@ public class EnfControl {
     Enfermeiro enf = new Enfermeiro();
     Enfermeiro enf2 = new Enfermeiro();
     
+    //inserir enfermeiros
     public EnfControl(int cod, String nome, String s, String contact, String morada, String nacio, String dpt, String categoria){
         
         enf.setIdFuncionatio(cod);
