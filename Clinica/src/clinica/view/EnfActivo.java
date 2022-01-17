@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.EnfControl;
+import clinica.model.Enfermeiro;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -31,6 +34,7 @@ public class EnfActivo extends JDialog implements ActionListener {
         table = new JTable(tabela);
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBounds(30, 60, 700, 300);
+        inserirDadosTabela(tabela);
         
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         
@@ -75,6 +79,21 @@ public class EnfActivo extends JDialog implements ActionListener {
         this.setLayout(null);
         this.setVisible(true);
     }
+    
+    
+     public void inserirDadosTabela(  DefaultTableModel modelo){
+       modelo.setNumRows(0);
+       EnfControl ec = new EnfControl();
+       ArrayList<Enfermeiro> lista = ec.getDadosEnfAct();
+       for(int i=0;i<lista.size();i++){
+          // String [] enf =  ec.getDados().get(i);
+           modelo.addRow(new String[]{String.valueOf(lista.get(i).getIdFuncionario()),
+                                        lista.get(i).getNomeFunc(),                                  
+                                        lista.get(i).getCategoria(),
+                                        lista.get(i).getDepartamento()});
+        }
+   
+   }
     
     @Override
     public void actionPerformed(ActionEvent e) {

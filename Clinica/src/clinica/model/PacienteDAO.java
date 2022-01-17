@@ -196,6 +196,31 @@ public class PacienteDAO {
          return nome;
      }
     
+     //Pacientes em cuidados de um determinado enfermeiro
+     
+     public ArrayList<Paciente> getPacCuidados(int codF){
+         ArrayList<Paciente> pacCuidados  =  new ArrayList<>();
+     
+         try{
+             String q = "Select p.codPaciente, p.nome from paciente p, internamento i where p.codPaciente = i.codPaciente and i.codFuncionario = "+codF;
+             
+             PreparedStatement ps = conexao.prepareStatement(q);
+             rs = ps.executeQuery();
+             
+             while(rs.next()){
+                 Paciente p = new Paciente();
+                 p.setIdPaciente(rs.getInt("p.codPaciente"));
+                 p.setNome(rs.getString("p.Nome"));
+                 
+                 pacCuidados.add(p);
+             }
+         
+         }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        } 
+         
+         return pacCuidados;
+     }
     
     
 }

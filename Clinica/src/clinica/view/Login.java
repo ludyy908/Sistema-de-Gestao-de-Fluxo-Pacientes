@@ -16,13 +16,17 @@ public class Login implements ActionListener, FocusListener, MouseListener {
     private JPanel p1, p2;
     private JLabel l1, l2, l3, l5, l6;
     private JTextField t1, t2;
-    private JPasswordField pf1;
+    private JPasswordField pf1 = new JPasswordField ();
     private JButton b1, close; 
     private JFrame janelaLogin;
     private static ImageIcon icone, icone1, icone2;
 
     //Novo Login
     public Login(){
+        
+ // }
+        
+      // public void novoLogin(){
         
         JLabel fundo = new JLabel(new ImageIcon("Group1.png"));
         fundo.setBounds(0, 0, 330, 400);
@@ -61,7 +65,7 @@ public class Login implements ActionListener, FocusListener, MouseListener {
         t1.addActionListener(this);
         t1.addFocusListener(this);            
         
-        pf1 = new JPasswordField (20);
+        //pf1 = new JPasswordField ();
         pf1.setBounds(30, 238, 260, 23);
         pf1.setFont(new Font("Segoe UI", 0, 14));
         pf1.setForeground(Color.GRAY);
@@ -136,12 +140,16 @@ public class Login implements ActionListener, FocusListener, MouseListener {
                     if(new String(pf1.getPassword()).isBlank())
                         JOptionPane.showMessageDialog(janelaLogin, "Introduza o Codigo de Funcionario.");
             
-         }
-         
-         
-         
-         
+         }        
+                  
     }
+    
+    
+    
+    public int getPassworsLogin(){
+        return Integer.parseInt(String.valueOf(pf1.getPassword()));
+    }
+        
     
     @Override
     public void focusGained(FocusEvent e) {

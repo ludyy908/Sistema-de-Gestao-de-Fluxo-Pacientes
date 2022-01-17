@@ -47,29 +47,17 @@ public class EnfControl {
     //ler dados de todos os enfermeiros
     
      public ArrayList<Enfermeiro> getDados(){
-         
-    
-        /*ArrayList<String[]> listaEnf = new ArrayList<String []>();
-        ArrayList<Enfermeiro> lista = e.lerDados();
-        
-        for(int i=0;i<e.lerDados().size();i++){
-            String[] dado = new String[8];
-            dado[0] = String.valueOf(lista.get(i).getIdFuncionario());
-            dado[1] = lista.get(i).getNomeFunc();
-            dado[2] = lista.get(i).getSexo();
-            dado[3] = lista.get(i).getContacto();
-            dado[4] = lista.get(i).getMorada();
-            dado[5] = lista.get(i).getNacionalidade();
-            dado[6] = lista.get(i).getDepartamento();
-            dado[7] = lista.get(i).getCategoria();
             
-            listaEnf.add(dado);
-            
-        }*/
-        
         return e.lerDados();
     
+    }    
+     
+     
+     //Lista dos enfermeiros activos/ com pacientes 
+     public ArrayList<Enfermeiro> getDadosEnfAct(){
+        return e.getEnfActivos(); 
     }
+     
      
      //lista so com os nomes dos enfermerios cadastrados
      public   ArrayList<String> getEnfs(){

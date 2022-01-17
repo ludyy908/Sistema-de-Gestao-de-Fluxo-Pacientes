@@ -104,7 +104,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         
         comboMedico = new JComboBox(medico);
         comboMedico.setBackground(null);
-        comboMedico.setBounds(70,320,270,35);
+        comboMedico.setBounds(70,320,270,36);
         comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboMedico.setForeground(Color.GRAY);
         painel1.add(comboMedico);

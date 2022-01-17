@@ -17,9 +17,9 @@ public class AgendaControl {
     AgendaDAO aDao = new AgendaDAO();
 
     public AgendaControl() {
+        
     }
-    
-    
+      
     //Inserir dados na Ag
     public AgendaControl(String d, String hora, String tipo){
        

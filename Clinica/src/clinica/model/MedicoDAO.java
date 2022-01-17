@@ -146,12 +146,12 @@ public class MedicoDAO {
          int id = 0;
          
          try{
-             String query = "select m.codFuncionario from funcionario f, where f.nome = '"+medNome+"' and f.codFuncionario = m.codFuncionario";
+             String query = "select m.codFuncionario from funcionario f ,medico m where f.nome = '"+medNome+"' and f.codFuncionario = m.codFuncionario";
              PreparedStatement ps = conexao.prepareStatement(query);
              rs = ps.executeQuery();
              
              rs.next();
-             id = rs.getInt("codFuncionario");
+             id = rs.getInt("m.codFuncionario");
              
             rs.close();
             ps.close();

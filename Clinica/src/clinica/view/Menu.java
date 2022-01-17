@@ -24,7 +24,7 @@ public class Menu implements MouseListener, ActionListener {
     private JButton btnAdicionarEnfermeiro, btnEnfermeiroActivo, btnListaEnfermeiro, btnPacienteDeEnfermeiro;
     private JButton btnMarcar, btnCancelar, btnListar;
     private JPanel painelEsquerdo, leftPanel, rightPanel, painelPrincipal, painelPaciente, painelMedico, painelEnfermeiro, painelRegisto;
-    
+   // Login g = new Login();
     Menu(){
         frame = new JFrame("Menu");
         frame.setSize(1200, 700);
@@ -274,7 +274,7 @@ public class Menu implements MouseListener, ActionListener {
         JLabel userEmail = new JLabel("E-mail do Usuário");
         userEmail.setForeground(Color.lightGray);
         userEmail.setFont(new Font("Segoe UI", 3, 14));
-        userEmail.setBounds(100, 346, 170, 20);
+        userEmail.setBounds(100, 346, 200, 20);
         userEmail.setText(dados[2]);
         
         logOut1 = new JButton("Log Out", new ImageIcon("Icone - LogOut 48px.png"));
@@ -287,7 +287,7 @@ public class Menu implements MouseListener, ActionListener {
         
         leftPanel = new JPanel();
         leftPanel.setBackground(new Color(1, 96, 128));
-        leftPanel.setBounds(0, 0, 260, 700);
+        leftPanel.setBounds(0, 0, 285, 700);
         leftPanel.setLayout(null);
         leftPanel.add(usuario);
         leftPanel.add(linha);
@@ -603,6 +603,7 @@ public class Menu implements MouseListener, ActionListener {
             if(i==0){
                 frame.dispose();
                 new Login();
+                //g.novoLogin();
             }
             
         }else if(e.getSource()==btnPaciente){

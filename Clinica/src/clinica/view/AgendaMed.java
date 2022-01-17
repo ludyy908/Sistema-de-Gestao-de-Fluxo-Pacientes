@@ -20,7 +20,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
     JPanel p1, p2;
     JLabel l0, l1, l2;
     JTextField t1, t2;
-    JButton b1, b2;
+    JButton b1, b2, b3;
     JTable tabela; String [] medico;
     JComboBox comboMedico;
     MedController mc = new MedController();
@@ -37,7 +37,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         p2 = new JPanel();
           
          setModal(true);
-        setSize(550, 300);
+        setSize(600, 300);
         setLocation(420, 200);
         setTitle("Agenda de Médico");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
@@ -81,7 +81,6 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         t2.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
         t2.setBounds(20,140,300,25);
         t2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        t2.setForeground(Color.GRAY);
         
 
         b1 = new JButton("Cancelar");
@@ -126,7 +125,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
     
     public void getAgenda(){
         setSize(500, 500);
-        setLocation(400, 140);
+        setLocation(440, 140);
         setModal(true);
         setResizable(false);
         setTitle("Agenda de Médico");
@@ -152,7 +151,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,70, 420,310);
-       //inserirDadosTableAgnda(tb);
+       inserirDadosTableAgnda(tb);
         
         
         b1 = new JButton("Fechar");
@@ -168,10 +167,10 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
        p2.add(l0); p2.add(scrol); p2.add(b1);
        add(p2);
        setResizable(false);
-       /*if (this.getDefaultCloseOperation() == 0){
+       if (this.getDefaultCloseOperation() == 0){
             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             new Menu("medico");
-        }*/
+        }
        setVisible(true);
     }
 
@@ -192,19 +191,17 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == b1){
-             // new Menu("medico");
-            dispose();
-            
+            dispose();           
         }
         
         if(e.getSource() == b2){
-            //if(t1.getText().isEmpty() || t2.getText().isEmpty()){
-               // JOptionPane.showMessageDialog(null, "Por Favor, Preencha os Espacos em Branco.");
-           // }else {
-              dispose();
+            if(t2.getText().isEmpty()){
+               JOptionPane.showMessageDialog(null, "Por Favor, Selecione o Medico.");
+           }else {
+              p1.setVisible(false);
               getAgenda();
             
-            //}
+            }
             
         }
     }

@@ -53,14 +53,12 @@ public class PacController {
         return listPac;
     }
     
-    //Nomes dos Pacientes de acordo com o id Registo Alta
-    
+    //Nomes dos Pacientes de acordo com o id Registo Alta   
     public String getPacNome(int codpac){
        return pd.getNomePac(codpac);
     }
     
     //Nome e id dos pacientes a serem internaos
-    
      public   ArrayList<Integer> getIdInter(){
         
         ArrayList<Integer> listPac = new ArrayList<Integer>();
@@ -74,41 +72,22 @@ public class PacController {
         return listPac;
     }
     
-    //Nomes dos Pacientes de acordo com o id Registo Alta
-    
+    //Nomes dos Pacientes de acordo com o id Registo Alta   
     public String getPacNomeInter(int codpac){
        return pd.getNomePInter(codpac);
    
     }
-    
-    
-    
+        
     
     //Todos os Dados dos pacientes
-    public ArrayList<Paciente> getDados(){
-    
-        ArrayList<Paciente> listaPac = pd.lerDados();
-       /* ArrayList<Paciente> p = pd.lerDados();
-        
-        for(int i=0;i<pd.lerDados().size();i++){
-            String[] dado = new String[11];
-            dado[0] = String.valueOf(p.get(i).getIdPaciente());
-            dado[1] = p.get(i).getApelido();
-            dado[2] = p.get(i).getNome();
-            dado[3] = p.get(i).getSexo();
-            dado[4] = p.get(i).getEndereco();
-            dado[5] = String.valueOf(p.get(i).getIdade());
-            dado[6] = p.get(i).getBi();
-            dado[7] = p.get(i).getEstadoCivil();
-            dado[8] = p.get(i).getNacionalidade();
-            dado[9] = p.get(i).getTel1();
-            dado[10] = p.get(i).getTel2();
-            
-            listaPac.add(dado);
-            
-        }*/
-        
+    public ArrayList<Paciente> getDados(){  
+        ArrayList<Paciente> listaPac = pd.lerDados();       
         return listaPac;
     
+    }
+    
+    //pacientes em cuidados de um determinao enfermeiro
+    public  ArrayList<Paciente> getPacCuidados(int codF){
+        return pd.getPacCuidados(codF);
     }
 }

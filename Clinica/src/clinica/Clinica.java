@@ -30,6 +30,7 @@ public class Clinica  {
         }
         new LoginDAO();
         new Login();
+        //g.novoLogin();
     }
     
 }

@@ -78,8 +78,8 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         ldata.setForeground(Color.GRAY);
         painel1.add(ldata);
         
-        lMedico = new JLabel("Enfermeiro ResponsavelPpelo Paciente Internado:");
-        lMedico.setBounds(70,290,450,35);
+        lMedico = new JLabel("Enfermeiro Responsavel Pelo Paciente Internado:");
+        lMedico.setBounds(70,290,450,37);
         lMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lMedico.setForeground(Color.GRAY);
         painel1.add(lMedico);

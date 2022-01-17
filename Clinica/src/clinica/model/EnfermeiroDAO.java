@@ -165,5 +165,34 @@ public class EnfermeiroDAO {
      
      }
     
+    //Enfermeiros activos/com pacientes (Enfermeiros que estao na tabela intenamento)
+    public ArrayList<Enfermeiro> getEnfActivos(){
+        
+        ArrayList<Enfermeiro> enfAct = new ArrayList<>();
+        
+        try{
+            String query = "Select e.codFuncionario, f.nome, e.categoria, f.departamento from enfermeiro e, internamento i, funcionario f"
+                    + " where e.codFuncionario = f.codFuncionario and e.codFuncionario = i.codFuncionario";
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+        
+            while(rs.next()){
+                Enfermeiro e = new Enfermeiro();
+                e.setIdFuncionatio(rs.getInt("e.codFuncionario"));
+                e.setNomeFunc(rs.getString("f.nome"));
+                e.setCategoria(rs.getString("e.categoria"));
+                e.setDepartamento(rs.getString("f.departamento"));  
+                
+                enfAct.add(e);
+            
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }   
+    
+        return enfAct;
+    }
+    
     
 }

@@ -8,13 +8,17 @@
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/CadastroInternamento.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/EnfControl.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaEnf.java</file>
+            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/EnfActivo.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/AltaPacienteDAO.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/PacienteDAO.java</file>
+            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/Clinica.java</file>
+            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/Login.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/AgendaMed.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/Menu.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaPac.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/Internamento.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/RegistoAlta.java</file>
+            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaPacCuidados.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/PacController.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/Agenda.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/MedController.java</file>
@@ -28,6 +32,7 @@
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/AgendaControl.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/EnfermeiroDAO.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/CadastroPac.java</file>
+            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/LoginDAO.java</file>
         </group>
     </open-files>
 </project-private>

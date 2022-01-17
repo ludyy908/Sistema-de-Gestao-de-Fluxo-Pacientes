@@ -18,6 +18,11 @@ public class AgendaDAO {
     Connection conexao;
     
     public AgendaDAO(){
+         try{ 
+            conexao=BDconexao.getConnection();
+        }catch(SQLException|ClassNotFoundException ex){
+            System.out.println("Erro de conexao: "+ex.getMessage());           
+        }   
     
     }
     
@@ -33,8 +38,6 @@ public class AgendaDAO {
         
         while(rs.next()){
             Agenda a = new Agenda();
-            //a.setIdAgenda(rs.getInt("idAgenda"));
-            //a.setCodFuncionar(rs.getInt("agenda,codFuncionario"));
             a.setData(rs.getString("data"));
             a.setHora(rs.getString("hora"));
             a.setTipoReg(rs.getString("tipo_registo"));
