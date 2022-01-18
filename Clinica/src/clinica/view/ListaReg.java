@@ -3,9 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.CirurgiaControl;
+import clinica.controller.ConsultaControl;
+
+import clinica.model.Cirurgia;
+import clinica.model.Consulta;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,8 +21,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Agostinho
  */
-public class ListaReg extends JDialog implements ActionListener{
-    
+public final class ListaReg extends JDialog implements ActionListener, ItemListener{
+    private ArrayList<Cirurgia> cir;
+    private ArrayList<Consulta> con;
     private JPanel pn1;
     private JLabel l1;
     private JComboBox tipo;
@@ -39,12 +48,11 @@ public class ListaReg extends JDialog implements ActionListener{
             "codigo do Paciente", "Nome do Medico", "Estado"};
         
         DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
-        tb.setColumnCount(7);
-        tb.setRowCount(30);
         tabela = new JTable(tb);
         tabela.setBounds(20, 80, 820, 610);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80,820,430);
+        inserirTabela(tb);
         
        
         b1 = new JButton("Fechar");
@@ -76,18 +84,52 @@ public class ListaReg extends JDialog implements ActionListener{
         setTitle("Lista");
         
     }
+    
+    public void inserirTabela(DefaultTableModel modelo){
+       
+       modelo.setNumRows(0);
+       ConsultaControl cc = new ConsultaControl();
+       con = cc.getDados();
+       for(int i = 0; i < cc.getDados().size(); i++){
+           
+           modelo.addRow(new String[]{String.valueOf(con.get(i).getNrConsulta()),
+                                con.get(i).getData(),
+                                con.get(i).getHora(),
+                                con.get(i).getPaciente(),
+                                String.valueOf(con.get(i).getidPaciente()),
+                                con.get(i).getMedico(),
+                                con.get(i).getEstado()});
+                             
+       }
+       
+   }  
 
     @Override
-     public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if(e.getSource()==b1){
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Fechar a Lista?", "Message", JOptionPane.YES_NO_OPTION);
             if (op == JOptionPane.YES_OPTION) {
                 dispose();
-               // new Menu("registo");
+               
             }
         }
         
-        
     }
+   
+   
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        CirurgiaControl cc = new CirurgiaControl();
+        ConsultaControl cn = new ConsultaControl();
+        if (e.getSource() == this.tipo){
+            if ("Cirurgia".equals(this.tipo.getSelectedItem().toString()))
+                cir = cc.getDados();
+            if ("Consulta".equals(this.tipo.getSelectedItem().toString()))
+                con = cn.getDados();
+        }       
+            
+    }
+   
 }

@@ -24,7 +24,7 @@ public class Dados {
         d = new Doenca();
     }
     
-    public void agendarConsulta() throws IOException{
+   /* public void agendarConsulta() throws IOException{
         Consulta cons = new Consulta(); Paciente p; int c1 = 0, c2 = 0; // c1 e c2 sao contadores. 
         String nome = verificarExistenciaMedico("Nome do medico que realizara a consulta:  "); //Ao agendar a consulta, o paciente diz com que medico deseja ter a conulta e se verica a sua existencia
         if(nome.isBlank() == false){ // se nome for vazio ou em branco vai cancelar a operacao
@@ -63,8 +63,9 @@ public class Dados {
             }
         }
     }
+    */
 
-    public void agendarCirurgia() throws IOException{
+   /* public void agendarCirurgia() throws IOException{
         Cirurgia cir = new Cirurgia();  Paciente p; int c1 = 0, c2 = 0;
         String nome = verificarExistenciaMedico("\nNome do medico que realizara a cirugia:  ");
         if(nome.isBlank() == false){
@@ -100,7 +101,7 @@ public class Dados {
                         pac.setEstado("Nao Internado");
                         lista.addElement(pac); lista.addElement(cir); lista.trimToSize();
                         System.out.println("Cirurgia Registada\nCodigo de Cirurgia: " +cir.getNrCirurgia());    }}}}}
-
+*/
      
     public String verificarExistenciaMedico(String n) throws IOException {
         boolean existencia = false; byte opcao; String nome; Funcionario f; Medico m; 
@@ -118,10 +119,10 @@ public class Dados {
                         else
                             c2++; }} 
             if (c2 == c1) {       
-                opcao = validar.validarByte((byte)0, (byte)1,"Medico Nao Existente."+
-                                                              "\n1. Introduzir Nome de Medico Novamente"+
-                                                              "\n0. Cancelar Procedimento");
-                if (opcao == 0)
+               // opcao = validar.validarByte((byte)0, (byte)1,"Medico Nao Existente."+
+                                                             // "\n1. Introduzir Nome de Medico Novamente"+
+                                                             // "\n0. Cancelar Procedimento");
+               //if (opcao == 0)
                     return "";  } 
         }while(existencia == false);
         return nome;  
@@ -143,9 +144,9 @@ public class Dados {
                     }  
                 }   
             }
-            if(exis == false ){
+            if(exis == false ){//mensagem
                 System.out.println("Enfermeiro Nao Encontrado.");
-                op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir o nome do enfermeiro novamente\n\t0. Cancelar operacao");
+                
                 if(op == 0)
                     return "";
             }
@@ -170,7 +171,7 @@ public class Dados {
                             c = (Consulta) r;
                             if(c.getPaciente().equalsIgnoreCase(nome)){ 
                                 exN = true;
-                                data = validar.validarData(); hora = validar.validarHora(); //introduz- se a data e hora da consulta a cancelar. Porque um ppaciente pode ter uma ou mais consultas
+         //                       data = validar.validarData(); hora = validar.validarHora(); //introduz- se a data e hora da consulta a cancelar. Porque um ppaciente pode ter uma ou mais consultas
                             if ((c.getData().equalsIgnoreCase(data)) && (c.getHora().equalsIgnoreCase(hora))){ //se corresponder, vai a agenda do medico, e procurar a da e hora para substituir por vazio e eliminar a consulta do vector
                                 exDH = true;
                                 for( int j = 0; j < lista.size(); j++){
@@ -203,7 +204,7 @@ public class Dados {
                             ci = (Cirurgia) r;
                             if(ci.getPaciente().equalsIgnoreCase(nome)){
                                 exN = true;
-                                data = validar.validarData(); hora = validar.validarHora();
+                                //data = validar.validarData(); hora = validar.validarHora();
                                  if ((ci.getData().equalsIgnoreCase(data)) && (ci.getHora().equalsIgnoreCase(hora))){
                                    exDH = true;
                                     for( int j = 0; j < lista.size(); j++){
@@ -222,9 +223,9 @@ public class Dados {
                                                                         lista.setElementAt(m,j); lista.trimToSize();
                                                                         System.out.println("*0*Cirurgia Cancelada.");
                                                    }}}}}}}}}}}}}
-            if(exDH == false || exN == false){
+            if(exDH == false || exN == false){//mensagem
                 System.out.println("Dados Nao Encontrados.");
-                op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
+           
                 } 
         }while(op == 1);
     }
@@ -249,17 +250,17 @@ public class Dados {
                     Alta(p, i);}}
         
         if(c>1){
-            int id = validar.validarInt(100, 999, "Introduza o Codigo de Identificacao do Paciente:");
+   //         int id = validar.validarInt(100, 999, "Introduza o Codigo de Identificacao do Paciente:");
             for(int i = 0; i < lista.size(); i++)
             if(lista.elementAt(i) instanceof Paciente){
                 p = (Paciente)lista.elementAt(i);
-                if (p.getIdPaciente() == id)
+        //        if (p.getIdPaciente() == id)
                     Alta(p, i);
                      
                 }}
-        if(c==0){
+        if(c==0){//mensagem
             System.out.print("Paciente Nao Encontrado.");
-            op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
+            
             }
         }while(op == 1 && c == 0);
         }
@@ -300,11 +301,11 @@ public class Dados {
                         Internamento(i); }}
          
         if(c > 1){
-            id = validar.validarInt(100, 999, "Introduza o Codigo de Identificacao do Paciente:");
+            //id = validar.validarInt(100, 999, "Introduza o Codigo de Identificacao do Paciente:");
             for(int i = 0; i < lista.size(); i++){
                 if(lista.elementAt(i) instanceof Paciente){
                     pac = (Paciente)lista.elementAt(i);
-                    if (pac.getIdPaciente() == id)
+                    //if (pac.getIdPaciente() == id)
                         Internamento(i);}}
         }   
         
@@ -324,7 +325,7 @@ public class Dados {
        // pac.setTelefone(validar.validarTelefone());
         pac.setEndereco(validar.validarString(5, 30, "Endereco do Paciente:"));
         pac.setBI(validar.validarString(8, 12, "Numero de BI do Paciente:"));
-        pac.setIdade(validar.validarByte((byte)0,(byte) 100, "Idade da Paciente:"));
+        //pac.setIdade(validar.validarByte((byte)0,(byte) 100, "Idade da Paciente:"));
         System.out.println("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
     }
     
@@ -426,9 +427,9 @@ public class Dados {
                                             lista.setElementAt(e, j); lista.trimToSize();
                                             System.out.println("Paciente Internado."); 
                                             c++;}
-                                    if(c == 0){
+                                    if(c == 0){ //mensagem
                                         System.out.println("O Enfermeiro "+enfermeiro+" Atingiu o Limite de Pacientes Por Cuidar");
-                                        op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Outro Enfermeiro Novamente\n\t0. Cancelar Procedimento.");
+                                        
                                     }}}    }                                                             
                     } while(op == 1 && c == 0);
     }

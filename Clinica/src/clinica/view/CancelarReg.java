@@ -3,17 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clinica.view;
+import clinica.controller.CirurgiaControl;
+import clinica.controller.ConsultaControl;
+import clinica.model.Cirurgia;
+import clinica.model.Consulta;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.Month;
+import java.util.ArrayList;
 /**
  *
  * @author Ludmila Mucavele
  */
-public class CancelarReg  extends JDialog implements ActionListener {
+public class CancelarReg  extends JDialog implements ActionListener, ItemListener {
     
-    
+    private ArrayList<Cirurgia> cir;
+    private ArrayList<Consulta> con;
     private JLabel l1, l2, nome, dataC, horaC, pontos ;
     private JTextField  tf1;
     private JSpinner mes, ano, dia, horas, minutos;
@@ -168,8 +174,6 @@ public class CancelarReg  extends JDialog implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == b1){
-
-                //new Menu("enfermeiro");
                 dispose();
 
             }
@@ -178,11 +182,30 @@ public class CancelarReg  extends JDialog implements ActionListener {
                 if(tf1.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "Por Favor, Preencha os Espacos em Branco.");
                 else {
+                    
                     dispose();
                     JOptionPane.showMessageDialog(null, "Dados Actualizados Com Sucesso.");
-                    //new Menu("registo");
+                    
 
                 }
             }
         }
+        
+    /**
+     *
+     * @param e
+     */
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        CirurgiaControl cc = new CirurgiaControl();
+        ConsultaControl cn = new ConsultaControl();
+        if (e.getSource() == this.tipo){
+            if ("Cirurgia".equals(this.tipo.getSelectedItem().toString()))
+                cir = cc.getDados();
+            if ("Consulta".equals(this.tipo.getSelectedItem().toString()))
+                con = cn.getDados();
+        }
+    }
+    
+    
 }

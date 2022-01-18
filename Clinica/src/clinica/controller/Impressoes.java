@@ -275,15 +275,15 @@ public class Impressoes {
                         System.out.println(e.getNomeFunc() +" - Codigo de Funcionario: " +e.getIdFuncionario());
                         enf = true;}}}}
         if (enf == true){
-            id = validar.validarInt(100, 999, "Introduza o Codigo de Funcionario:");
+//            id = validar.validarInt(100, 999, "Introduza o Codigo de Funcionario:");
             for(int i=0; i < lista.size(); i++){
             if(lista.elementAt(i) instanceof Funcionario){
                 f = (Funcionario)lista.elementAt(i);
                 if(f instanceof Enfermeiro){
                     e = (Enfermeiro) f;
-                    if(e.getNomeFunc().equalsIgnoreCase(nome) && id == e.getIdFuncionario()){
+       //             if(e.getNomeFunc().equalsIgnoreCase(nome) && id == e.getIdFuncionario()){
                         p = e.getCuidados();
-                        pacientes = imprimeCuidados(p);
+         //               pacientes = imprimeCuidados(p);
                         for(int k = 0; k < p.length; k++)
                             if (p[k].isBlank() == false)
                                 c++;
@@ -302,7 +302,7 @@ public class Impressoes {
         }    
     }
         
-    public String imprimeCuidados(String pa[]){
+   /* public String imprimeCuidados(String pa[]){
         String imp ="";
         for(int j = 0; j<pa.length; j++){
             if(pa[j].isBlank() == false){
@@ -310,7 +310,7 @@ public class Impressoes {
             }   
         }
         return imp;
-    }    
+    }   
     
     
-}
+}*/

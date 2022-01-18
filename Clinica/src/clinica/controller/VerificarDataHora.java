@@ -7,7 +7,7 @@ import clinica.model.*;
 
 public class VerificarDataHora {
     
-     Validacao validar = new Validacao();
+   /*  Validacao validar = new Validacao();
      
       public String verificarData (String nome, Vector lista) throws IOException{
         String data, dt = ""; int pos = 0, c1= 0, c2= 0, i, j,l;  byte opcao = 0; 
@@ -60,10 +60,10 @@ public class VerificarDataHora {
                     }  }                      
             }    
         return dt;
-    } 
+    } */
             
     
-    public String verificarHora (String nome, String dt, Vector lista) throws IOException{
+   /* public String verificarHora (String nome, String dt, Vector lista) throws IOException{
         String horas, data = dt; int lin = 0, i, j,k, c = 0, pos = 0; 
         boolean ocupado = false; byte opcao = 0;
         Funcionario f; Medico m;
@@ -115,5 +115,5 @@ public class VerificarDataHora {
        return horas;
     }
     
-    
+    */
 }
