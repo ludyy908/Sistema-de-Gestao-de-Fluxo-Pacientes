@@ -77,12 +77,16 @@ DROP TABLE IF EXISTS `cirurgia`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cirurgia` (
   `numeroCirurgia` int NOT NULL,
-  `data` date NOT NULL,
-  `Hora` time NOT NULL,
-  `Estado` varchar(30) NOT NULL,
+  `codPaciente` int NOT NULL,
+  `nomePac` varchar(30) DEFAULT NULL,
+  `nomeMed` varchar(30) DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `estado` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`numeroCirurgia`),
-  UNIQUE KEY `numeroCirurgia` (`numeroCirurgia`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `codPaciente` (`codPaciente`),
+  CONSTRAINT `cirurgia_ibfk_1` FOREIGN KEY (`codPaciente`) REFERENCES `paciente` (`codPaciente`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +95,6 @@ CREATE TABLE `cirurgia` (
 
 LOCK TABLES `cirurgia` WRITE;
 /*!40000 ALTER TABLE `cirurgia` DISABLE KEYS */;
-INSERT INTO `cirurgia` VALUES (666661,'0000-00-00','00:00:00',''),(666662,'0000-00-00','00:00:00','');
 /*!40000 ALTER TABLE `cirurgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,11 +107,16 @@ DROP TABLE IF EXISTS `consulta`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `consulta` (
   `numeroConsulta` int NOT NULL,
-  `Data` date NOT NULL,
-  `Hora` time NOT NULL,
-  `Estado` varchar(30) NOT NULL,
-  PRIMARY KEY (`numeroConsulta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `codPaciente` int NOT NULL,
+  `nomePac` varchar(30) NOT NULL,
+  `nomeMed` varchar(30) NOT NULL,
+  `data` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `estado` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`numeroConsulta`),
+  KEY `codPaciente` (`codPaciente`),
+  CONSTRAINT `consulta_ibfk_1` FOREIGN KEY (`codPaciente`) REFERENCES `paciente` (`codPaciente`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +125,6 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-INSERT INTO `consulta` VALUES (600001,'0000-00-00','00:00:00',''),(600002,'0000-00-00','00:00:00',''),(600003,'0000-00-00','00:00:00',''),(600004,'0000-00-00','00:00:00',''),(600005,'0000-00-00','00:00:00',''),(600006,'0000-00-00','00:00:00','');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,4 +525,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-17 15:05:27
+-- Dump completed on 2022-01-19 23:33:18
