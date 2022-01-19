@@ -515,14 +515,6 @@ LOCK TABLES `secretario` WRITE;
 INSERT INTO `secretario` VALUES (202001,'Amarilda','amarildachihepe@gmail.com','Secretario',1);
 /*!40000 ALTER TABLE `secretario` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'clinicapoo'
---
-
---
--- Dumping routines for database 'clinicapoo'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -533,4 +525,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-19  0:02:20
+-- Dump completed on 2022-01-19 23:29:28
