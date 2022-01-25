@@ -4,6 +4,7 @@ package clinica.controller;
 import java.util.*;
 import clinica.model.Paciente;
 import clinica.model.PacienteDAO;
+import java.sql.SQLException;
 
 /**
  *
@@ -89,5 +90,9 @@ public class PacController {
     //pacientes em cuidados de um determinao enfermeiro
     public  ArrayList<Paciente> getPacCuidados(int codF){
         return pd.getPacCuidados(codF);
+    }
+    
+    public ArrayList <Integer> getCodPacientes (String nome) throws SQLException{
+        return pd.getCodPaciente(nome);
     }
 }

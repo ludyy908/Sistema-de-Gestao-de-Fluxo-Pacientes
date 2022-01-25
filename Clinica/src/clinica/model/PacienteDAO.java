@@ -222,5 +222,21 @@ public class PacienteDAO {
          return pacCuidados;
      }
     
-    
+    public ArrayList <Integer> getCodPaciente (String nome) throws SQLException{
+        ArrayList<Integer> codigo = new ArrayList<>();
+        
+        try{
+            String query = "Select codPaciente from paciente where nome ='"+nome+"';";
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+                codigo.add(rs.getInt("codPaciente"));
+            }
+        }
+        catch(SQLException e){
+             System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }
+        return codigo;
+    }
 }

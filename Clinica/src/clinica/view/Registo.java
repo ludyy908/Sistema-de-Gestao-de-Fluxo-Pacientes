@@ -9,6 +9,9 @@ import java.awt.event.*;
 import java.time.*;
 import clinica.controller.*;
 import clinica.view.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Ludmila Mucavele
@@ -17,7 +20,7 @@ public class Registo extends JDialog implements ActionListener {
     private JLabel medico, dataC, horaC, nomeD, l1, l2, pontos;
     private JTextField tf1, tf2, tf3;
     private JSpinner mes, ano, dia, horas, minutos;
-    private JComboBox tipo;
+    private JComboBox tipo, codigo;
     private JPanel p1, p2, p3, p4;
     private JButton b1, b2, b3, b4, b5;
     private JLabel nrC, estado, nome, contagio;
@@ -177,7 +180,7 @@ public class Registo extends JDialog implements ActionListener {
         p3 = new JPanel();
         p3.setLayout(null);
         p3.setBackground(Color.WHITE);
-        p3.setBounds(0, 0, 700, 500);
+        p3.setBounds(0, 0, 700, 700);
         
         nrC = new JLabel("Numero de Consulta/Cirurgia:");
         nrC.setBounds(20, 10, 300, 30);
@@ -205,6 +208,12 @@ public class Registo extends JDialog implements ActionListener {
         tf2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tf2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         
+        
+        codigo = new JComboBox();
+        codigo.setBackground(Color.WHITE);
+        codigo.setBounds(20, 190, 270,25);
+    
+    
         b3 = new JButton("Voltar");
         b3.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b3.setForeground(Color.WHITE);
@@ -312,8 +321,9 @@ public class Registo extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String resp;
+        PacController pacControl = new PacController();
         if (e.getSource() == b1){
-            int op = 0;
+            int op;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Message", JOptionPane.YES_NO_OPTION);
             if(op == JOptionPane.YES_OPTION)
                // new Menu("registo");
@@ -352,6 +362,16 @@ public class Registo extends JDialog implements ActionListener {
                     }
                 }
             
+            }
+            
+            if (e.getSource()== tf2){
+                if (tf2.getText().isBlank() == false){
+                    try {
+                        codigo.addItem(pacControl.getCodPacientes(tf2.getText()));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         
         

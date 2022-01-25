@@ -2,37 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/AdicionarEnf.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/Enfermeiro.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/CadastroInternamento.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/EnfControl.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaEnf.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/EnfActivo.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/AltaPacienteDAO.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/PacienteDAO.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/Clinica.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/Login.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/AgendaMed.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/Menu.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaPac.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/Internamento.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/RegistoAlta.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaPacCuidados.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/PacController.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/Agenda.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/MedController.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/BDconexao.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/MedicoDAO.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/ListaMed.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/AltaPacienteControl.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/AltaPaciente.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/AdicionarMed.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/AgendaDAO.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/controller/AgendaControl.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/EnfermeiroDAO.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/view/CadastroPac.java</file>
-            <file>file:/C:/Users/Amarilda%20Chihepe/Documents/NetBeansProjects/Clinica/src/clinica/model/LoginDAO.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
