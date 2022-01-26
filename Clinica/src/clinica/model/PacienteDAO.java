@@ -221,6 +221,8 @@ public class PacienteDAO {
          
          return pacCuidados;
      }
+     
+     //Codigo do paciente de acordo com  o nome fornecido
     
     public ArrayList <Integer> getCodPaciente (String nome) throws SQLException{
         ArrayList<Integer> codigo = new ArrayList<>();
@@ -239,4 +241,96 @@ public class PacienteDAO {
         }
         return codigo;
     }
+    
+    
+    //Carregar os nomes os pacientes para gerar o relatorio
+    
+    public ArrayList<Paciente> lerNomePac(){
+        ArrayList<Paciente> paciente = new ArrayList<>();
+        
+        try{
+            
+            String q = "select nome from paciente";
+            PreparedStatement ps = conexao.prepareStatement(q);
+            
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Paciente pac = new Paciente();
+                pac.setNome(rs.getString("nome"));
+            
+                paciente.add(pac);
+            }
+            rs.close();
+            ps.close();
+          
+            
+        }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }      
+        
+          return paciente;
+    }
+    
+    //carregar id do paciente de acordo com  nome fornecido
+    public int getIdPac(String nome){
+        int id = 0;
+         
+         try{
+             String query = "select codPaciente from paciente where nome = '"+nome+"'";
+             PreparedStatement ps = conexao.prepareStatement(query);
+             rs = ps.executeQuery();
+             
+             rs.next();
+             id = rs.getInt("codPaciente");
+             
+            rs.close();
+            ps.close();
+         
+         }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }   
+         
+         return id;
+     
+     
+     }
+    
+    // Carregar todos os dados de um determinado paciente
+    public ArrayList<Paciente> getDadosPac(int codPac){
+          ArrayList<Paciente> pac = new ArrayList<>();
+        try{
+          
+            String q = "Select * from paciente where codPaciente = "+codPac;
+            PreparedStatement ps = conexao.prepareStatement(q);
+            rs = ps.executeQuery();
+            
+            rs.next();
+            Paciente p = new Paciente();
+            
+            p.setIdPaciente(rs.getInt("codPaciente"));
+               // p.setApelido(rs.getString("Apelido"));
+                p.setNome(rs.getString("nome"));
+                p.setSexo(rs.getString("genero"));
+                p.setEndereco(rs.getString("morada"));
+                p.setIdade(rs.getInt("idade"));   
+                p.setBi(rs.getString("bi"));
+                p.setEstadoCivil(rs.getString("Estado_Civil"));
+                p.setNacionalidade(rs.getString("Nacionalidade"));
+                p.setTel1(rs.getString("telefone"));
+                p.setTel2(rs.getString("Tel_Alternativo"));
+                p.setApelido(rs.getString("Apelido"));
+                
+                pac.add(p);
+                rs.close();
+                ps.close();
+                
+        }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        } 
+        
+        return pac;
+    }
+    
+    
 }

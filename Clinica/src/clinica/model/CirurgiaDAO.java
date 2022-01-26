@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class CirurgiaDAO {
     private Connection conexao;
     Cirurgia c;
+     ResultSet rs;
     
     public CirurgiaDAO(){
         
@@ -54,7 +55,7 @@ public class CirurgiaDAO {
         try{
           
           PreparedStatement stmt = conexao.prepareStatement(query);         
-          ResultSet rs = stmt.executeQuery();
+         rs = stmt.executeQuery();
           
             while(rs.next()){
               c = new Cirurgia();
@@ -89,4 +90,36 @@ public class CirurgiaDAO {
         } 
     }
    
+    
+    //Cirurgia de um determinado paciente
+    public ArrayList<Cirurgia> getDadosCir(int idPac){
+            
+            ArrayList<Cirurgia> cir = new ArrayList();
+
+        try{
+            String query = "Select c.numeroCirurgia, nomeMed, data, hora, f.nome from cirurgia c, enfermeiro_cirurgia ec, funcionario f "
+                    + "where c.numeroCirurgia = ec.numeroCirurgia and codPaciente = "+idPac;
+            PreparedStatement stmt = conexao.prepareStatement(query);
+             rs = stmt.executeQuery();
+             
+             rs.next();
+             c  = new Cirurgia();
+             Enfermeiro enf = new Enfermeiro();
+             
+             c.setNrCirurgia(rs.getInt("numeroCirurgia"));
+             c.setData(rs.getString("data"));
+             c.setHora(rs.getString("hora"));
+             c.setMedico(rs.getString("nomeMed"));
+             enf.setNomeFunc(rs.getString("f.nome"));
+             
+             cir.add(c);
+            //cir.add(enf);
+             
+
+        }catch(SQLException e){
+                System.out.println("Falha na leitura dos dados "+e.getMessage());
+        } 
+        
+        return cir;
+    }  
 }

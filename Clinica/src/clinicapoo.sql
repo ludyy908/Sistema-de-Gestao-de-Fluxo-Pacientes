@@ -95,6 +95,7 @@ CREATE TABLE `cirurgia` (
 
 LOCK TABLES `cirurgia` WRITE;
 /*!40000 ALTER TABLE `cirurgia` DISABLE KEYS */;
+INSERT INTO `cirurgia` VALUES (666662,808,'Ludimila','Kelvin','2020-01-28','01:30:00','Activa');
 /*!40000 ALTER TABLE `cirurgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,6 +126,7 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
+INSERT INTO `consulta` VALUES (222,808,'Ludimila','Kelvin','2020-01-31','15:30:00','Activa');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,4 +527,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-19 23:33:18
+-- Dump completed on 2022-01-27  1:39:59

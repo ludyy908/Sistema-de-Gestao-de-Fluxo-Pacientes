@@ -95,4 +95,47 @@ public class PacController {
     public ArrayList <Integer> getCodPacientes (String nome) throws SQLException{
         return pd.getCodPaciente(nome);
     }
+    
+    
+     public   ArrayList<String> getPacNome(){
+        
+        ArrayList<String> listPac = new ArrayList<>();
+        ArrayList<Paciente> m = pd.lerNomePac();
+        
+        for(int i=0;i<pd.lerNomePac().size();i++){
+        
+            listPac.add(m.get(i).getNome());
+            //listaPac.add(m.get(i).ge)
+          
+        }
+        return listPac;
+    }
+     
+     
+     
+    
+      public ArrayList<Paciente> getPacDados(int cod){
+             return pd.getDadosPac(cod);
+      }
+    
+    public int getPacId(String n){
+        return pd.getIdPac(n);
+    }
+    
+    
+    //Dados de um determinado paciente
+   /*  public   ArrayList<String> getPacDados(int cod){
+        
+        ArrayList<String> listPac = new ArrayList<>();
+        ArrayList<Paciente> m = pd.getDadosPac(cod);
+        
+        for(int i=0;i<pd.getDadosPac(cod).size();i++){
+        
+            listPac.add(m.get(i).getNome());
+            
+          
+        }
+        return listPac;
+    }*/
 }
+

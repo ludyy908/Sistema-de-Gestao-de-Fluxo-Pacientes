@@ -52,4 +52,9 @@ public class CirurgiaControl {
                 cd.cancelarCirurgia(id);
         return id;
     }
+    
+    //Cirurgia de um determinado paciente
+     public ArrayList<Cirurgia> getDadosCons(int cod){
+        return cd.getDadosCir(cod);
+    }
 }

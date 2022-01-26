@@ -19,7 +19,7 @@ public class Menu implements MouseListener, ActionListener {
     final private JFrame frame;
     private JButton home, registo, paciente, medico, enfermagem, logOut1, logOut2;
     private JButton btnPaciente, btnRegisto, btnMedico, btnEnfermeiro;
-    private JButton btnAdicionarPaciente, btnPacienteInternado, btnPacienteRecuperado, btnListaPaciente;
+    private JButton btnAdicionarPaciente, btnPacienteInternado, btnPacienteRecuperado, btnListaPaciente, btnRelatorioPac;
     private JButton btnAdicionarMedico, btnMedicoConsulta, btnMedicoCirurgia, btnAgendaMedico, btnListaMedico;
     private JButton btnAdicionarEnfermeiro, btnEnfermeiroActivo, btnListaEnfermeiro, btnPacienteDeEnfermeiro;
     private JButton btnMarcar, btnCancelar, btnListar;
@@ -424,20 +424,28 @@ public class Menu implements MouseListener, ActionListener {
     private void menuPaciente(){
         
         btnAdicionarPaciente = new JButton("Adicionar Paciente", new ImageIcon("Icone - Adicionar 187px.png"));
-        btnAdicionarPaciente.setBounds(150, 121, 265, 247);
+        //btnAdicionarPaciente.setBounds(150, 121, 265, 247);
+        btnAdicionarPaciente.setBounds(30, 121, 253, 247);
         configurarBotaoDireiro(btnAdicionarPaciente);
         
         btnPacienteInternado = new JButton("Adicionar Paciente Internado", new ImageIcon("Icone - PacienteInternado 187px.png"));
-        btnPacienteInternado.setBounds(525, 121, 280, 247);
+       // btnPacienteInternado.setBounds(525, 121, 280, 247);
+         btnPacienteInternado.setBounds(346, 121, 253, 247);
         configurarBotaoDireiro(btnPacienteInternado);
                 
         btnPacienteRecuperado = new JButton("Registar Alta", new ImageIcon("Icone - PacienteRecuperado 187px.png"));
-        btnPacienteRecuperado.setBounds(150, 390, 265, 247);
+       // btnPacienteRecuperado.setBounds(150, 390, 265, 247);
+         btnPacienteRecuperado.setBounds(659, 121, 253, 247);
         configurarBotaoDireiro(btnPacienteRecuperado);
         
         btnListaPaciente = new JButton("Lista de Pacientes", new ImageIcon("Icone - Lista 187px.png"));
-        btnListaPaciente.setBounds(525, 390, 265, 247);
+       // btnListaPaciente.setBounds(525, 390, 265, 247);
+        btnListaPaciente.setBounds(164, 390, 253, 247);
         configurarBotaoDireiro(btnListaPaciente);
+        
+        btnRelatorioPac = new JButton("Ficha do Paciente", new ImageIcon("Icone - Agenda 187px.png"));
+        btnRelatorioPac.setBounds(500, 390, 253, 247);
+        configurarBotaoDireiro(btnRelatorioPac);
         
         painelPaciente = new JPanel();
         painelPaciente.setLayout(null);
@@ -448,6 +456,7 @@ public class Menu implements MouseListener, ActionListener {
         painelPaciente.add(btnPacienteInternado);
         painelPaciente.add(btnPacienteRecuperado);
         painelPaciente.add(btnListaPaciente);
+        painelPaciente.add(btnRelatorioPac);
         frame.add(painelPaciente);
     }
     
@@ -641,6 +650,10 @@ public class Menu implements MouseListener, ActionListener {
             //frame.dispose();
         }
         
+        if(e.getSource() == btnRelatorioPac){
+            new GerarRelatorioPac();
+        }
+        
         if(e.getSource()== btnListaPaciente){
             new ListaPac();
             //frame.dispose();
@@ -747,7 +760,10 @@ public class Menu implements MouseListener, ActionListener {
             
         }else if(button==btnListaPaciente){
             configurarBotaoDireitoEntradaMouse(btnListaPaciente, new ImageIcon("Icone - Lista 200px.png"));
-
+          
+        }else if(button == btnRelatorioPac){    
+            configurarBotaoDireitoEntradaMouse(btnRelatorioPac,  new ImageIcon("Icone - Agenda 200px.png"));
+            
         // Botões do Menu Médico
         }else if(button==btnAdicionarMedico){
             configurarBotaoDireitoEntradaMouse(btnAdicionarMedico, new ImageIcon("Icone - Adicionar 200px.png"));
@@ -835,6 +851,9 @@ public class Menu implements MouseListener, ActionListener {
             
         }else if(button==btnListaPaciente){
             configurarBotaoDireitolSaidaMouse(btnListaPaciente, new ImageIcon("Icone - Lista 187px.png"));
+            
+        }else if(button == btnRelatorioPac){  
+             configurarBotaoDireitolSaidaMouse(btnRelatorioPac, new ImageIcon("Icone - Agenda 187px.png"));
         
         // Botões do Menu Médico
         }else if(button==btnAdicionarMedico){

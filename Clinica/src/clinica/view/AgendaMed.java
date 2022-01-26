@@ -70,6 +70,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         comboMedico.setForeground(Color.GRAY);
         comboMedico.setRequestFocusEnabled(false);
         comboMedico.addItemListener(this);
+        comboMedico.setFocusable(false);
 
         
         l2 = new JLabel("Codigo de Médico:");

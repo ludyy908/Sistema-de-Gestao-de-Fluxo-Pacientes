@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class ConsultaDAO {
     private Connection conexao;
     private Consulta c;
+    private ResultSet rs;
     
     public ConsultaDAO(){
         
@@ -59,7 +60,7 @@ public class ConsultaDAO {
         try{
           
           PreparedStatement stmt = conexao.prepareStatement(query);         
-          ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
           
             while(rs.next()){
               c = new Consulta();
@@ -93,4 +94,31 @@ public class ConsultaDAO {
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
         } 
     }
+    
+    //ler da consulta de um determinado paciente
+    public ArrayList<Consulta> getDadosCons(int idPac){
+            
+            ArrayList<Consulta> cons = new ArrayList();
+
+        try{
+            String query = "Select numeroConsulta, nomeMed, data, hora from consulta where codPaciente = "+idPac;
+            PreparedStatement stmt = conexao.prepareStatement(query);
+             rs = stmt.executeQuery();
+             
+             rs.next();
+             c  = new Consulta();
+             c.setNrConsulta(rs.getInt("numeroConsulta"));
+             c.setMedico(rs.getString("nomeMed"));
+             c.setData(rs.getString("data"));
+             c.setHora(rs.getString("hora"));
+             
+             cons.add(c);
+
+        }catch(SQLException e){
+                System.out.println("Falha na leitura dos dados "+e.getMessage());
+        } 
+        
+        return cons;
+    }  
 }
+

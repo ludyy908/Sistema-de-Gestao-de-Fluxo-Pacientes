@@ -55,4 +55,9 @@ public class ConsultaControl {
         return id;
     }
     
+    //dados de cirurgia de um determinado paciente
+    public ArrayList<Consulta> getDadosCons(int cod){
+        return cd.getDadosCons(cod);
+    }
+    
 }
