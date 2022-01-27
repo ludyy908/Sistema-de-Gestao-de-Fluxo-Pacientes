@@ -94,7 +94,6 @@ public class ConsultaDAO {
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
         } 
     }
-<<<<<<< Updated upstream
     
     //ler da consulta de um determinado paciente
     public ArrayList<Consulta> getDadosCons(int idPac){
@@ -121,7 +120,7 @@ public class ConsultaDAO {
         
         return cons;
     }  
-=======
+
 
     public void inserirMedConsulta(int idMedico, int idConsulta) {
         String query = "INSERT INTO consulta_funcionario VALUES(?,?)";
@@ -139,6 +138,6 @@ public class ConsultaDAO {
         }
     }
     
->>>>>>> Stashed changes
+
 }
 

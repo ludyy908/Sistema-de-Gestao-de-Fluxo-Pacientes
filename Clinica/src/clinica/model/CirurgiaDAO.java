@@ -89,7 +89,7 @@ public class CirurgiaDAO {
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
         } 
     }
-<<<<<<< Updated upstream
+
    
     
     //Cirurgia de um determinado paciente
@@ -123,9 +123,9 @@ public class CirurgiaDAO {
         
         return cir;
     }  
-=======
-    
-    public void inserirMedCirurgia(int idMedico, int idCirurgia) {
+
+
+public void inserirMedCirurgia(int idMedico, int idCirurgia) {
         String query = "INSERT INTO medico_cirurgia VALUES(?,?)";
         try{
             try (PreparedStatement ps = conexao.prepareStatement(query)) {
@@ -140,5 +140,5 @@ public class CirurgiaDAO {
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
         }
     }
->>>>>>> Stashed changes
+
 }
