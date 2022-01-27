@@ -36,15 +36,15 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
         p2 = new JPanel();
         
           setModal(true);
-        setSize(630, 300);
-        setLocation(420, 200);
+        setSize(500, 300);
+        setLocation(450, 200);
         setTitle("Pacientes em Cuidados");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         p1.setLayout(null);
         p1.setBackground(Color.WHITE);
 
         l1 = new JLabel("Selecione o Nome do Enfermeiro:");
-        l1.setBounds(20, 20, 600, 30);
+        l1.setBounds(90, 20, 600, 30);
         l1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l1.setForeground(Color.GRAY);
 
@@ -64,36 +64,38 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
         comboEnf = new JComboBox(enf);
         //comboMedico.setSelectedItem(ob);
          comboEnf.setBackground(null);
-         comboEnf.setBounds(20,60,370,37);
-         comboEnf.setFont(new Font("Segoe UI", Font.BOLD, 15));
+         comboEnf.setBounds(90,60,270,37);
+         comboEnf.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         comboEnf.setForeground(Color.GRAY);
         comboEnf.setRequestFocusEnabled(false);
         comboEnf.addItemListener(this);
         
         l2 = new JLabel("Codigo de Enfermeiro:");
-        l2.setBounds(20, 100, 600, 30);
+        l2.setBounds(90, 110, 600, 30);
         l2.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l2.setForeground(Color.GRAY);
 
         t2 = new JTextField(50); 
         t2.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t2.setBounds(20,140,300,25);
+        t2.setBounds(90,140,300,25);
         t2.setFont(new Font("Segoe UI", Font.PLAIN, 17));
         
 
         b1 = new JButton("Cancelar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b1.setForeground(Color.WHITE);
-        b1.setBounds(110, 200, 175, 30);
+        b1.setBounds(50, 200, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
+        b1.setBorderPainted(false);
 
         b2 = new JButton("Seguinte");
         b2.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b2.setForeground(Color.WHITE);
-        b2.setBounds(330, 200, 175, 30);
+        b2.setBounds(270, 200, 175, 30);
         b2.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0)));
         b2.setBackground(new Color(0, 100, 0));
+        b2.setBorderPainted(false);
 
 
         b1.addActionListener(this);
@@ -119,8 +121,10 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == b1){           
-            //new Menu("enfermeiro");
-            dispose();
+            byte ab = 0;
+            ab = (byte) JOptionPane.showConfirmDialog(null, "Deseja Fechar A Lista?", "Message", JOptionPane.YES_NO_OPTION);
+            if (ab == JOptionPane.YES_OPTION) 
+                dispose();
             
         }
         
@@ -160,7 +164,7 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
         tb.setRowCount(5);
        
         tabela = new JTable(tb);
-        tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,70, 450,120);
@@ -174,6 +178,7 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
         b1.setFocusable(false);
+        b1.setBorderPainted(false);
        
        b1.addActionListener(this);
        

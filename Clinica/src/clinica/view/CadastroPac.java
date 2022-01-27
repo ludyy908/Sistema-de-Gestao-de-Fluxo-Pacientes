@@ -27,14 +27,16 @@ public class CadastroPac extends JDialog implements ActionListener{
     JLabel lNome, lIdade, lBi, lTel,lTelAlt, lNacionalidade,lApelido, lSexo, lEstado, imgPac, lEnd, lTitulo;
     JTextArea end;
     JComboBox comboEstado;
-    String[] estado = {"-- Estado Civil -- ", "Solteiro(a)", "Casado(a)", "Viuvo(a)"};
+    String[] estado = {"Estado Civil", "Solteiro(a)", "Casado(a)", "Viuvo(a)"};
     JRadioButton radioF, radioM; 
     ButtonGroup grupoRadio;
     JPanel painel1, painel2, painel3;
     JButton bSalvar, bClean,bCancelar,bClose;
     JSpinner idade;
     JProgressBar progresso;
-    int idPac;
+    int idPac = 0, idad; 
+    String nome, nacionalidade, apelido, endr, bi, estadoCivil, tel1, tel2, genero;
+    
     
 
     public CadastroPac(int idPac) {
@@ -124,7 +126,7 @@ public class CadastroPac extends JDialog implements ActionListener{
        
         lEstado = new JLabel("Estado Civil:");
         lEstado.setBounds(60,300,100,20);
-        lEstado.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        lEstado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lEstado.setForeground(Color.GRAY);
         painel1.add(lEstado);
         
@@ -251,67 +253,63 @@ public class CadastroPac extends JDialog implements ActionListener{
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Cadastro?", "Message", JOptionPane.YES_NO_OPTION);
             if(op == JOptionPane.YES_OPTION){
                 dispose();
-               // new Menu("paciente");
+               
             }
         }
         if(e.getSource() == bSalvar){
-            Random r = new Random();
+            try{
        
-            if (idPac == 0)
-            idPac = va.gerarCodigo();
-            String nome = tNome.getText();
-            String nacionalidade = tNacionalidade.getText();
-            String apelido = tApelido.getText();
-            String end =  tend.getText();
-            String bi = tBi.getText();
-            int idad = (Integer) idade.getValue();
-            String estadoCivil = comboEstado.getSelectedItem().toString();
-            String tel1 = tTel.getText();
-            String tel2 = tTelAlt.getText();
-            String genero;
-            
-           
-            if(radioF.isSelected()){
-                 genero = "Feminino";
-            } else{
-                genero = "Masculino";
-            }
-            
-            if(tNome.getText().isEmpty() || tApelido.getText().isEmpty()|| tBi.getText().isEmpty() ||   tTel.getText().isEmpty() || 
-                 tNacionalidade.getText().isEmpty() || tTelAlt.getText().isEmpty() || tend.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
-            }else{
-                //Chamar o metodo que grava os dados na base de dados
-                try{
-                    PacController pc = new PacController(idPac,nome,nacionalidade, apelido, genero, end, bi, idad,estadoCivil, tel1, tel2);
-                    
-                }catch (Exception ex) {
+                if (idPac == 0)
+                    idPac = va.gerarCodigo();
+                nome = va.validarString(3, 30,tNome.getText());
+                nacionalidade = va.validarString(3, 20, tNacionalidade.getText());
+                apelido = va.validarString(3, 30, tApelido.getText());
+                endr =  va.validarString(3, 30,tend.getText());
+                bi = va.validarString(3, 30,tBi.getText());
+                idad = (Integer) idade.getValue();
+                estadoCivil = comboEstado.getSelectedItem().toString();
+                tel1 = va.validarString(3, 30, tTel.getText());
+                tel2 = va.validarString(3, 30, tTelAlt.getText());
+
+
+                if(radioF.isSelected()){
+                     genero = "Feminino";
+                } else{
+                    genero = "Masculino";
+                }
+
+                if(tNome.getText().isEmpty() || tApelido.getText().isEmpty()|| tBi.getText().isEmpty() ||   tTel.getText().isEmpty() || 
+                     tNacionalidade.getText().isEmpty() || tTelAlt.getText().isEmpty() || tend.getText().isEmpty() || tNome.getText() == null
+                        || tApelido.getText() == null || tBi.getText() == null ||   tTel.getText() == null || 
+                     tNacionalidade.getText() == null || tTelAlt.getText() == null || tend.getText() == null)
+                    JOptionPane.showMessageDialog(null, "Dados validos. Introduza Novamente.");
+                else{
+                    new PacController(idPac,nome,nacionalidade, apelido, genero, endr, bi, idad,estadoCivil, tel1, tel2);
+                     JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
+
+                     tNome.setText("");
+                     tApelido.setText("");
+                     tBi.setText("");
+                     tTel.setText("");
+                     tNacionalidade.setText("");
+                     tTelAlt.setText(""); 
+                     tend.setText("") ;
+
+                     Object ob,SpinerIdade;
+                     ob = estado[0];                
+                     comboEstado.setSelectedItem(ob);
+
+                    if(radioF.isSelected())
+                         radioF.setSelected(false);
+                    else
+                         radioM.setSelected(false);
+
+                }
+
+        } catch (Exception ex) {
                       Logger.getLogger(CadastroPac.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
-                 
-                 tNome.setText("");
-                 tApelido.setText("");
-                 tBi.setText("");
-                 tTel.setText("");
-                 tNacionalidade.setText("");
-                 tTelAlt.setText(""); 
-                 tend.setText("") ;
-                 
-                 Object ob,SpinerIdade;
-                 ob = estado[0];                
-                 comboEstado.setSelectedItem(ob);
-                 //pinerIdade = "1";
-                 //idade.setValue(SpinerIdade);
-                 
-                 if(radioF.isSelected()){
-                     radioF.setSelected(false);
-                } else{
-                     radioM.setSelected(false);
-                }
-            }
-       
-        }
+          }
     }
 }
 

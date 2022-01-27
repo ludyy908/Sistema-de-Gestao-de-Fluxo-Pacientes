@@ -37,7 +37,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         p2 = new JPanel();
           
          setModal(true);
-        setSize(600, 300);
+        setSize(520, 300);
         setLocation(420, 200);
         setTitle("Agenda de Médico");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
@@ -45,7 +45,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         p1.setBackground(Color.WHITE);
 
         l1 = new JLabel("Selecione o Médico Para Ver a Agenda:");
-        l1.setBounds(20, 20, 500, 30);
+        l1.setBounds(90, 20, 500, 30);
         l1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l1.setForeground(Color.GRAY);
 
@@ -65,8 +65,8 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         comboMedico = new JComboBox(medico);
         //comboMedico.setSelectedItem(ob);
         comboMedico.setBackground(null);
-        comboMedico.setBounds(20,60,350,35);
-        comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        comboMedico.setBounds(90,60,270,35);
+        comboMedico.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboMedico.setForeground(Color.GRAY);
         comboMedico.setRequestFocusEnabled(false);
         comboMedico.addItemListener(this);
@@ -74,13 +74,13 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
 
         
         l2 = new JLabel("Codigo de Médico:");
-        l2.setBounds(20, 100, 500, 30);
+        l2.setBounds(90, 100, 500, 30);
         l2.setFont(new Font("Segoe UI", Font.BOLD, 16));
         l2.setForeground(Color.GRAY);
 
         t2 = new JTextField(50); 
         t2.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.gray));
-        t2.setBounds(20,140,300,25);
+        t2.setBounds(90,140,300,25);
         t2.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         
 
@@ -90,6 +90,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         b1.setBounds(50, 200, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
+        b1.setBorderPainted(false);
 
         b2 = new JButton("Seguinte");
         b2.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -97,7 +98,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         b2.setBounds(270, 200, 175, 30);
         b2.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0)));
         b2.setBackground(new Color(0, 100, 0));
-
+        b2.setBorderPainted(false);
 
         b1.addActionListener(this);
         b2.addActionListener(this);
@@ -148,7 +149,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         tb.setRowCount(20);
        
         tabela = new JTable(tb);
-        tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,70, 420,310);
@@ -161,6 +162,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         b1.setBounds(250, 405, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
+        b1.setBorderPainted(false);
        
        b1.addActionListener(this);
        
@@ -192,7 +194,10 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == b1){
-            dispose();           
+           int op = 0;
+            op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Cadastro?", "Message", JOptionPane.YES_NO_OPTION);
+            if(op == JOptionPane.YES_OPTION)
+                dispose();           
         }
         
         if(e.getSource() == b2){

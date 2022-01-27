@@ -7,24 +7,23 @@ package clinica.view;
 import clinica.controller.AltaPacienteControl;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import clinica.controller.MedController;
 import clinica.controller.PacController;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
+import clinica.controller.Validacao;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 
 /**
  *
  * @author Amarilda Chihepe
  */
-public class RegistoAlta extends JDialog implements ActionListener, ItemListener{
+public class RegistoAlta extends JDialog implements ActionListener, ItemListener, MouseListener{
     
     JLabel lId, ldata, lMedico, lTitulo, l1, lNomePac;
     JTextField tfId, tfMedico, tfPac;
@@ -37,6 +36,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
     JSpinner dia, sMes, sAno;
     MedController mc = new MedController();
     PacController pc = new PacController();
+    String data;
 
 
     public RegistoAlta() {
@@ -105,7 +105,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboMedico = new JComboBox(medico);
         comboMedico.setBackground(null);
         comboMedico.setBounds(70,320,270,36);
-        comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        comboMedico.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboMedico.setForeground(Color.GRAY);
         painel1.add(comboMedico);
         
@@ -117,7 +117,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboId = new JComboBox(pacId);
         comboId.setBackground(null);        
         comboId.setBounds(70, 110,130,31);
-        comboId.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        comboId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboId.setForeground(Color.GRAY);
         comboId.addItemListener(this);
         painel1.add(comboId);
@@ -126,29 +126,30 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         tfPac.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         tfPac.setBounds(70, 180,270,23); 
         tfPac.setFont(new Font("Segoe UI", Font.PLAIN,15));
+        tfPac.addMouseListener(this);
         painel1.add(tfPac);
         
         //Definr a data        
  
         dia = new JSpinner(new SpinnerNumberModel(1,1,31,1));
         dia.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        dia.setBounds(70,250,50,23);
-        dia.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        dia.setBounds(70,250,50,25);
+        dia.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         dia.setForeground(Color.GRAY);
         painel1.add(dia);
         
         sMes = new JSpinner(new SpinnerNumberModel(1,1,12,1));
         //sMes = new JSpinner(new SpinnerListModel(mes));
         sMes.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        sMes.setBounds(150,250,100,23);
-        sMes.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sMes.setBounds(150,250,100,25);
+        sMes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sMes.setForeground(Color.GRAY);
         painel1.add(sMes);
         
         sAno = new JSpinner(new SpinnerListModel(ano));
         sAno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        sAno.setBounds(270,250,70,23);
-        sAno.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sAno.setBounds(270,250,70,25);
+        sAno.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sAno.setForeground(Color.GRAY);
         
         painel1.add(sAno);
@@ -196,7 +197,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        Validacao va = new Validacao();
         if(e.getSource() == bCancel){
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Mensagem de Confirmacao", JOptionPane.YES_NO_OPTION);
@@ -208,30 +209,71 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         if(e.getSource() == bSalvar){
             
             int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
-                int codFunc, idAlta = 0;
-                String day = dia.getValue().toString(), nomeMed;
-                String mes = sMes.getValue().toString();
-                String ano = sAno.getValue().toString();
-                String data = ano+"-0"+mes+"-0"+day;
+            int codFunc, idAlta; String nomeMed;
+            idAlta = va.gerarCodigo();
+            
+            try { 
+                data = va.validarData(Integer.parseInt(dia.getValue().toString()),
+                        Integer.parseInt(sMes.getValue().toString()), Integer.parseInt(sAno.getValue().toString()));
+            } catch (IOException ex) {
+                Logger.getLogger(RegistoAlta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            nomeMed = comboMedico.getSelectedItem().toString();
+            codFunc = mc.getIdMed(nomeMed);
 
-                //SimpleDateFormat formato = new SimpleDateFormat("yyy/MM/dd");
-                //Date dataFormatada = (Date) formato.parse(data);
-                nomeMed = comboMedico.getSelectedItem().toString();
-                codFunc = mc.getIdMed(nomeMed);
-
-            if(tfPac.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
-            }else{
-                             
-                AltaPacienteControl apc = new AltaPacienteControl(0,data,codPac, codFunc);
+            if(tfPac.getText().isEmpty() || tfPac.getText() == null)
+                JOptionPane.showMessageDialog(null, "Por Favor, Preencha Todos Campos.");
+            else{          
+                new AltaPacienteControl(idAlta, data, codPac, codFunc);
                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
                 tfPac.setText("");
-                
             }
         }    
     }
 
     
+    @Override
+    public void mouseExited(MouseEvent e) { 
+            PacController pacControl = new PacController();
+            ArrayList <Integer> arr = new ArrayList <>();
+            
+            if (e.getSource()== tfPac){
+                comboId.removeAllItems();
+                if (tfPac.getText().isEmpty() == false){
+                    try {
+                        arr = pacControl.getCodPacientes(tfPac.getText());
+                        for(int i = 0; i < arr.size(); i++)
+                            comboId.addItem(arr.get(i));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(RegistoAlta.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+   
         
     
     

@@ -55,11 +55,11 @@ public class EnfActivo extends JDialog implements ActionListener {
         
         botao = new JButton("Fechar");
         botao.setBounds(550, 400, 175, 30);
-        botao.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0)));
+        botao.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         botao.setFont(new Font("Segoe UI", Font.BOLD, 16));
         botao.addActionListener(this);
         botao.setForeground(Color.white);
-        botao.setBackground(new Color(0, 100, 0));
+        botao.setBackground(new Color(255, 0, 0));
         botao.setBorderPainted(false);
         botao.setFocusable(false);
         painel3.add(botao); painel3.add(l1);

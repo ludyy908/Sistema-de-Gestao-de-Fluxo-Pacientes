@@ -5,9 +5,11 @@
 package clinica.view;
 
 import clinica.controller.EnfControl;
+import clinica.controller.Validacao;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 //import java.lang.System.Logger;
 //import java.lang.System.Logger.Level;
 import java.util.logging.Level;
@@ -29,7 +31,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     ButtonGroup g;
     Font f = new Font("Segoe UI",Font.BOLD,15);
     Random random;
-    
+    String nome,sexo, end,nacio, dpt, tel, categoria;
     BorderFactory br;
      String s[] = new String[2];
     
@@ -63,10 +65,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         
         p2.setBounds(0, 5, 800, 650);
         
-        caixa1 = new JComboBox(categ);
-        //caixa1.addItem("Auxiliar de Enfermagem");
-       // caixa1.addItem("Parteira");
-        //caixa1.addItem("Tecnico de enfermagem");
+        caixa1 = new JComboBox(new String[]{"Auxiliar de Enfermagem", "Parteira","Tecnico de enfermagem"});
         caixa1.setFocusable(false);
         caixa1.setForeground(Color.WHITE);
         caixa1.setBackground(null);
@@ -120,7 +119,8 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         b3.setBackground(new Color(0, 100, 0));
         b3.setBorderPainted(false);
         b3.setFocusable(false);
-
+        b3.addActionListener(this);
+        
         b2 = new JButton("Cancelar");
         b2.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b2.setForeground(Color.WHITE);
@@ -140,11 +140,6 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         r[1].setFocusable(false);
 
 
-        //r[0].addActionListener(this);
-        //r[1].addActionListener(this);
-
-        b2.addActionListener(this);
-        b3.addActionListener(this);
 
         p1.setBounds(0,0,870,75);
         p1.setBackground(new Color(8,84, 121));
@@ -172,8 +167,8 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         r[0].setForeground(Color.gray);
         r[1].setBounds(660, 130, 120, 20);r[1].setFont(f);
         r[1].setForeground(Color.gray);
-        b2.addActionListener(this);
-        b3.addActionListener(this);
+        
+        
 
         p1.add(l0);p2.add(r[0]); p2.add(r[1]);
         p2.add(l9); p2.add(l7);
@@ -201,12 +196,8 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String s = ""; 
         boolean b = false;
-        /*if(e.getSource() == b3){
-            if( e.getSource() == r[0]) {s = "Feminino"; b = true;}
-            else if( e.getSource() == r[1]) {s = "Masculino"; b = true;}
-            
-        }*/
-       
+        Validacao va = new Validacao();
+        
         if(e.getSource() == b2){
            int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Messagem de confimacao", JOptionPane.YES_NO_OPTION);
@@ -217,48 +208,59 @@ public class AdicionarEnf extends JDialog implements ActionListener {
             }
         }
         
-       if(e.getSource() == b3){  
+        if(e.getSource() == b3){  
                  
-               random = new Random();
-               
-               String nome,sexo, end,nacio, dpt, tel, categoria;
-               int id = random.nextInt(999);
-               
-               categoria = caixa1.getSelectedItem().toString();
-               nome = t2.getText();
-               nacio = t3.getText();
-               tel = t4.getText();
-               end = t5.getText();
-               dpt = t7.getText();
-
-                if(r[0].isSelected()){
-                     sexo = "Femenino";
-                } else{
-                     sexo = "Masculino";
-                }
-
-             if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t7.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
-              //else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");             
-             }else{
-                              
-                EnfControl ec = new EnfControl(id, nome, sexo,tel, end, nacio,dpt, categoria);
-                   
-                JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso!!!!");
-                t2.setText("");   
-                t3.setText("");  
-                t4.setText("");  
-                t5.setText("");  
-                t7.setText("");
+            try{
+                int id = va.gerarCodigo();
+                nome = va.validarString(3, 30, t2.getText());
+                nacio = va.validarString(3, 20, t3.getText());
+                tel = va.validarString(9, 9, t4.getText());
+                end = va.validarString(3, 40, t5.getText());
+                categoria = caixa1.getSelectedItem().toString();
+                dpt = va.validarString(3, 30, t7.getText());
                 
-                r[0].setSelected(false);
-                r[1].setSelected(false);
-                Object ob = categ[0];                
-                caixa1.setSelectedItem(ob);
-           }
+               
+                if(r[0].isSelected())
+                    sexo = "Feminino";
+                if(r[1].isSelected())
+                    sexo = "Masculino";
+                
+                if(r[0].isSelected() == false ||  r[1].isSelected() == false || t2.getText().isEmpty() 
+                        || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || 
+                        t7.getText().isEmpty() || t2.getText() == null || t3.getText() == null  || t4.getText() == null  ||t5.getText() == null || 
+                        t7.getText() == null )
+                    JOptionPane.showMessageDialog(null,"Dados Invalidos. Introduza Novamente.");
+                else{
+                    new EnfControl(id, nome, sexo,tel, end, nacio,dpt, categoria);
+                    JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso.");
+                    t2.setText("");
+                    t3.setText("");
+                    t4.setText("");
+                    t5.setText("");
+                    t7.setText("");
+                    r[0].setSelected(false);
+                    r[1].setSelected(false);
+                    caixa1.setSelectedIndex(0);
+                    
+                }          
+                   
+                } catch (IOException ex) {
+                Logger.getLogger(AdicionarMed.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            }
+        
+        if(e.getSource() == b2){
+           int op = 0;
+            op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Message", JOptionPane.YES_NO_OPTION);
+            if (op == JOptionPane.YES_OPTION) {
+                dispose();
+                
+            }
+        }
        }   
        
           
-    }
-
 }
+
+

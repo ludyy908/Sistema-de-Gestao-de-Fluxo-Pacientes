@@ -48,7 +48,7 @@ public class ListaPac extends JDialog implements ActionListener {
         tb.setRowCount(30);
        
         tabela = new JTable(tb);
-        tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         
@@ -61,6 +61,7 @@ public class ListaPac extends JDialog implements ActionListener {
         b1.setBounds(900, 500, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
+        b1.setBorderPainted(false);
        
        b1.addActionListener(this);
        

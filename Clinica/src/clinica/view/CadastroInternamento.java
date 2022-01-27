@@ -4,17 +4,15 @@
  */
 package clinica.view;
 
-import clinica.controller.EnfControl;
-import clinica.controller.InterControl;
-import clinica.controller.MedController;
-import clinica.controller.PacController;
+import clinica.controller.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.SimpleDateFormat;
+import java.awt.event.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 
@@ -22,12 +20,12 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  *
  * @author Amarilda Chihepe
  */
-public class CadastroInternamento extends JDialog implements ActionListener, ItemListener{
+public class CadastroInternamento extends JDialog implements ActionListener, ItemListener, MouseListener{
     
     JLabel lId, ldata, lMedico, lTitulo, imgPac, ldoenca, lNomePac;
     JTextField tfId, tfMedico,tfdoenca, tfPac;
     String [] mes = {"Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Stembro", "Outubro", "Novembro", "Dezembro"};
-    String[] ano = {"2021","2022"};
+    String[] ano = {"2022","2021"};
     JComboBox  comboMes, comboAno,comboId, comboMedico;
     String [] medico ,pacId; 
     JPanel painel1, painel2,painel3, painelPrinc;
@@ -36,6 +34,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
     MedController mc = new MedController();
     PacController pc = new PacController();
     EnfControl ec = new EnfControl();
+    String data, doenca;
 
     public CadastroInternamento() {
         if (this.getDefaultCloseOperation() == 0){
@@ -97,7 +96,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         comboId = new JComboBox(pacId);
         comboId.setBackground(null);        
         comboId.setBounds(70, 110,100,30);
-        comboId.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        comboId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboId.setForeground(Color.GRAY);
         comboId.addItemListener(this);
         painel1.add(comboId);
@@ -113,27 +112,28 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         tfPac.setBounds(70, 180,270,23); 
         tfPac.setFont(new Font("Segoe UI", Font.PLAIN,17));
         painel1.add(tfPac);
+        tfPac.addMouseListener(this);
         
         //Definr a data        
         dia = new JSpinner(new SpinnerNumberModel(1,1,31,1));
         dia.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        dia.setBounds(70,250,50,23);
-        dia.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        dia.setBounds(70,250,50,25);
+        dia.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         dia.setForeground(Color.GRAY);
         painel1.add(dia);
         
         //sMes = new JSpinner(new SpinnerListModel(mes));
         sMes = new JSpinner(new SpinnerNumberModel(1,1,12,1));
         sMes.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        sMes.setBounds(150,250,100,23);
-        sMes.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sMes.setBounds(150,250,100,25);
+        sMes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sMes.setForeground(Color.GRAY);
         painel1.add(sMes);
         
         sAno = new JSpinner(new SpinnerListModel(ano));
         sAno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        sAno.setBounds(270,250,70,23);
-        sAno.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        sAno.setBounds(270,250,70,25);
+        sAno.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sAno.setForeground(Color.GRAY);
         
         //Enfemeiro
@@ -147,7 +147,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         //tfMedico = new JTextField();
         //tfMedico.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         comboMedico.setBounds(70,320,270,30);
-        comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        comboMedico.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboMedico.setForeground(Color.GRAY);
         painel1.add(comboMedico);
         
@@ -205,6 +205,8 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Validacao va = new Validacao();
+        DoencaControl dc = new DoencaControl();
          if(e.getSource() == bCancel){
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Registo?", "Mensagem de Confirmacao", JOptionPane.YES_NO_OPTION);
@@ -214,24 +216,36 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         }
         if(e.getSource() == bSalvar){
             int idP, idF;
-                String data, doenca, nomeEnf;
+                String  nomeEnf;
                 
-                String day = dia.getValue().toString();
-                String mes = sMes.getValue().toString();
-                String ano = sAno.getValue().toString();
-                data = ano+"-0"+mes+"-0"+day;
+            try {
+                data = va.validarData(Integer.parseInt(dia.getValue().toString()), 
+                        Integer.parseInt(sMes.getValue().toString()), Integer.parseInt(sAno.getValue().toString()));
+            } catch (IOException ex) {
+                Logger.getLogger(CadastroInternamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
                 
                 idP = Integer.parseInt(comboId.getSelectedItem().toString());
-                doenca = tfdoenca.getText();
+            try {
+                doenca = va.validarString(3, 30, tfdoenca.getText());
+                int codDoe = dc.getDoenca(doenca);
+                String contag = "Nao";
+                
+                if (doenca != null && codDoe != 0)
+                    new DoencaControl (codDoe, doenca, contag);
+                    
+            } catch (IOException ex) {
+                Logger.getLogger(CadastroInternamento.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 
                 nomeEnf = comboMedico.getSelectedItem().toString();
                 idF = ec.getIdEnf(nomeEnf);
 
-            if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty()){
+            if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty() || tfPac.getText() == null || tfdoenca.getText() == null ){
                 JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.");
             }else{
-                                               
-                InterControl ic = new InterControl(data,idP, 0, idF, doenca);
+                new InterControl(data,idP, 0, idF, doenca);
 
                  JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");
                  tfdoenca.setText("");
@@ -247,6 +261,47 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
             int id = Integer.parseInt(comboId.getSelectedItem().toString());
             tfPac.setText(pc.getPacNomeInter(id));
         }
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) { 
+            PacController pacControl = new PacController();
+            ArrayList <Integer> arr = new ArrayList <>();
+            
+            if (e.getSource()== tfPac){
+                comboId.removeAllItems();
+                if (tfPac.getText().isEmpty() == false){
+                    
+                    try {
+                        arr = pacControl.getCodPacientes(tfPac.getText());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CadastroInternamento.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        for(int i = 0; i < arr.size(); i++)
+                            comboId.addItem(arr.get(i));
+                    
+                }
+            }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

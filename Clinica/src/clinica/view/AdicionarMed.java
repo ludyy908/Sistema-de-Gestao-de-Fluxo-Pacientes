@@ -204,20 +204,28 @@ public class AdicionarMed extends JDialog implements ActionListener{
                 end = va.validarString(3, 40, t5.getText());;
                 esp = va.validarString(3, 30, t6.getText());
                 dpt = va.validarString(3, 30, t7.getText());
-                if(r[0].isSelected()){
-                    sexo = "Femenino";
-                } else{
+                if(r[0].isSelected())
+                    sexo = "Feminino";
+                if(r[1].isSelected())
                     sexo = "Masculino";
-                }  if(r[0].isSelected() == false ||  r[1].isSelected() == false || t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t6.getText().isEmpty() || 
+                
+                if(r[0].isSelected() == false ||  r[1].isSelected() == false || t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t6.getText().isEmpty() || 
                         t7.getText().isEmpty() || t2.getText() == null || t3.getText() == null  || t4.getText() == null  ||t5.getText() == null  || t6.getText() == null  || 
                         t7.getText() == null ){
-                    JOptionPane.showMessageDialog(null,"Por Favor, Preencha os Espacos em Branco.");
+                    JOptionPane.showMessageDialog(null,"Dados Invalidos. Introduza Novamente.");
                     
                 }else {
                     
                     new MedController(id, nome, sexo,tel, end, nacio,dpt, esp);
                     JOptionPane.showMessageDialog(null,"Dados Salvos Com Sucesso.");
-                    dispose();
+                    t2.setText("");
+                    t3.setText("");
+                    t4.setText("");
+                    t5.setText("");
+                    t6.setText("");
+                    t7.setText("");
+                    r[0].setSelected(false);
+                    r[1].setSelected(false);
                     
                 }  
             } catch (IOException ex) {
