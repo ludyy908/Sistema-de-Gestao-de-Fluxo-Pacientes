@@ -18,7 +18,7 @@ public class CirurgiaControl {
     CirurgiaDAO cd  = new CirurgiaDAO();
     Validacao validar = new Validacao();
 
-    public CirurgiaControl(int idPaciente, String nomePac ,String nomeMed, String hora, String data, String estado,  int idCirurgia) 
+    public CirurgiaControl(int idPaciente, String nomePac ,String nomeMed, String hora, String data, String estado,  int idCirurgia, int idMedico) 
     {
         c  = new Cirurgia();
         c.setMedico(nomeMed);
@@ -30,6 +30,7 @@ public class CirurgiaControl {
         c.setEstado(estado);
    
         cd.inserirCirurgia(c);
+        cd.inserirMedCirurgia(idMedico, idCirurgia);
     }
     
     public CirurgiaControl(){ }

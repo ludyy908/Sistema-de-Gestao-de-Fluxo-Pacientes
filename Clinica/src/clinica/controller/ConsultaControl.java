@@ -19,7 +19,7 @@ public class ConsultaControl {
     ConsultaDAO cd  = new ConsultaDAO();
     Validacao validar = new Validacao();
 
-    public ConsultaControl(int idPaciente, String nomePac ,String nomeMed, String hora, String data, String estado,  int idConsulta) 
+    public ConsultaControl(int idPaciente, String nomePac ,String nomeMed, String hora, String data, String estado,  int idConsulta, int idMedico) 
     {
         c  = new Consulta();
         c.setMedico(nomeMed);
@@ -31,6 +31,7 @@ public class ConsultaControl {
         c.setEstado(estado);
    
         cd.inserirConsulta(c);
+        cd.inserirMedConsulta(idMedico, idConsulta);
     }
     
     public ConsultaControl(){ }
@@ -54,6 +55,9 @@ public class ConsultaControl {
                 cd.cancelarCirurgia(id);
         return id;
     }
+
+   
+    
     
     //dados de cirurgia de um determinado paciente
     public ArrayList<Consulta> getDadosCons(int cod){

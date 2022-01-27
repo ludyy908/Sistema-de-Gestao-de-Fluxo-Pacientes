@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import clinica.controller.PacController;
 import clinica.controller.Dados;
+import clinica.controller.Validacao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,10 +34,11 @@ public class CadastroPac extends JDialog implements ActionListener{
     JButton bSalvar, bClean,bCancelar,bClose;
     JSpinner idade;
     JProgressBar progresso;
+    int idPac;
     
 
-    public CadastroPac() {
-  
+    public CadastroPac(int idPac) {
+        this.idPac = idPac;
         setTitle ("Cadastro de Paciente");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage()); 
         if (this.getDefaultCloseOperation() == 0){
@@ -243,6 +245,7 @@ public class CadastroPac extends JDialog implements ActionListener{
     ///Eventos
     @Override
     public void actionPerformed(ActionEvent e) {
+        Validacao va = new Validacao();
         if(e.getSource() == bCancelar){
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o Cadastro?", "Message", JOptionPane.YES_NO_OPTION);
@@ -254,8 +257,8 @@ public class CadastroPac extends JDialog implements ActionListener{
         if(e.getSource() == bSalvar){
             Random r = new Random();
        
-            
-            int id = r.nextInt(999), index;
+            if (idPac == 0)
+            idPac = va.gerarCodigo();
             String nome = tNome.getText();
             String nacionalidade = tNacionalidade.getText();
             String apelido = tApelido.getText();
@@ -280,7 +283,7 @@ public class CadastroPac extends JDialog implements ActionListener{
             }else{
                 //Chamar o metodo que grava os dados na base de dados
                 try{
-                    PacController pc = new PacController(id,nome,nacionalidade, apelido, genero, end, bi, idad,estadoCivil, tel1, tel2);
+                    PacController pc = new PacController(idPac,nome,nacionalidade, apelido, genero, end, bi, idad,estadoCivil, tel1, tel2);
                     
                 }catch (Exception ex) {
                       Logger.getLogger(CadastroPac.class.getName()).log(Level.SEVERE, null, ex);

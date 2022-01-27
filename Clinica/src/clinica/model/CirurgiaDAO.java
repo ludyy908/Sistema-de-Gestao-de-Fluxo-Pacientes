@@ -24,7 +24,7 @@ public class CirurgiaDAO {
     }
     
     public void inserirCirurgia(Cirurgia c){
-        String query = "INSERT INTO cirugia VALUES(?,?,?,?,?,?,?)";
+        String query = "INSERT INTO cirurgia VALUES(?,?,?,?,?,?,?)";
         try{
             PreparedStatement ps = conexao.prepareStatement(query);
             ps.setInt(1, c.getNrCirurgia());
@@ -83,12 +83,13 @@ public class CirurgiaDAO {
         String query = "UPDATE cirurgia SET estado = 'Cancelado' WHERE numeroCirurgia = "+id;
         try{
             PreparedStatement stmt = conexao.prepareStatement(query);
-            stmt.executeQuery();
+            stmt.executeUpdate();
         }
         catch(SQLException e){
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
         } 
     }
+<<<<<<< Updated upstream
    
     
     //Cirurgia de um determinado paciente
@@ -122,4 +123,22 @@ public class CirurgiaDAO {
         
         return cir;
     }  
+=======
+    
+    public void inserirMedCirurgia(int idMedico, int idCirurgia) {
+        String query = "INSERT INTO medico_cirurgia VALUES(?,?)";
+        try{
+            try (PreparedStatement ps = conexao.prepareStatement(query)) {
+                ps.setInt(1, idCirurgia);
+                ps.setInt(2, idMedico);
+                
+                ps.executeUpdate();
+            }
+            conexao.close();
+        }
+        catch(SQLException sqle){
+            System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
+        }
+    }
+>>>>>>> Stashed changes
 }

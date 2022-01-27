@@ -29,6 +29,7 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
     private JComboBox tipo;
     private JTable tabela;
     private JButton b1;
+    private DefaultTableModel tb;
     
     public ListaReg(){
         
@@ -42,17 +43,17 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
         tipo = new JComboBox(new String[]{"Consulta", "Cirurgia"});
         tipo.setBackground(Color.WHITE);
         tipo.setBounds(20, 50, 270,25);
-        
+        tipo.addItemListener(this);
         
         String [] nomeColuna = {"Codigo","Data","Hora","Nome do Paciente",
             "codigo do Paciente", "Nome do Medico", "Estado"};
         
-        DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
+        tb = new DefaultTableModel(null,nomeColuna);
         tabela = new JTable(tb);
         tabela.setBounds(20, 80, 820, 610);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80,820,430);
-        inserirTabela(tb);
+        inserirTabela(tb, tipo.getSelectedItem());
         
        
         b1 = new JButton("Fechar");
@@ -61,6 +62,7 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
         b1.setBounds(570, 530, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
+        b1.setBorderPainted(false);
         b1.addActionListener(this);
         
         pn1 = new JPanel();
@@ -85,22 +87,36 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
         
     }
     
-    public void inserirTabela(DefaultTableModel modelo){
+    public void inserirTabela(DefaultTableModel modelo, Object tipo){
+        ConsultaControl cc = new ConsultaControl();
+        CirurgiaControl cic = new CirurgiaControl();
+        modelo.setNumRows(0);
+        
+       if ("Cirurgia" == tipo){
+            cir = cic.getDados();
+            for(int i = 0; i < cir.size(); i++)
+                modelo.addRow(new String[]{String.valueOf(cir.get(i).getNrCirurgia()),
+                                     cir.get(i).getData(),
+                                     cir.get(i).getHora(),
+                                     cir.get(i).getPaciente(),
+                                     String.valueOf(cir.get(i).getidPaciente()),
+                                     cir.get(i).getMedico(),
+                                     cir.get(i).getEstado()});
        
-       modelo.setNumRows(0);
-       ConsultaControl cc = new ConsultaControl();
-       con = cc.getDados();
-       for(int i = 0; i < cc.getDados().size(); i++){
-           
-           modelo.addRow(new String[]{String.valueOf(con.get(i).getNrConsulta()),
-                                con.get(i).getData(),
-                                con.get(i).getHora(),
-                                con.get(i).getPaciente(),
-                                String.valueOf(con.get(i).getidPaciente()),
-                                con.get(i).getMedico(),
-                                con.get(i).getEstado()});
-                             
+       
        }
+                
+       if ("Consulta" == tipo){
+            con = cc.getDados();
+            for(int i = 0; i < con.size(); i++)
+                modelo.addRow(new String[]{String.valueOf(con.get(i).getNrConsulta()),
+                                     con.get(i).getData(),
+                                     con.get(i).getHora(),
+                                     con.get(i).getPaciente(),
+                                     String.valueOf(con.get(i).getidPaciente()),
+                                     con.get(i).getMedico(),
+                                     con.get(i).getEstado()});
+        }                
        
    }  
 
@@ -109,10 +125,9 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
         if(e.getSource()==b1){
             int op = 0;
             op = JOptionPane.showConfirmDialog(null, "Deseja Fechar a Lista?", "Message", JOptionPane.YES_NO_OPTION);
-            if (op == JOptionPane.YES_OPTION) {
+            if (op == JOptionPane.YES_OPTION) 
                 dispose();
-               
-            }
+             
         }
         
     }
@@ -120,16 +135,10 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
    
 
     @Override
-    public void itemStateChanged(ItemEvent e) {
-        CirurgiaControl cc = new CirurgiaControl();
-        ConsultaControl cn = new ConsultaControl();
-        if (e.getSource() == this.tipo){
-            if ("Cirurgia".equals(this.tipo.getSelectedItem().toString()))
-                cir = cc.getDados();
-            if ("Consulta".equals(this.tipo.getSelectedItem().toString()))
-                con = cn.getDados();
-        }       
-            
+    public void itemStateChanged (ItemEvent e) {
+        if (e.getSource() == tipo)
+            inserirTabela(tb, tipo.getSelectedItem());
+        
     }
    
 }

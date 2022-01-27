@@ -3,11 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Updated upstream
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/GitHub/Clinica/Clinica/src/clinica/Clinica.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/GitHub/Clinica/Clinica/src/clinica/model/ConsultaDAO.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/GitHub/Clinica/Clinica/src/clinica/model/BDconexao.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/GitHub/Clinica/Clinica/src/clinica/model/CirurgiaDAO.java</file>
             <file>file:/C:/Users/Amarilda%20Chihepe/Documents/GitHub/Clinica/Clinica/src/clinica/view/Registo.java</file>
+=======
+            <file>file:/C:/Users/Ludmila%20Mucavele/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/Clinica/src/clinica/controller/Dados.java</file>
+            <file>file:/C:/Users/Ludmila%20Mucavele/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/Clinica/src/clinica/controller/PacController.java</file>
+            <file>file:/C:/Users/Ludmila%20Mucavele/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/Clinica/src/clinica/controller/DoencaControl.java</file>
+            <file>file:/C:/Users/Ludmila%20Mucavele/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/Clinica/src/clinica/view/Registo.java</file>
+            <file>file:/C:/Users/Ludmila%20Mucavele/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/Clinica/src/clinica/model/PacienteDAO.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>

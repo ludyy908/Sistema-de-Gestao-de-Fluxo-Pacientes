@@ -178,7 +178,61 @@ public class MedicoDAO {
         }catch(SQLException es){
             System.out.println("Falha na leitura dos dados "+es.getMessage());
         }   
-    
+        
     }
+    
+    public ArrayList<Integer> getCodMed(String nome){
+    ArrayList<Integer> codigo = new ArrayList<>();
+        
+        try{
+            String query = "select m.codFuncionario from funcionario f, medico m where f.nome = '"+nome+"' and f.codFuncionario = m.codFuncionario";
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+                codigo.add(rs.getInt("codFuncionario"));
+                codigo.trimToSize();
+            }
+        }
+        catch(SQLException e){
+             System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }
+        return codigo;
+    }
+    
+    public ArrayList<String> getHoras (int cod){
+        ArrayList<String> horas = new ArrayList<>();
+        try{
+            String query = "select Hora from agenda where codFuncionario ='"+cod+"'";
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+                horas.add(rs.getString("Hora"));
+            }
+        }
+        catch(SQLException e){
+             System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }
+        return horas;
+    }
+    
+    public ArrayList<String> getData (int cod){
+        ArrayList<String> data = new ArrayList<>();
+        try{
+            String query = "select Data from agenda where codFuncionario ='"+cod+"'";
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+                data.add(rs.getString("Data"));
+            }
+        }
+        catch(SQLException e){
+             System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }
+        return data;
+    }
+    
     
 }

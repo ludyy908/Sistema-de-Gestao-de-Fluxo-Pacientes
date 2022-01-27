@@ -7,6 +7,7 @@ import clinica.controller.SecretarioControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import clinica.controller.Validacao;
 /**
  *
  * @author Ludmila Mucavele
@@ -15,7 +16,7 @@ import java.awt.event.*;
 //Nvo Menu
 
 public class Menu implements MouseListener, ActionListener {
-    
+    final Validacao va = new Validacao();
     final private JFrame frame;
     private JButton home, registo, paciente, medico, enfermagem, logOut1, logOut2;
     private JButton btnPaciente, btnRegisto, btnMedico, btnEnfermeiro;
@@ -25,7 +26,7 @@ public class Menu implements MouseListener, ActionListener {
     private JButton btnMarcar, btnCancelar, btnListar;
     private JPanel painelEsquerdo, leftPanel, rightPanel, painelPrincipal, painelPaciente, painelMedico, painelEnfermeiro, painelRegisto;
    // Login g = new Login();
-    Menu(){
+    public Menu(){
         frame = new JFrame("Menu");
         frame.setSize(1200, 700);
         frame.setIconImage((new ImageIcon(("iconeprincipal.png"))).getImage());
@@ -226,7 +227,7 @@ public class Menu implements MouseListener, ActionListener {
         usuario.setBounds(42, 45, 190, 187);
         
         JLabel linha = new JLabel(new ImageIcon("long Line.png"), 2);
-        linha.setBounds(27, 227, 200, 25);
+        linha.setBounds(27, 227, 200, 30);
         
         JLabel id = new JLabel("ID:");
         id.setForeground(Color.white);
@@ -637,7 +638,7 @@ public class Menu implements MouseListener, ActionListener {
         }
         
         if(e.getSource()== btnAdicionarPaciente){
-            new CadastroPac();
+            new CadastroPac(va.gerarCodigo());
             //frame.dispose();                          
         }
         

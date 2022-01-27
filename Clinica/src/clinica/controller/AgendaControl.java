@@ -21,9 +21,15 @@ public class AgendaControl {
     }
       
     //Inserir dados na Ag
-    public AgendaControl(String d, String hora, String tipo){
+    public AgendaControl(int idAgenda, int codF, String data, String hora, String tipo){
+        a = new Agenda();
+        a.setIdAgenda(idAgenda);
+        a.setCodFuncionar(codF);
+        a.setData(data);
+        a.setHora(hora);
+        a.setTipoReg(tipo);
+        aDao.inserirAgenda(a);
        
-    
     }
     
     public ArrayList<Agenda> getAgenda(int codMed){

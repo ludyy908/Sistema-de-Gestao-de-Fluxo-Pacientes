@@ -88,12 +88,13 @@ public class ConsultaDAO {
         String query = "UPDATE consulta SET estado = 'Cancelado' WHERE numeroConsulta = "+id;
         try{
             PreparedStatement stmt = conexao.prepareStatement(query);
-            stmt.executeQuery();
+            stmt.executeUpdate();
         }
         catch(SQLException e){
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
         } 
     }
+<<<<<<< Updated upstream
     
     //ler da consulta de um determinado paciente
     public ArrayList<Consulta> getDadosCons(int idPac){
@@ -120,5 +121,24 @@ public class ConsultaDAO {
         
         return cons;
     }  
+=======
+
+    public void inserirMedConsulta(int idMedico, int idConsulta) {
+        String query = "INSERT INTO consulta_funcionario VALUES(?,?)";
+        try{
+            try (PreparedStatement ps = conexao.prepareStatement(query)) {
+                ps.setInt(1, idConsulta);
+                ps.setInt(2, idMedico);
+                
+                ps.executeUpdate();
+            }
+            conexao.close();
+        }
+        catch(SQLException sqle){
+            System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
+        }
+    }
+    
+>>>>>>> Stashed changes
 }
 

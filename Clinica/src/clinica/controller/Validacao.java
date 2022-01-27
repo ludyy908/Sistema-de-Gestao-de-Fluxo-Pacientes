@@ -1,8 +1,11 @@
 
 package clinica.controller;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import java.util.Random;
 
 public class Validacao {
     
@@ -47,8 +50,15 @@ public class Validacao {
         String data; int dia, mes, ano;
         dia = validarInt(1,31,d);
         mes = validarInt(1, 12, m);
-        ano = validarInt(2021, 2022, a);
-        data = dia+"-"+mes+"-"+ano;
+        ano = validarInt(2022, 2023, a);
+        data = ano+"-"+mes+"-"+dia;
+        if (mes < 10 && dia < 10)
+            data = ano+"-0"+mes+"-0"+dia;
+        if (mes < 10 && dia > 9)
+            data = ano+"-0"+mes+"-"+dia;
+        if (mes > 9 && dia < 10)
+            data = ano+"-"+mes+"-0"+dia;
+            
         return data;
     }
     
@@ -71,6 +81,26 @@ public class Validacao {
                 tel[i] = validarString(9, 9,t2);
         return tel; 
         
+    }
+    
+    public String validarDataAlta(String inicio, String fim) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dInicio = sdf.parse(inicio);
+        Date dFim = sdf.parse(fim);            
+        if (dFim.after(dInicio) == false)
+            JOptionPane.showMessageDialog(null, "Data de Alta Invalida.");
+        else
+            return fim;
+        return null;
+    }
+             
+    public int gerarCodigo(){
+        int cod;
+        Random r = new Random();
+        do {
+            cod = r.nextInt(999);
+        } while (cod < 100);
+        return cod;
     }
     
 }    

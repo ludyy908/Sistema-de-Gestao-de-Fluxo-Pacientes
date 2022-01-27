@@ -67,4 +67,31 @@ public class MedController {
        return md.getMedId(n);
     }
     
+    public ArrayList<Integer> getCodMed(String m){
+        return md.getCodMed(m);
+    }
+
+    public String verificarDataAgenda(int cod, String d, String h) {
+       ArrayList <String> data = md.getData(cod);
+       ArrayList <String> hora;
+       for (int i = 0; i < data.size(); i++)
+           if (data.get(i).equalsIgnoreCase(d)){
+                hora = verificarHoraAgenda(cod);
+                for (int j = 0; j < hora.size(); j++)
+                    if (hora.get(j).equalsIgnoreCase(h))
+                        return null;
+           }
+        return d;
+    }
+
+
+    public ArrayList<String> verificarHoraAgenda(int cod) {
+        ArrayList<String> hora = new ArrayList<>();
+        hora = md.getHoras(cod);
+        return hora;
+    }
+
+    
+    
+    
 }
