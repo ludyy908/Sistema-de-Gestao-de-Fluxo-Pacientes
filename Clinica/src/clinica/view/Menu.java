@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import clinica.controller.Validacao;
+import clinica.model.Secretario;
 /**
  *
  * @author Ludmila Mucavele
@@ -17,6 +18,8 @@ import clinica.controller.Validacao;
 
 public class Menu implements MouseListener, ActionListener {
     final Validacao va = new Validacao();
+    SecretarioControl sc = new SecretarioControl();
+    private Secretario dados = new Secretario();
     final private JFrame frame;
     private JButton home, registo, paciente, medico, enfermagem, logOut1, logOut2;
     private JButton btnPaciente, btnRegisto, btnMedico, btnEnfermeiro;
@@ -25,6 +28,7 @@ public class Menu implements MouseListener, ActionListener {
     private JButton btnAdicionarEnfermeiro, btnEnfermeiroActivo, btnListaEnfermeiro, btnPacienteDeEnfermeiro;
     private JButton btnMarcar, btnCancelar, btnListar;
     private JPanel painelEsquerdo, leftPanel, rightPanel, painelPrincipal, painelPaciente, painelMedico, painelEnfermeiro, painelRegisto;
+    private JLabel idUser, userName,userEmail, userJob;
    // Login g = new Login();
     public Menu(){
         frame = new JFrame("Menu");
@@ -214,13 +218,9 @@ public class Menu implements MouseListener, ActionListener {
     
     private void menuPrincipal(){
         
-        SecretarioControl sc = new SecretarioControl();
-         String [] dados = sc.dadosSecretario(202001).toArray(new String [sc.dadosSecretario(202001).size()]);
-         //dificuldades em pegar a palavra passe introduzida pelo secretario que faz login
-        
         JLabel usuario = new JLabel("Dados Pessoais", new ImageIcon("Icon 2 - User.png"), JLabel.CENTER);
         usuario.setFont(new Font("Segoe UI", 3, 24));
-        usuario.setForeground(new Color(255, 255, 255));;
+        usuario.setForeground(new Color(255, 255, 255));
         usuario.setHorizontalTextPosition(JLabel.CENTER);
         usuario.setVerticalTextPosition(JLabel.BOTTOM);
         usuario.setIconTextGap(15);
@@ -233,21 +233,21 @@ public class Menu implements MouseListener, ActionListener {
         id.setForeground(Color.white);
         id.setFont(new Font("Segoe UI", 1, 14));
         id.setBounds(27, 270, 62, 20);
-        JLabel idUser = new JLabel("xxxx");
+        idUser = new JLabel("xxxx");
         idUser.setForeground(Color.lightGray);
         idUser.setFont(new Font("Segoe UI", 3, 14));
         idUser.setBounds(100, 270, 130, 20);
-        idUser.setText(dados[0]);
+        idUser.setText(String.valueOf(dados.getIdFuncionario()));
         
         JLabel name = new JLabel("Nome:");
         name.setForeground(Color.white);
         name.setFont(new Font("Segoe UI", 1, 14));
         name.setBounds(27, 308, 62, 20);
-        JLabel userName = new JLabel("Nome Próprio");
+        userName = new JLabel("Nome Próprio");
         userName.setForeground(Color.lightGray);
         userName.setFont(new Font("Segoe UI", 3, 14));
         userName.setBounds(100, 308, 130, 20);
-        userName.setText(dados[1]);
+        userName.setText(dados.getNomeFunc());
         
         /*JLabel surname = new JLabel("Apelido:");
         surname.setForeground(Color.white);
@@ -262,21 +262,21 @@ public class Menu implements MouseListener, ActionListener {
         cargo.setForeground(Color.white);
         cargo.setFont(new Font("Segoe UI", 1, 14));        
         cargo.setBounds(27, 384, 62, 20);
-        JLabel userJob = new JLabel("Cargo Ocupado");
+        userJob = new JLabel("Cargo Ocupado");
         userJob.setForeground(Color.lightGray);
         userJob.setFont(new Font("Segoe UI", 3, 14));
         userJob.setBounds(100, 384, 130, 20);
-        userJob.setText(dados[3]);
+        userJob.setText(dados.getCargo());
         
         JLabel email = new JLabel("E-mail:");
         email.setForeground(Color.white);
         email.setFont(new Font("Segoe UI", 1, 14));        
         email.setBounds(27, 346, 62, 20);
-        JLabel userEmail = new JLabel("E-mail do Usuário");
+        userEmail = new JLabel("E-mail do Usuário");
         userEmail.setForeground(Color.lightGray);
         userEmail.setFont(new Font("Segoe UI", 3, 14));
         userEmail.setBounds(100, 346, 200, 20);
-        userEmail.setText(dados[2]);
+        userEmail.setText(dados.getEmail());
         
         logOut1 = new JButton("Log Out", new ImageIcon("Icone - LogOut 48px.png"));
         logOut1.setBounds(53, 566, 148, 58);
@@ -726,7 +726,15 @@ public class Menu implements MouseListener, ActionListener {
             //frame.dispose();
         }
     }
-
+    
+    public void setSecretario(int codigo){
+        dados = sc.dadosSecretario(codigo);
+        userEmail.setText(dados.getEmail());
+        userName.setText(dados.getNomeFunc());
+        userJob.setText(dados.getCargo());
+        idUser.setText(String.valueOf(dados.getIdFuncionario()));
+        
+    }
     // Método que define o comportamento dos botões ao serem "envadidos" pelo Mouse
     @Override
     public void mouseEntered(MouseEvent e) {

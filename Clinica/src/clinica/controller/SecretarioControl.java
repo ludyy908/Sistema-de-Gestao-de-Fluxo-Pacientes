@@ -7,7 +7,7 @@ package clinica.controller;
 
 import clinica.model.Secretario;
 import clinica.model.SecretarioDAO;
-import java.util.ArrayList;
+
 
 /**
  *
@@ -18,19 +18,10 @@ public class SecretarioControl {
     public SecretarioControl(){ 
    }
     
-    public  ArrayList<String> dadosSecretario(int codigo){
+    public  Secretario dadosSecretario(int codigo){
         SecretarioDAO sd = new SecretarioDAO();
-        ArrayList<String> lista = new ArrayList<String>();
-        ArrayList<Secretario> sec = sd.getSecreatrio(codigo);
+        Secretario sec = sd.getSecretario(codigo);
         
-        for(int i=0; i<sec.size();i++){
-            lista.add(String.valueOf(sec.get(i).getIdFuncionario()));
-            lista.add(sec.get(i).getNomeFunc()); 
-            lista.add(sec.get(i).getEmail());
-            lista.add(sec.get(i).getCargo());
-           
-        }
-        
-        return lista;
+        return sec;
     }
 }

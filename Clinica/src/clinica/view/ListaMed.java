@@ -33,7 +33,7 @@ public class ListaMed extends JDialog implements ActionListener{
    }
      public void MedConCir(String tipo){ //tipo vem como parametro no metodo. pode ser Cirurgia ou Consulta
         setSize(650, 600);
-        setLocation(105, 55);
+        setLocation(400, 80);
         setTitle("Lista de Medicos");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Medicos Com "+tipo +":");
@@ -43,16 +43,18 @@ public class ListaMed extends JDialog implements ActionListener{
         
         
         this.tipo = tipo;
-        String [] nomeColuna = {"Codigo de Funcionario", "Nome","Especialidade","Departamento",("Codigo de "+tipo)};
+        String [] nomeColuna = {"Codigo de Funcionario", "Nome","Especialidade"};
         DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
-        tb.setColumnCount(5);
+        tb.setColumnCount(3);
         tb.setRowCount(30);
-       
+        inserirDadosTabelaTipo(tb, this.tipo);
+                
         tabela = new JTable(tb);
-        tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80, 590,400);
+        
         
         b1 = new JButton("Fechar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -60,25 +62,25 @@ public class ListaMed extends JDialog implements ActionListener{
         b1.setBounds(430, 500, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
-       
-       b1.addActionListener(this);
-       
-       p1.setBackground(Color.WHITE);
-       p1.add(l0); p1.add(scrol); p1.add(b1);
-       add(p1);
-       if (this.getDefaultCloseOperation() == 0){
-            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            new Menu("medico");
-        }
-       setResizable(false);
-       setVisible(true);
+        b1.setBorderPainted(false);
+        b1.addActionListener(this);
+
+        p1.setBackground(Color.WHITE);
+        p1.add(l0); p1.add(scrol); p1.add(b1);
+        add(p1);
+        if (this.getDefaultCloseOperation() == 0){
+             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+             new Menu("medico");
+         }
+        setResizable(false);
+        setVisible(true);
     }
 
     
     
     public void getMedicos(){
         setSize(1020, 600);
-        setLocation(150, 55);
+        setLocation(160, 115);
         setTitle("Lista de Medicos");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Medicos na Clinica:");
@@ -92,9 +94,10 @@ public class ListaMed extends JDialog implements ActionListener{
         DefaultTableModel tb = new DefaultTableModel(null,nomeColuna);
         tb.setColumnCount(8);
         tb.setRowCount(30);
+        
        
         tabela = new JTable(tb);
-        tabela.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tabela.setForeground(Color.GRAY);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80, 960,350);
@@ -106,18 +109,18 @@ public class ListaMed extends JDialog implements ActionListener{
         b1.setBounds(730, 500, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
         b1.setBackground(new Color(255, 0, 0));
-       
-       b1.addActionListener(this);
-       
-       p1.setBackground(Color.WHITE);
-       p1.add(l0); p1.add(scrol); p1.add(b1);
-       add(p1);
-       if (this.getDefaultCloseOperation() == 0){
-            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            new Menu("medico");
-        }
-       setVisible(true);
-       setResizable(false);
+        b1.setBorderPainted(false);
+        b1.addActionListener(this);
+
+        p1.setBackground(Color.WHITE);
+        p1.add(l0); p1.add(scrol); p1.add(b1);
+        add(p1);
+        if (this.getDefaultCloseOperation() == 0){
+             this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+             new Menu("medico");
+         }
+        setVisible(true);
+        setResizable(false);
        
     }
     
@@ -135,6 +138,18 @@ public class ListaMed extends JDialog implements ActionListener{
                                         lista.get(i).getMorada(),
                                         lista.get(i).getNacionalidade(),
                                         lista.get(i).getDepartamento(),
+                                        lista.get(i).getEspecialidade()});
+        }
+   
+   }
+    
+    public void inserirDadosTabelaTipo(  DefaultTableModel modelo,String tipo ){
+       modelo.setNumRows(0);
+       MedController mc = new MedController();
+       ArrayList<Medico> lista = mc.getMedTipo(tipo);
+       for(int i=0;i<lista.size();i++){
+           modelo.addRow(new String[]{String.valueOf(lista.get(i).getIdFuncionario()),
+                                        lista.get(i).getNomeFunc(), 
                                         lista.get(i).getEspecialidade()});
         }
    

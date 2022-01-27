@@ -31,7 +31,7 @@ public class ConsultaControl {
         c.setEstado(estado);
    
         cd.inserirConsulta(c);
-        cd.inserirMedConsulta(idMedico, idConsulta);
+        cd.inserirMedConsulta(idConsulta, idMedico);
     }
     
     public ConsultaControl(){ }
@@ -46,13 +46,19 @@ public class ConsultaControl {
     
     //validacao do id e verificacao de existencia de id antes de remover
     public int cancelar(int id) throws IOException {
-        ArrayList <Consulta> lista = getDados();
+        ArrayList <Consulta> lista = getDados(); int c = 0;
         id = validar.validarInt(100, 999, id);
         if (id == 0)
             return id;
-        for (int i = 0; i < lista.size(); i++)
-            if (lista.get(i).getNrConsulta() == id)
+        for (int i = 0; i < lista.size(); i++){
+            c++;
+            if (lista.get(i).getNrConsulta() == id){
                 cd.cancelarCirurgia(id);
+                return id;
+            }
+            if ( c == lista.size())
+                return 0;
+        }
         return id;
     }
 

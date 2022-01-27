@@ -4,6 +4,7 @@
  */
 package clinica.view;
 import clinica.model.LoginDAO;
+import clinica.controller.LoginControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -115,7 +116,7 @@ public class Login implements ActionListener, FocusListener, MouseListener {
     
     @Override
     public void actionPerformed(ActionEvent e){
-        LoginDAO lg = new LoginDAO();
+        LoginControl lg = new LoginControl();
         JButton b = (JButton) e.getSource();
         String p = null;
          
@@ -126,10 +127,9 @@ public class Login implements ActionListener, FocusListener, MouseListener {
             p = new String(pf1.getPassword());
             if(p.isEmpty() == false){
                 if ((t1.getText()).isEmpty() == false){
-                    if (lg.getFuncionario(p).equalsIgnoreCase(t1.getText())){
+                    if (lg.getFuncionario(p, t1.getText()) == 1)
                             janelaLogin.dispose();
-                            new Menu();
-                    }
+                    
                     else
                         JOptionPane.showMessageDialog(janelaLogin, "Codigo ou Nome de Funcionario Invalido.");
                 }
@@ -139,7 +139,6 @@ public class Login implements ActionListener, FocusListener, MouseListener {
             else 
                     if(new String(pf1.getPassword()).isBlank())
                         JOptionPane.showMessageDialog(janelaLogin, "Introduza o Codigo de Funcionario.");
-            
          }        
                   
     }

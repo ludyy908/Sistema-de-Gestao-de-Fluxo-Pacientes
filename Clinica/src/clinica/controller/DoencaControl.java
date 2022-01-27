@@ -29,8 +29,8 @@ public class DoencaControl {
 
     public int getDoenca(String nomeD) {
         Validacao va = new Validacao();
-        int cod = 0, c = 1;
-        ArrayList<String> nomes = new ArrayList<>(dDao.getNome());
+        int cod = 0, c = 0;
+        ArrayList<String> nomes = dDao.getNome();
         
         for (int i = 0; i < nomes.size(); i++){
             if (nomes.get(i).equalsIgnoreCase(nomeD))

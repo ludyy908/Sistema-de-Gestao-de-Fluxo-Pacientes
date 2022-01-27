@@ -38,7 +38,7 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
-INSERT INTO `agenda` VALUES (12,202002,'2022-01-20','15:30:00','Consulta');
+INSERT INTO `agenda` VALUES (12,202002,'2022-01-20','15:30:00','Consulta'),(122,112,'2022-02-01','12:00:00','Cirurgia'),(378,112,'2022-01-11','10:00:00','Cirurgia'),(412,202002,'2022-01-03','08:00:00','Consulta'),(507,112,'2022-06-05','12:00:00','Consulta'),(586,112,'2022-01-01','11:00:00','Consulta'),(633,112,'2022-01-04','01:00:00','Consulta'),(738,202002,'2022-02-03','10:00:00','Consulta'),(921,112,'2022-04-03','15:30:00','Cirurgia'),(949,112,'2022-03-03','14:00:00','Cirurgia');
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `cirurgia` (
 
 LOCK TABLES `cirurgia` WRITE;
 /*!40000 ALTER TABLE `cirurgia` DISABLE KEYS */;
-INSERT INTO `cirurgia` VALUES (666662,808,'Ludimila','Kelvin','2020-01-28','01:30:00','Activa');
+INSERT INTO `cirurgia` VALUES (0,854,'Ludmila',NULL,NULL,NULL,NULL),(424,808,'Ludimila','Ana Maria da Graca','2022-04-03','15:30:00','Activo'),(443,854,'Ludmila','Ana Maria da Graca','2022-01-11','10:00:00','Activo'),(569,808,'Ludimila','Ana Maria da Graca','2022-03-03','14:00:00','Activo'),(760,808,'Ludimila','Ana Maria da Graca','2022-02-01','12:00:00','Activo'),(666662,808,'Ludimila','Kelvin','2020-01-28','01:30:00','Activa');
 /*!40000 ALTER TABLE `cirurgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-INSERT INTO `consulta` VALUES (222,808,'Ludimila','Kelvin','2020-01-31','15:30:00','Activa');
+INSERT INTO `consulta` VALUES (153,854,'Ludmila','Ana Maria da Graca','2022-01-01','11:00:00','Activo'),(222,808,'Ludimila','Kelvin','2020-01-31','15:30:00','Activa'),(271,123,'Lina','Celestino','2022-01-03','08:00:00','Activo'),(431,854,'Ludmila','celestino','2022-02-03','10:00:00','Cancelado'),(832,854,'Ludmila','Ana Maria da Graca','2022-01-04','01:00:00','Cancelado'),(841,854,'Ludmila','Ana Maria da Graca','2022-06-05','12:00:00','Cancelado');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,8 +140,6 @@ DROP TABLE IF EXISTS `consulta_funcionario`;
 CREATE TABLE `consulta_funcionario` (
   `numeroConsulta` int NOT NULL,
   `codFuncionario` int NOT NULL,
-  `Data` date NOT NULL,
-  `Hora` time NOT NULL,
   PRIMARY KEY (`numeroConsulta`,`codFuncionario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -152,7 +150,7 @@ CREATE TABLE `consulta_funcionario` (
 
 LOCK TABLES `consulta_funcionario` WRITE;
 /*!40000 ALTER TABLE `consulta_funcionario` DISABLE KEYS */;
-INSERT INTO `consulta_funcionario` VALUES (600001,202001,'0000-00-00','00:00:00'),(600002,202001,'0000-00-00','00:00:00'),(600003,202005,'0000-00-00','00:00:00'),(600004,202001,'0000-00-00','00:00:00'),(600005,202001,'0000-00-00','00:00:00'),(600006,202005,'0000-00-00','00:00:00');
+INSERT INTO `consulta_funcionario` VALUES (112,841),(202002,271),(600001,202001),(600002,202001),(600003,202005),(600004,202001),(600005,202001),(600006,202005);
 /*!40000 ALTER TABLE `consulta_funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +175,7 @@ CREATE TABLE `doenca` (
 
 LOCK TABLES `doenca` WRITE;
 /*!40000 ALTER TABLE `doenca` DISABLE KEYS */;
-INSERT INTO `doenca` VALUES (333331,'Catarata','N Contagio'),(333332,'AVC','N Contagio'),(333333,'Diabetes','N Contagio'),(333334,'Hipertensao','N Contagio'),(333335,'Glaucoma','Contagiosa'),(333336,'Cancro','N Contagio'),(333337,'Acidente','N Contagio');
+INSERT INTO `doenca` VALUES (585,'Escoliose','Nao'),(333331,'Catarata','N Contagio'),(333332,'AVC','N Contagio'),(333333,'Diabetes','N Contagio'),(333334,'Hipertensao','N Contagio'),(333335,'Glaucoma','Contagiosa'),(333336,'Cancro','N Contagio'),(333337,'Acidente','N Contagio');
 /*!40000 ALTER TABLE `doenca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,7 +329,7 @@ CREATE TABLE `medico_cirurgia` (
 
 LOCK TABLES `medico_cirurgia` WRITE;
 /*!40000 ALTER TABLE `medico_cirurgia` DISABLE KEYS */;
-INSERT INTO `medico_cirurgia` VALUES (666662,202002),(666661,202003);
+INSERT INTO `medico_cirurgia` VALUES (443,112),(569,112),(666662,202002),(666661,202003);
 /*!40000 ALTER TABLE `medico_cirurgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,7 +362,7 @@ CREATE TABLE `paciente` (
 
 LOCK TABLES `paciente` WRITE;
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` VALUES (123,'Lina ','Femenino','Malhazine',7,'314848448484','Casado(a)','MOz','5555555','55555','Chihepe'),(210,'aaaa','Masculino','aaa',4,'aaa','Solteiro(a)','aaa','aaa','aaaa','aaaa'),(263,'aaaaa','Masculino','aaaaaa',15,'aaaaa','Solteiro(a)','aaaaa','11111','22222','aaaaa'),(418,'bbb','Masculino','bfff',5,'111111','Solteiro(a)','cccc','Masculino','Masculino','aaaa'),(755,'aaa','Masculino','aaa',5,'a','Solteiro(a)','aaa','a','a','aaaaa'),(763,'Americo','Masculino','Matola',8,'123654','Solteiro(a)','Russa','789654','45698','Julio'),(808,'Ludimila','Femenino','Mavotas',5,'789654123','Casado(a)','Russa','1265','79895','Mucevel'),(555551,'Antonio','M','Magude',0,'','','',NULL,NULL,''),(555552,'Jonas','M','Xinavane',0,'','','',NULL,NULL,''),(555553,'Marta','F','Motaze',0,'','','',NULL,NULL,''),(555554,'Maria','F','Duku',0,'','','',NULL,NULL,''),(555555,'Esperanca','F','Santo Antonio',0,'','','',NULL,NULL,''),(555556,'Cristina','F','Makupe',0,'','','',NULL,NULL,''),(555557,'Lucas','M','Mahotas',0,'','','',NULL,NULL,''),(555558,'Larissa','F','Aeroporto',0,'','','',NULL,NULL,'');
+INSERT INTO `paciente` VALUES (123,'Lina ','Femenino','Malhazine',7,'314848448484','Casado(a)','MOz','5555555','55555','Chihepe'),(210,'aaaa','Masculino','aaa',4,'aaa','Solteiro(a)','aaa','aaa','aaaa','aaaa'),(263,'aaaaa','Masculino','aaaaaa',15,'aaaaa','Solteiro(a)','aaaaa','11111','22222','aaaaa'),(418,'bbb','Masculino','bfff',5,'111111','Solteiro(a)','cccc','Masculino','Masculino','aaaa'),(755,'aaa','Masculino','aaa',5,'a','Solteiro(a)','aaa','a','a','aaaaa'),(763,'Americo','Masculino','Matola',8,'123654','Solteiro(a)','Russa','789654','45698','Julio'),(808,'Ludimila','Femenino','Mavotas',5,'789654123','Casado(a)','Russa','1265','79895','Mucevel'),(854,'Ludmila','Femenino','Mahotas',19,'123456789','Solteiro(a)','Mocambicana','123456789','234567891','Mucavele'),(555551,'Antonio','M','Magude',0,'','','',NULL,NULL,''),(555552,'Jonas','M','Xinavane',0,'','','',NULL,NULL,''),(555553,'Marta','F','Motaze',0,'','','',NULL,NULL,''),(555554,'Maria','F','Duku',0,'','','',NULL,NULL,''),(555555,'Esperanca','F','Santo Antonio',0,'','','',NULL,NULL,''),(555556,'Cristina','F','Makupe',0,'','','',NULL,NULL,''),(555557,'Lucas','M','Mahotas',0,'','','',NULL,NULL,''),(555558,'Larissa','F','Aeroporto',0,'','','',NULL,NULL,'');
 /*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -514,9 +512,17 @@ CREATE TABLE `secretario` (
 
 LOCK TABLES `secretario` WRITE;
 /*!40000 ALTER TABLE `secretario` DISABLE KEYS */;
-INSERT INTO `secretario` VALUES (202001,'Amarilda','amarildachihepe@gmail.com','Secretario',1);
+INSERT INTO `secretario` VALUES (202001,'Amarilda','amarildachihepe@gmail.com','Secretario',1),(202010,'Ludmila Mucavele','ludmila.mucavele@boasaude.com','Secretario',2);
 /*!40000 ALTER TABLE `secretario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'clinicapoo'
+--
+
+--
+-- Dumping routines for database 'clinicapoo'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -527,4 +533,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27  1:39:59
+-- Dump completed on 2022-01-27 20:22:41

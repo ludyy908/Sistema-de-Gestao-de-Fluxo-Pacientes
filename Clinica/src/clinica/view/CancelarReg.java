@@ -10,35 +10,36 @@ import clinica.model.Consulta;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.Month;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Ludmila Mucavele
  */
-public class CancelarReg  extends JDialog implements ActionListener, ItemListener {
+public class CancelarReg  extends JDialog implements ActionListener, ItemListener, MouseListener {
     
     private ArrayList<Cirurgia> cir;
     private ArrayList<Consulta> con;
-    private JLabel l1, l2, nome, dataC, horaC, pontos ;
+    private JLabel l1, l2, codigo, dataC, horaC, pontos ;
     private JTextField  tf1;
-    private JSpinner mes, ano, dia, horas, minutos;
     private JPanel p1, p2;
     private JComboBox tipo;
     private JButton b1, b2;
     
     public CancelarReg(){
         
-          setModal(true);
+        setModal(true);
         setTitle("Cancelar Registo");
-        setSize (500, 500); setLocation (300, 150);
+        setSize (500, 350); setLocation (400, 180);
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
        
 
         p1 = new JPanel ();
         p1.setLayout(null);
         p1.setBackground(new Color(8,84, 121));
-        p1.setBounds(0, 0, 700, 75);
+        p1.setBounds(0, 0, 500, 75);
         
 
         l1 = new JLabel("Cancelar Consulta/Cirurgia"); 
@@ -48,8 +49,9 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
         
         p1.add(l1);
     
-        p2 = new JPanel (); p2.setLayout(null);
-        p2.setBounds(0, 75, 700, 425);
+        p2 = new JPanel (); 
+        p2.setLayout(null);
+        p2.setBounds(0, 75, 500, 275);
         p2.setBackground(Color.WHITE);
         
         l2 = new JLabel ("Tipo de Registo que Deseja Cancelar:");
@@ -60,103 +62,48 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
         tipo = new JComboBox(new String[]{"Consulta", "Cirurgia"});
         tipo.setBackground(Color.WHITE);
         tipo.setEditable(true);
-        tipo.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        tipo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tipo.setForeground(Color.GRAY);
         tipo.setBounds(70, 50, 270,25);
+        tipo.setSelectedIndex(0);
+        tipo.addItemListener(this);
 
-        nome = new JLabel ("Nome do Paciente que Deseja Cancelar a Cirurgia:");
-        nome.setBounds(70, 85, 300, 30);
-        nome.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        nome.setForeground(Color.GRAY);
+        codigo = new JLabel ("Codigo de Consulta no Qual Deseja Cancelar:");
+        codigo.setBounds(70, 85, 350, 30);
+        codigo.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        codigo.setForeground(Color.GRAY);
 
         tf1 = new JTextField(20);
         tf1.setBounds(70, 115, 300, 30);
         tf1.setForeground(Color.GRAY);
-        tf1.setText("Introduza o Nome Completo");
+        tf1.setText("Introduza o Codigo");
         tf1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         tf1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
+        tf1.addMouseListener(this);
 
-        dataC = new JLabel ("Data:");
-        dataC.setBounds(70, 150, 300, 30);
-        dataC.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        dataC.setForeground(Color.GRAY);
-
-        String [] anoo = new String[2];
-        anoo[0]= "2021"; anoo[1]="2022";
-        SpinnerListModel listaAno = new SpinnerListModel(anoo);
-        ano = new JSpinner (listaAno);
-        ano.setBounds(250, 180, 60, 30);
-        ano.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        ano.setForeground(Color.GRAY);
-        ano.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-
-        Month[] mess = Month.values();
-        SpinnerListModel listaMes = new SpinnerListModel(mess);
-        mes = new JSpinner (listaMes);
-        mes.setBounds(130, 180, 100, 30);
-        mes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        mes.setForeground(Color.GRAY);
-        mes.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-
-        String[] diaa = new String [31];
-        for (int i = 0; i < 31; i++)
-            diaa[i]= Integer.toString(i+1);
-        SpinnerListModel listaDia = new SpinnerListModel(diaa);
-        dia = new JSpinner (listaDia);
-        dia.setBounds(70, 180, 60, 30);
-        dia.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        dia.setForeground(Color.GRAY);
-        dia.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray)); 
-
-        horaC = new JLabel ("Horas:");
-        horaC.setBounds(70, 215, 300, 30);
-        horaC.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        horaC.setForeground(Color.GRAY);
-
-        String[] hora = new String [24];
-        for (int i = 0; i < 24; i++)
-            hora[i]= Integer.toString(i);
-        SpinnerListModel listaHora = new SpinnerListModel(hora);
-        horas = new JSpinner (listaHora);
-        horas.setBounds(70, 245, 60, 30);
-        horas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        horas.setForeground(Color.GRAY);
-        horas.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-
-        String[] minuto = new String [60];
-        for (int i = 0; i < 60; i++)
-            minuto[i]= Integer.toString(i);
-        SpinnerListModel listaMinuto = new SpinnerListModel(minuto);
-        minutos = new JSpinner (listaMinuto);
-        minutos.setBounds(130, 245, 60, 30);
-        minutos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        minutos.setForeground(Color.GRAY);
-        minutos.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        minutos.setName("Minutos");
-
-        pontos = new JLabel (":");
-        pontos.setBounds(120,245, 100, 30);
-        pontos.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        pontos.setForeground(Color.GRAY);
+        
 
         b1 = new JButton("Cancelar");
         b1.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b1.setForeground(Color.WHITE);
-        b1.setBounds(50, 320, 175, 30);
+        b1.setBounds(50, 180, 175, 30);
         b1.setBorder(BorderFactory.createLineBorder(new Color(255, 0, 51)));
+        b1.setBorderPainted(false);
         b1.setBackground(new Color(255, 0, 0));
+        b1.addActionListener(this);
 
         b2 = new JButton("Seguinte");
         b2.setFont(new Font("Segoe UI", Font.BOLD, 16));
         b2.setForeground(Color.WHITE);
-        b2.setBounds(270, 320, 175, 30);
+        b2.setBounds(270, 180, 175, 30);
         b2.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0)));
+        b2.setBorderPainted(false);
         b2.setBackground(new Color(0, 100, 0));
+        b2.addActionListener(this);
 
 
-        p2.add(horaC); p2.add(horas); p2.add(minutos); p2.add(dataC);
-        p2.add(dia); p2.add(mes); p2.add(ano); p2.add(pontos); p2.add(b1);
-        p2.add(b2);  p2.add(nome); p2.add(tf1); p2.add(l2); p2.add(tipo);
+        
+        p2.add(b1); p2.add(b2);  p2.add(codigo); p2.add(tf1); p2.add(l2); p2.add(tipo);
 
         Container c = getContentPane();
         c.setLayout(null);
@@ -173,6 +120,8 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
     }
         @Override
         public void actionPerformed(ActionEvent e) {
+            CirurgiaControl cc = new CirurgiaControl();
+            ConsultaControl cn = new ConsultaControl();
             if(e.getSource() == b1){
                 dispose();
 
@@ -182,11 +131,31 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
                 if(tf1.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "Por Favor, Preencha os Espacos em Branco.");
                 else {
+                    if (tipo.getSelectedItem() == "Cirurgia"){
+                        try {
+                            if (cc.cancelar(Integer.parseInt(tf1.getText()))!= 0){
+                                JOptionPane.showMessageDialog(null, tipo.getSelectedItem() +" Cancelada Com Sucesso.");
+                                dispose();
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "Cirurgia Nao Indentificada.");
+                        } catch (IOException ex) {
+                            Logger.getLogger(CancelarReg.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    if (tipo.getSelectedItem() == "Consulta"){
+                        try {
+                            if (cn.cancelar(Integer.parseInt(tf1.getText()))!= 0){
+                                JOptionPane.showMessageDialog(null, tipo.getSelectedItem() +" Cancelada Com Sucesso.");
+                                dispose();
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "Consulta Nao Indentificada.");
+                        } catch (IOException ex) {
+                            Logger.getLogger(CancelarReg.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     
-                    dispose();
-                    JOptionPane.showMessageDialog(null, "Dados Actualizados Com Sucesso.");
-                    
-
                 }
             }
         }
@@ -197,14 +166,44 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
-        CirurgiaControl cc = new CirurgiaControl();
-        ConsultaControl cn = new ConsultaControl();
+        
         if (e.getSource() == this.tipo){
-            if ("Cirurgia".equals(this.tipo.getSelectedItem().toString()))
-                cir = cc.getDados();
-            if ("Consulta".equals(this.tipo.getSelectedItem().toString()))
-                con = cn.getDados();
+            if ("Cirurgia".equals(this.tipo.getSelectedItem().toString())){
+                codigo.setText("Codigo de Cirurgia no Qual Deseja Cancelar:");
+               
+            }
+            if ("Consulta".equals(this.tipo.getSelectedItem().toString())){
+                codigo.setText("Codigo de Consulta no Qual Deseja Cancelar:");
+            }
         }
+    }
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == tf1){
+            tf1.setText("");
+        }
+        
+    } 
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

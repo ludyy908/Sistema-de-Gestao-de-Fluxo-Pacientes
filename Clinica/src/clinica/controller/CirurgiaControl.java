@@ -30,7 +30,7 @@ public class CirurgiaControl {
         c.setEstado(estado);
    
         cd.inserirCirurgia(c);
-        cd.inserirMedCirurgia(idMedico, idCirurgia);
+        cd.inserirMedCirurgia(idCirurgia, idMedico);
     }
     
     public CirurgiaControl(){ }
@@ -44,13 +44,19 @@ public class CirurgiaControl {
     }
     
     public int cancelar(int id) throws IOException {
-        ArrayList <Cirurgia> lista = getDados();
+        ArrayList <Cirurgia> lista = getDados(); int c = 0;
         id = validar.validarInt(100, 999, id);
         if (id == 0)
             return id;
-        for (int i = 0; i < lista.size(); i++)
-            if (lista.get(i).getNrCirurgia() == id)
+        for (int i = 0; i < lista.size(); i++){
+            c++;
+            if (lista.get(i).getNrCirurgia() == id){
                 cd.cancelarCirurgia(id);
+                return id;
+            }
+            if ( c == lista.size())
+                return 0;
+        }
         return id;
     }
     

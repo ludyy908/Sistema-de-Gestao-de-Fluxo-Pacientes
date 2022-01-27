@@ -195,7 +195,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     }
    
     private void InterfaceReg1(){
-        setSize (500, 375); setLocation (300, 150);
+        setSize (500, 375); setLocation (450, 180);
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         setTitle("Registo");
         setModal(true);
@@ -285,7 +285,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     
     private void InterfaceReg2(){
         
-        setSize (400,285); setLocation (650, 300);
+        setSize (400,285); setLocation (700, 400);
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         setTitle("Registo");
         setModal(true);
@@ -312,11 +312,12 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         contagio.setForeground(Color.GRAY);
         
         radio = new ButtonGroup(); 
+        
         rS = new JRadioButton("Sim");
         rN = new JRadioButton("Nao");
-        rS.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        rS.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         rN.setForeground(Color.GRAY);
-        rS.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        rS.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         rN.setForeground(Color.GRAY);
         rS.setBounds(20,110,100,30);
         rN.setBounds(90,110,100,30);
@@ -367,7 +368,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)  {
         Validacao va = new Validacao();
         PacController pacControl = new PacController();
         MedController medControl = new MedController();
@@ -375,10 +376,6 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         ConsultaControl con;
         CirurgiaControl cir;
         DoencaControl doenca = new DoencaControl();
-        
-        
-         
-        
         
         
         
@@ -393,8 +390,12 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         
         if (e.getSource() == b2)
             if(p2.isShowing() == true){
-                try {
-                    nomeM = va.validarString(3, 30, tf1.getText());
+                
+            try {
+                nomeM = va.validarString(3, 30, tf1.getText());
+            } catch (IOException ex) {
+                Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
+            }
                     if(this.codigoM.getSelectedItem() == null)
                         codMed = 0;
                     else
@@ -407,11 +408,15 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
                         for (int i = 0; i < mess.length; i++)
                             if (mes.getValue().toString().equalsIgnoreCase(mess[i]))
                                 m = i+1;
-                        data = va.validarData(Integer.parseInt(dia.getValue().toString()), 
-                            m, Integer.parseInt(ano.getValue().toString()));
+                        try {
+                            data = va.validarData(Integer.parseInt(dia.getValue().toString()),
+                                    m, Integer.parseInt(ano.getValue().toString()));
+                        
                         hora = va.validarHora(Integer.parseInt(horas.getValue().toString()), 
                             Integer.parseInt(minutos.getValue().toString()));
-
+                        } catch (IOException ex) {
+                                                    Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
                         if (medControl.verificarDataAgenda(codMed, data, hora) == null)
                             JOptionPane.showMessageDialog(null, "Medico Nao Disponivel Nesta Hora.");
                         else{
@@ -433,9 +438,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
                             }
                         }
                     }
-                } catch (NullPointerException|IOException ex) {
-                    Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
-                  }
+               
                                 
             }        
                          
@@ -443,32 +446,31 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         if(e.getSource() == b5){
             try {
                 nomed = va.validarString(3, 30, tf3.getText());
+            } catch (IOException ex) {
+                Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 codDoe = doenca.getDoenca(nomed);
-                
+                contag = null;
                 if (rS.isSelected())
                     contag = "Sim";
                 if (rN.isSelected())
                     contag = "Nao";
                 
-                if(nomed.isEmpty() || contag.isEmpty())
+                if(nomed == null|| contag == null)
                     JOptionPane.showMessageDialog(null, "Introduza os Dados de Doenca.");
                 else{
                     if (codDoe != 0)
-                        doenca = new DoencaControl (codDoe, nomed, contag);
-                    
+                        new DoencaControl (codDoe, nomed, contag);
                     p4.setVisible(false);
                     codC = va.gerarCodigo();
-                    nrC = new JLabel("Numero de "+tipo.getSelectedItem().toString()+": "+codC);
                     InterfaceReg1();
-                    
+                    nrC.setText("Numero de "+tipo.getSelectedItem().toString()+": "+codC);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(Registo.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         
         if (e.getSource() == b6){
             p2.setVisible(true); p1.setVisible(true);
+            setSize(500, 590); setLocation (400, 150);
             p4.setVisible(false);
         }
                     
@@ -514,6 +516,17 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
             }
             
             }
+        
+        if (e.getSource() == b3){
+            if (tipo.getSelectedItem() == "Cirurgia"){
+                p4.setVisible(true);
+                setSize(400, 285); setLocation (450, 180);
+            }
+            else{
+                p1.setVisible(true); p2.setVisible(true);
+                setSize(500, 590); setLocation (400, 150);
+            }
+        }
             
             
             

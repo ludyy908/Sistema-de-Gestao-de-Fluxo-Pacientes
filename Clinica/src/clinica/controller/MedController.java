@@ -91,6 +91,14 @@ public class MedController {
         return hora;
     }
 
+    public ArrayList <Medico> getMedTipo (String tipo){
+        ArrayList <Medico> lista = null; 
+        if (tipo.equalsIgnoreCase("Cirurgia"))
+            lista = md.getMedicos(tipo);
+        if (tipo.equalsIgnoreCase("Consulta"))
+            lista = md.getMedicos(tipo);
+    return lista;
+    }
     
     
     

@@ -39,7 +39,7 @@ public class CirurgiaDAO {
             ps.executeUpdate();
             
             ps.close();
-            conexao.close();
+            
         }
         catch(SQLException sqle){
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
@@ -84,6 +84,12 @@ public class CirurgiaDAO {
         try{
             PreparedStatement stmt = conexao.prepareStatement(query);
             stmt.executeUpdate();
+            
+            query = "DELETE from medico_cirurgia where numeroCirurgia =" + id;
+            stmt = conexao.prepareStatement(query);
+            stmt.executeUpdate();
+            
+            stmt.close();
         }
         catch(SQLException e){
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
@@ -115,7 +121,7 @@ public class CirurgiaDAO {
              
              cir.add(c);
             //cir.add(enf);
-             
+            stmt.close();
 
         }catch(SQLException e){
                 System.out.println("Falha na leitura dos dados "+e.getMessage());
@@ -133,8 +139,9 @@ public void inserirMedCirurgia(int idMedico, int idCirurgia) {
                 ps.setInt(2, idMedico);
                 
                 ps.executeUpdate();
+                ps.close();
             }
-            conexao.close();
+            
         }
         catch(SQLException sqle){
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());

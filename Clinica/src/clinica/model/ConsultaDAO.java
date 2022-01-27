@@ -44,7 +44,7 @@ public class ConsultaDAO {
             ps.executeUpdate();
             
             ps.close();
-            conexao.close();
+            
         }
         catch(SQLException sqle){
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
@@ -89,6 +89,13 @@ public class ConsultaDAO {
         try{
             PreparedStatement stmt = conexao.prepareStatement(query);
             stmt.executeUpdate();
+            
+            query = "DELETE from consulta_funcionario where numeroConsulta =" + id;
+            stmt = conexao.prepareStatement(query);
+            stmt.executeUpdate();
+            
+            
+            stmt.close();
         }
         catch(SQLException e){
             System.out.println("Falha na actualizacao dos dados "+e.getMessage());
@@ -122,16 +129,16 @@ public class ConsultaDAO {
     }  
 
 
-    public void inserirMedConsulta(int idMedico, int idConsulta) {
+    public void inserirMedConsulta( int idConsulta, int idMedico) {
         String query = "INSERT INTO consulta_funcionario VALUES(?,?)";
         try{
-            try (PreparedStatement ps = conexao.prepareStatement(query)) {
+            PreparedStatement ps = conexao.prepareStatement(query);
                 ps.setInt(1, idConsulta);
                 ps.setInt(2, idMedico);
                 
                 ps.executeUpdate();
-            }
-            conexao.close();
+            
+            ps.close();
         }
         catch(SQLException sqle){
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());

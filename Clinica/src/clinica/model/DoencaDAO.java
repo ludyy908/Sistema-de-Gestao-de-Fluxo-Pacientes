@@ -29,9 +29,10 @@ public class DoencaDAO {
                 ps.setString(2, d.getNome());
                 ps.setString(3, d.getContagio());
                 
-                ps.executeQuery();
+                ps.executeUpdate();
+                ps.close();
             }
-            conexao.close();
+            
         }
         catch(SQLException sqle){
             System.out.println("Problemas na insercao de dados no banco de dados "+sqle.getMessage());
@@ -51,6 +52,7 @@ public class DoencaDAO {
                     nomes.add(rs.getString("nome"));
                 }
                 rs.close();
+                stmt.close();
             }
        
        }catch(SQLException e){

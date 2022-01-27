@@ -146,7 +146,7 @@ public class CadastroPac extends JDialog implements ActionListener{
        //Definicao dos radios
         grupoRadio = new ButtonGroup(); 
         radioM = new JRadioButton("Masculino");
-        radioF = new JRadioButton("Femenino");
+        radioF = new JRadioButton("Feminino");
         radioF.setFont(new Font("Segoe UI", Font.BOLD, 15));
         radioF.setForeground(Color.GRAY);
         radioM.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -272,7 +272,7 @@ public class CadastroPac extends JDialog implements ActionListener{
             
            
             if(radioF.isSelected()){
-                 genero = "Femenino";
+                 genero = "Feminino";
             } else{
                 genero = "Masculino";
             }

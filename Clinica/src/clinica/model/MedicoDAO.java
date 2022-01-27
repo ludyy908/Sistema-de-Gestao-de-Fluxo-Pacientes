@@ -165,21 +165,65 @@ public class MedicoDAO {
      
      }
     
-    public void medCir(){
+    public ArrayList<Medico> getMedicos(String tipo){
+        ArrayList <Medico> lista = new ArrayList<>();
+        if (tipo.equalsIgnoreCase("Cirurgia")){
+            String query = "select medico_cirurgia.codFuncionario, nome, especializacao "
+                    + "from medico, funcionario, medico_cirurgia where "
+                    + "medico.codFuncionario = medico_cirurgia.codFuncionario "
+                    + "and medico_cirurgia.codFuncionario = funcionario.codFuncionario";
+            try{ 
+                PreparedStatement stmt = conexao.prepareStatement(query);         
+                rs = stmt.executeQuery();
+
+                while(rs.next()){
+                    Medico m = new Medico();
+                    m.setIdFuncionatio(rs.getInt("codFuncionario"));
+                    m.setNomeFunc(rs.getString("nome"));
+                    m.setEspecialidade(rs.getString("especializacao"));
+                    
+                   lista.add(m);
+                }
+              rs.close();
+              stmt.close();
+
+
+            }catch(SQLException es){
+                System.out.println("Falha na leitura dos dados "+es.getMessage());
+            } 
+            return lista;
+        }
         
-        try{ 
-            String query = "Select f.codFuncionario, nome, especialidade, departamento, mc.numeroCirurgia from funcionario f, medico_cirurgia mc"
-                    + "  where where f.codFuncionario = mc.codFuncionario";
-            
-            while(rs.next()){
-                
-            }
+        if (tipo.equalsIgnoreCase("Consulta")){
+            String query = "select consulta_funcionario.codFuncionario, nome, especializacao from medico, "
+                    + "funcionario, consulta_funcionario where "
+                    + "medico.codFuncionario = consulta_funcionario.codFuncionario";
+            try{ 
+                PreparedStatement stmt = conexao.prepareStatement(query);         
+                rs = stmt.executeQuery();
+
+                while(rs.next()){
+                    Medico m = new Medico();
+                    m.setIdFuncionatio(rs.getInt("codFuncionario"));
+                    m.setNomeFunc(rs.getString("nome"));
+                    m.setEspecialidade(rs.getString("especializacao"));
+                    
+                   lista.add(m);
+                }
+              rs.close();
+              stmt.close();
+
+
+            }catch(SQLException es){
+                System.out.println("Falha na leitura dos dados "+es.getMessage());
+            } 
+            return lista;
+        }
         
-        }catch(SQLException es){
-            System.out.println("Falha na leitura dos dados "+es.getMessage());
-        }   
-        
+        return lista;
     }
+    
+    
     
     public ArrayList<Integer> getCodMed(String nome){
     ArrayList<Integer> codigo = new ArrayList<>();
