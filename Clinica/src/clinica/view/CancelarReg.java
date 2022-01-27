@@ -62,9 +62,11 @@ public class CancelarReg  extends JDialog implements ActionListener, ItemListene
         tipo = new JComboBox(new String[]{"Consulta", "Cirurgia"});
         tipo.setBackground(Color.WHITE);
         tipo.setEditable(true);
-        tipo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tipo.setForeground(Color.GRAY);
-        tipo.setBounds(70, 50, 270,25);
+        tipo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+       // tipo.setForeground(Color.GRAY);
+        tipo.setBounds(70, 50, 270,35);
+        tipo.setFont(new Font("Segoe UI",Font.BOLD,16));
+        tipo.setFocusable(false);
         tipo.setSelectedIndex(0);
         tipo.addItemListener(this);
 

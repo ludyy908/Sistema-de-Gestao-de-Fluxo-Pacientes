@@ -194,5 +194,30 @@ public class EnfermeiroDAO {
         return enfAct;
     }
     
+    //nome do enfermeiro que paticipou na cirugia de uma determinado paciente
+    
+    public ArrayList<Enfermeiro> nomeEnf(int codPac){
+        
+       ArrayList<Enfermeiro> enf = new ArrayList<>();
+       
+       try{
+            String query = "select f.nome from funcionario f,cirurgia c,enfermeiro_cirurgia ec"+
+                           "where c.numeroCirurgia = ec.numeroCirurgia and ec.codFuncionario = f.codFuncionario and c.codPaciente = "+codPac ; 
+            PreparedStatement ps = conexao.prepareStatement(query);
+            rs = ps.executeQuery();
+        
+            while(rs.next()){
+                Enfermeiro e = new Enfermeiro();
+                e.setNomeFunc(rs.getString("f.nome"));
+                enf.add(e);
+            
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }   
+    
+        return enf;
+    }
     
 }

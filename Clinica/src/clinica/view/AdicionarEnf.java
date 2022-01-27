@@ -27,7 +27,9 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     JComboBox <String> caixa1;
     JRadioButton[] r;
     ButtonGroup g;
-    Font f = new Font("Segoe UI",Font.BOLD,15);
+    Font f = new Font("Segoe UI",Font.PLAIN,17);
+    Font f1 = new Font("Segoe UI",Font.BOLD,17);
+    
     Random random;
     
     BorderFactory br;
@@ -71,21 +73,21 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         caixa1.setForeground(Color.WHITE);
         caixa1.setBackground(null);
      
-        l2 = new JLabel("Nome de Enfermeiro:");l2.setFont(f);
+        l2 = new JLabel("Nome de Enfermeiro:");l2.setFont(f1);
         l2.setForeground(Color.GRAY);
-        l4 = new JLabel("Nacionalidade:");l4.setFont(f);
+        l4 = new JLabel("Nacionalidade:");l4.setFont(f1);
         l4.setForeground(Color.GRAY);
-        l5 = new JLabel("Telefone:");l5.setFont(f);
+        l5 = new JLabel("Telefone:");l5.setFont(f1);
         l5.setForeground(Color.GRAY);
-        l6 = new JLabel("Morada:");l6.setFont(f);
+        l6 = new JLabel("Morada:");l6.setFont(f1);
         l6.setForeground(Color.GRAY);
-        l7 = new JLabel("Categoria:");l7.setFont(f);
+        l7 = new JLabel("Categoria:");l7.setFont(f1);
         l7.setForeground(Color.GRAY);
         caixa1.setFont(f);
         caixa1.setForeground(Color.GRAY);
-        l8 = new JLabel("Departamento:");l8.setFont(f);
+        l8 = new JLabel("Departamento:");l8.setFont(f1);
         l8.setForeground(Color.GRAY);
-        l9 = new JLabel("Gênero:");l9.setFont(f);
+        l9 = new JLabel("Gênero:");l9.setFont(f1);
         l9.setForeground(Color.GRAY);
 
 
@@ -222,8 +224,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
                random = new Random();
                
                String nome,sexo, end,nacio, dpt, tel, categoria;
-               int id = random.nextInt(999);
-               
+               int id = random.nextInt(999);              
                categoria = caixa1.getSelectedItem().toString();
                nome = t2.getText();
                nacio = t3.getText();
@@ -238,8 +239,8 @@ public class AdicionarEnf extends JDialog implements ActionListener {
                 }
 
              if(t2.getText().isEmpty() || t3.getText().isEmpty() || t4.getText().isEmpty() ||t5.getText().isEmpty() || t7.getText().isEmpty()){
-              JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
-              //else if(b == false){JOptionPane.showMessageDialog(null, "Seleccione o Genero.");             
+                JOptionPane.showMessageDialog(null,"Por Favor, Preencha Todos os campos.");
+             
              }else{
                               
                 EnfControl ec = new EnfControl(id, nome, sexo,tel, end, nacio,dpt, categoria);

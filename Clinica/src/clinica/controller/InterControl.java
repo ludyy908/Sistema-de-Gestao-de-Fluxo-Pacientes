@@ -16,6 +16,10 @@ public class InterControl {
     
     Internamento i;
   InternamentoDAO iDao = new InternamentoDAO();
+  
+  public InterControl() {
+    }
+    
 
     public InterControl( String dataInter, int idPac,int idInter, int idFunc, String doenca) {
         
@@ -29,5 +33,16 @@ public class InterControl {
         
         iDao.inserirPac(i);
         
+    }
+
+   
+    
+    public String getD(int cod){
+        return iDao.getDataInter(cod);
+    
+    }
+    
+    public void InterRemove(int c){
+        iDao.removerInter(c);
     }
 }

@@ -112,14 +112,16 @@ public class ConsultaDAO {
             PreparedStatement stmt = conexao.prepareStatement(query);
              rs = stmt.executeQuery();
              
-             rs.next();
-             c  = new Consulta();
-             c.setNrConsulta(rs.getInt("numeroConsulta"));
-             c.setMedico(rs.getString("nomeMed"));
-             c.setData(rs.getString("data"));
-             c.setHora(rs.getString("hora"));
-             
-             cons.add(c);
+             while(rs.next()){
+                c  = new Consulta();
+                c.setNrConsulta(rs.getInt("numeroConsulta"));
+                c.setMedico(rs.getString("nomeMed"));
+                c.setData(rs.getString("data"));
+                c.setHora(rs.getString("hora"));
+
+                cons.add(c);
+            } 
+             stmt.close();
 
         }catch(SQLException e){
                 System.out.println("Falha na leitura dos dados "+e.getMessage());

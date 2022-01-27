@@ -13,9 +13,10 @@ import clinica.controller.MedController;
 import clinica.controller.PacController;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import clinica.controller.InterControl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
     JButton bSalvar, bCancel;
     JSpinner dia, sMes, sAno;
     MedController mc = new MedController();
+    InterControl i = new InterControl();
     PacController pc = new PacController();
 
 
@@ -107,6 +109,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboMedico.setBounds(70,320,270,36);
         comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboMedico.setForeground(Color.GRAY);
+        comboMedico.setFocusable(false);
         painel1.add(comboMedico);
         
         pacId = new String[pc.getIds().size()];
@@ -120,6 +123,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboId.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboId.setForeground(Color.GRAY);
         comboId.addItemListener(this);
+        comboId.setFocusable(false);
         painel1.add(comboId);
         
         tfPac = new JTextField();
@@ -207,26 +211,36 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         }
         if(e.getSource() == bSalvar){
             
-            int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
                 int codFunc, idAlta = 0;
                 String day = dia.getValue().toString(), nomeMed;
                 String mes = sMes.getValue().toString();
                 String ano = sAno.getValue().toString();
                 String data = ano+"-0"+mes+"-0"+day;
-
-                //SimpleDateFormat formato = new SimpleDateFormat("yyy/MM/dd");
-                //Date dataFormatada = (Date) formato.parse(data);
+                
+                String dataInter = i.getD(codPac);
+                
+                Date dA = (Date) sdf.parse(data);
+                Date dInter = (Date) sdf.parse(dataInter);
+                
                 nomeMed = comboMedico.getSelectedItem().toString();
                 codFunc = mc.getIdMed(nomeMed);
-
-            if(tfPac.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
-            }else{
-                             
-                AltaPacienteControl apc = new AltaPacienteControl(0,data,codPac, codFunc);
-                JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
-                tfPac.setText("");
                 
+                if(tfPac.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.. ");
+                }else if(dA.before(dInter) || dA.equals(dInter)){
+                    JOptionPane.showMessageDialog(null, "A data de Alta nao pode ser anterior ou igual a data do internamento..");
+                }else{
+                    
+                    AltaPacienteControl apc = new AltaPacienteControl(0,data,codPac, codFunc);
+                    i.InterRemove(codPac);
+                    JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
+                    tfPac.setText("");                   
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(RegistoAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
         }    
     }

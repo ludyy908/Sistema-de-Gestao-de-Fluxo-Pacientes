@@ -115,12 +115,16 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
         Agenda a = new Agenda();
         ArrayList<Agenda> agenda = ac.getAgenda(Integer.parseInt(t2.getText()));
         model.setNumRows(0);
+        
+        if(agenda.isEmpty()){         
+            JOptionPane.showMessageDialog(null, "Agenda Vazia.");
+        }else{
         for(int i=0; i<agenda.size(); i++){
             model.addRow(new String[]{agenda.get(i).getData(),
                                       agenda.get(i).getHora(),
                                       agenda.get(i).getTipoReg()});
         }
-
+        }
     }
 
     

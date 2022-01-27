@@ -125,24 +125,13 @@ public class GerarRelatorioPac extends JDialog implements ActionListener, ItemLi
                 
                 
                 ArrayList<Consulta> listCons = cc.getDadosCons(Integer.parseInt(t2.getText()));
-                String codCons = String.valueOf(listCons.get(0).getNrConsulta());
-                String DCons = listCons.get(0).getData();
-                String hCons = listCons.get(0).getHora();
-                String medCons = listCons.get(0).getMedico();
-                
-                
-                ArrayList<Cirurgia> listCir = circ.getDadosCons(Integer.parseInt(t2.getText()));
-                //String[] cir = (String[]) listCir.toArray(new String[listCir.size()]);
-                String codCir = String.valueOf(listCir.get(0).getNrCirurgia());
-                String DCir = listCir.get(0).getData();
-                String Hcir = listCir.get(0).getHora();
-                String medCir = listCir.get(0).getMedico();
-                String enfcir = " ";
-                        
+               
+                ArrayList<Cirurgia> listCir = circ.getDadosCir(Integer.parseInt(t2.getText()));
+                                        
                 RelatorioPac rp = new RelatorioPac();
                 
                 try {
-                    rp.gerarRelatorio(nP,idp, nP, gp, morp, idadp, biP, civilp, nacioP, telp, telAlt, apelip, codCons,DCons,hCons, medCons, codCir, DCir, Hcir,medCir,enfcir);
+                    rp.gerarRelatorio(nP,idp, nP, gp, morp, idadp, biP, civilp, nacioP, telp, telAlt, apelip,listCons, listCir);
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(GerarRelatorioPac.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

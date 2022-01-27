@@ -104,23 +104,20 @@ public class CirurgiaDAO {
             ArrayList<Cirurgia> cir = new ArrayList();
 
         try{
-            String query = "Select c.numeroCirurgia, nomeMed, data, hora, f.nome from cirurgia c, enfermeiro_cirurgia ec, funcionario f "
-                    + "where c.numeroCirurgia = ec.numeroCirurgia and codPaciente = "+idPac;
+            String query = "Select numeroCirurgia, nomeMed, data, hora from cirurgia where codPaciente = "+idPac;
             PreparedStatement stmt = conexao.prepareStatement(query);
              rs = stmt.executeQuery();
              
-             rs.next();
-             c  = new Cirurgia();
-             Enfermeiro enf = new Enfermeiro();
+             while(rs.next()){
+                c  = new Cirurgia();
+                c.setNrCirurgia(rs.getInt("numeroCirurgia"));
+                c.setData(rs.getString("data"));
+                c.setHora(rs.getString("hora"));
+                c.setMedico(rs.getString("nomeMed"));
+
+                cir.add(c);
+             }
              
-             c.setNrCirurgia(rs.getInt("numeroCirurgia"));
-             c.setData(rs.getString("data"));
-             c.setHora(rs.getString("hora"));
-             c.setMedico(rs.getString("nomeMed"));
-             enf.setNomeFunc(rs.getString("f.nome"));
-             
-             cir.add(c);
-            //cir.add(enf);
             stmt.close();
 
         }catch(SQLException e){

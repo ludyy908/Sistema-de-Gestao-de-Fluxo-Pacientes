@@ -133,15 +133,9 @@ public class AdicionarMed extends JDialog implements ActionListener{
         r[1].addActionListener(this);
       
       
-       
-        
-       
-       
         p1.setBounds(0,0,870,75);
         p1.setBackground(new Color(8,84, 121));
         
-        
-
         l0= new JLabel("Registo de Medico"); 
         l0.setBounds(100,0, 400, 75); 
         l0.setFont(new Font("Imprint MT Shadow", Font.BOLD, 28));
@@ -151,13 +145,11 @@ public class AdicionarMed extends JDialog implements ActionListener{
         p2.setLayout(null);
         
         
-        
-        
         l2.setBounds(100, 100, 200, 27); t2.setBounds(100, 130, 380, 25);t2.setFont(f);
         l4.setBounds(100, 170, 250, 27); t3.setBounds(100, 200, 380, 25);t3.setFont(f);
         l5.setBounds(100, 240, 250, 27); t4.setBounds(100, 270, 380, 25);t4.setFont(f);
         l6.setBounds(100, 310, 200, 27); t5.setBounds(100, 340, 380, 25);t5.setFont(f);
-        l7.setBounds(100, 380, 200, 27); t6.setBounds(100, 410, 380, 25);t6.setFont(f);
+        l7.setBounds(100, 380, 250, 27); t6.setBounds(100, 410, 380, 25);t6.setFont(f);
         l8.setBounds(100, 450, 200, 27); t7.setBounds(100,480, 380, 25);t7.setFont(f);
         l9.setBounds(550, 100, 100, 27);
         

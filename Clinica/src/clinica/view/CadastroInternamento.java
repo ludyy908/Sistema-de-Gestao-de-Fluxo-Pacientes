@@ -120,6 +120,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         dia.setBounds(70,250,50,23);
         dia.setFont(new Font("Segoe UI", Font.BOLD, 15));
         dia.setForeground(Color.GRAY);
+        dia.setFocusable(false);
         painel1.add(dia);
         
         //sMes = new JSpinner(new SpinnerListModel(mes));
@@ -128,6 +129,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         sMes.setBounds(150,250,100,23);
         sMes.setFont(new Font("Segoe UI", Font.BOLD, 15));
         sMes.setForeground(Color.GRAY);
+        sMes.setFocusable(false);
         painel1.add(sMes);
         
         sAno = new JSpinner(new SpinnerListModel(ano));
@@ -135,6 +137,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         sAno.setBounds(270,250,70,23);
         sAno.setFont(new Font("Segoe UI", Font.BOLD, 15));
         sAno.setForeground(Color.GRAY);
+        sAno.setFocusable(false);
         
         //Enfemeiro
         medico = new String[ec.getEnfs().size()];
@@ -146,9 +149,10 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         comboMedico.setBackground(null);
         //tfMedico = new JTextField();
         //tfMedico.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        comboMedico.setBounds(70,320,270,30);
+        comboMedico.setBounds(70,320,270,35);
         comboMedico.setFont(new Font("Segoe UI", Font.BOLD, 15));
         comboMedico.setForeground(Color.GRAY);
+        comboMedico.setFocusable(false);
         painel1.add(comboMedico);
         
         
@@ -215,6 +219,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         if(e.getSource() == bSalvar){
             int idP, idF;
                 String data, doenca, nomeEnf;
+                boolean internado = false;
                 
                 String day = dia.getValue().toString();
                 String mes = sMes.getValue().toString();
@@ -227,10 +232,17 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
                 nomeEnf = comboMedico.getSelectedItem().toString();
                 idF = ec.getIdEnf(nomeEnf);
 
+                for(int i=0; i<pc.getIds().size();i++){                  
+                    if(pc.getIds().get(i) == idP){
+                        internado = true;
+                    }
+                }
+                
             if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.");
-            }else{
-                                               
+            }else if(internado){
+                JOptionPane.showMessageDialog(null, "Paciente Internado Ja Registado.");
+            }else{                                              
                 InterControl ic = new InterControl(data,idP, 0, idF, doenca);
 
                  JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");

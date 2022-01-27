@@ -50,4 +50,36 @@ public class InternamentoDAO {
     
     }
     
+    public String getDataInter(int codp){
+        String d = "";
+        
+        try{
+        String query = "select dataInternamento from internamento where codPaciente = "+codp;
+         PreparedStatement ps = conexao.prepareStatement(query);
+         rs = ps.executeQuery();
+            
+         rs.next();
+         d = rs.getString("dataInternamento");
+         
+         ps.close();
+         rs.close();
+        }catch(SQLException e){
+            System.out.println("Falha na leitura dos dados "+e.getMessage());
+        }  
+        
+        return d;
+    }
+    
+    public void removerInter(int cod){
+        try{
+            String q = "delete from internamento where codPaciente = "+cod;
+            PreparedStatement stmt=conexao.prepareStatement(q);
+            stmt.execute();
+            stmt.close();
+        
+        }catch(SQLException e){
+		throw new RuntimeException(e);
+	}
+    }
+    
 }

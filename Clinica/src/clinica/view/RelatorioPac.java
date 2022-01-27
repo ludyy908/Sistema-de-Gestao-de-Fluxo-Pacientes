@@ -1,6 +1,8 @@
 
 package clinica.view;
 
+import clinica.model.Cirurgia;
+import clinica.model.Consulta;
 import com.itextpdf.io.image.*;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.geom.PageSize;
@@ -14,6 +16,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import java.io.*;
 import java.awt.Desktop;
 import java.net.MalformedURLException;
+import java.util.*;
 /**
  *
  * @author Amarilda Chihepe
@@ -29,7 +32,7 @@ public class RelatorioPac {
      
     
      public void gerarRelatorio(String n, String idp, String nP, String gp, String morp, String idadp, String biP,String civilp, String nacioP, String telp,
-             String telAlt, String apelip, String idCons,String DCons, String hCons, String medCons, String idCir, String Dcir, String Hcir, String medCir, String enfCir) 
+             String telAlt, String apelip, ArrayList<Consulta> listCons, ArrayList<Cirurgia> listCir) 
              throws FileNotFoundException, MalformedURLException, IOException{
         
         PdfWriter pw = new PdfWriter("Relatorio do(a) paciente "+n+".pdf");
@@ -109,52 +112,63 @@ public class RelatorioPac {
         tb1.addCell(new Cell().add(p6).setPadding(3).setBorder(Border.NO_BORDER));
         tb1.setBackgroundColor(new DeviceRgb(128,128,128), 20);
         
+        
         p4 = new Paragraph("Consultas Marcadas:");
         p4.setPaddingTop(5f); 
-        p4.setFontSize(13);
+        p4.setFontSize(14);
         p4.setBold();
-        Table tabela2 = new Table(sizeColuna);
-        tabela2.addCell(new Cell().add(new Paragraph("Numero da Consulta:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela2.addCell(new Cell().add(new Paragraph(idCons)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
+        float colCons[] = {200,200,200,200};
+        Table tabela2 = new Table(colCons);
         
-        tabela2.addCell(new Cell().add(new Paragraph("Data da Consulta:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela2.addCell(new Cell().add(new Paragraph(DCons)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-         
-        tabela2.addCell(new Cell().add(new Paragraph("Hora:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela2.addCell(new Cell().add(new Paragraph(hCons)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-         
-        tabela2.addCell(new Cell().add(new Paragraph("Nome do Medico:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela2.addCell(new Cell().add(new Paragraph(medCons)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        
-        
+        tabela2.setMarginLeft(50f);
+        tabela2.addCell(new Cell().add(new Paragraph("Nr. da Consulta").setBold().setFontSize(14).setPaddingBottom(3))
+                 .setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        tabela2.addCell(new Cell().add(new Paragraph("Data").setBold().setFontSize(14)).setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        tabela2.addCell(new Cell().add(new Paragraph("Hora").setBold().setFontSize(14)).setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        tabela2.addCell(new Cell().add(new Paragraph("Nome do Medico:").setBold().setFontSize(14)).setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+          
+          for(int i =0; i<listCons.size();i++){
+               tabela2.addCell(new Cell().add(new Paragraph(String.valueOf(listCons.get(i).getNrConsulta())))
+                       .setBorder(Border.NO_BORDER));
+               tabela2.addCell(new Cell().add(new Paragraph(listCons.get(i).getData())).setBorder(Border.NO_BORDER));
+               tabela2.addCell(new Cell().add(new Paragraph(listCons.get(i).getHora())).setBorder(Border.NO_BORDER));
+               tabela2.addCell(new Cell().add(new Paragraph(listCons.get(i).getMedico())).setBorder(Border.NO_BORDER));
+          
+          }
+               
         p5 = new Paragraph("Cirurgias Marcadas:");
         p5.setPaddingTop(15f);
-        p5.setFontSize(13);
+        p5.setFontSize(14);
         p5.setBold();
-         Table tabela3 = new Table(sizeColuna);
-         tabela3.addCell(new Cell().add(new Paragraph("Numero da Cirurgia:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela3.addCell(new Cell().add(new Paragraph(idCir)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        
-        tabela3.addCell(new Cell().add(new Paragraph("Data da Cirurgia:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela3.addCell(new Cell().add(new Paragraph(Dcir)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
+        float colCir[] = {200,200,200,200};
+         Table tabela3 = new Table(colCir);
          
-        tabela3.addCell(new Cell().add(new Paragraph("Hora:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela3.addCell(new Cell().add(new Paragraph(Hcir)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
+        tabela3.setMarginLeft(50f);
+        tabela3.addCell(new Cell().add(new Paragraph("Nr. da Cirurgia:").setBold().setFontSize(14).setFontColor(new DeviceRgb(105,105,105)))
+                 .setBorder(Border.NO_BORDER));
+        tabela3.addCell(new Cell().add(new Paragraph("Data").setFontSize(14).setBold()).setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        tabela3.addCell(new Cell().add(new Paragraph("Hora").setFontSize(14)).setBold().setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        tabela3.addCell(new Cell().add(new Paragraph("Nome do Medico:").setBold().setFontSize(14)).setBorder(Border.NO_BORDER).setFontColor(new DeviceRgb(105,105,105)));
+        //tabela3.addCell(new Cell().add(new Paragraph("Nome Enfermeiro").setFontSize(14)).setBorde)r(Border.NO_BORDER));
          
-        tabela3.addCell(new Cell().add(new Paragraph("Medico:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela3.addCell(new Cell().add(new Paragraph(medCir)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-         
-        tabela3.addCell(new Cell().add(new Paragraph("Enfermeiro:")).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
-        tabela3.addCell(new Cell().add(new Paragraph(enfCir)).setBorder(Border.NO_BORDER).setPaddingLeft(50f));
+        for(int i =0; i<listCir.size();i++){
+               tabela3.addCell(new Cell().add(new Paragraph(String.valueOf(listCir.get(i).getNrCirurgia())))
+                       .setBorder(Border.NO_BORDER));
+               tabela3.addCell(new Cell().add(new Paragraph(listCir.get(i).getData())).setBorder(Border.NO_BORDER));
+               tabela3.addCell(new Cell().add(new Paragraph(listCir.get(i).getHora())).setBorder(Border.NO_BORDER));
+               tabela3.addCell(new Cell().add(new Paragraph(listCir.get(i).getMedico())).setBorder(Border.NO_BORDER));
+          
+          }
         
         p7 = new Paragraph("");
-       p7.setPaddingTop(10f);
+        p7.setPaddingTop(10f);
         p7.setBorderBottom(new SolidBorder(0.3f));
         
         p8 = new Paragraph("Maputo-Mocambique\t Tel: +258 84765484");
         p8.setFontSize(10);
         p8.setFontColor(new DeviceRgb(128,128,128));
         
+        doc.showTextAligned(p8, 50, 30, TextAlignment.LEFT);
         doc.add(img);
         doc.add(p);
         doc.add(p1);
