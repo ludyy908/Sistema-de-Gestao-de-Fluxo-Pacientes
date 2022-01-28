@@ -68,6 +68,7 @@ public class ListaPacCuidados extends JDialog implements ActionListener, ItemLis
          comboEnf.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         comboEnf.setForeground(Color.GRAY);
         comboEnf.setRequestFocusEnabled(false);
+        comboEnf.setFocusable(false);
         comboEnf.addItemListener(this);
         
         l2 = new JLabel("Codigo de Enfermeiro:");

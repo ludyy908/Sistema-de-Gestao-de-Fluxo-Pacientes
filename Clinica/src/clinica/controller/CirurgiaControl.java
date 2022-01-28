@@ -61,7 +61,7 @@ public class CirurgiaControl {
     }
     
     //Cirurgia de um determinado paciente
-     public ArrayList<Cirurgia> getDadosCons(int cod){
+     public ArrayList<Cirurgia> getDadosCir(int cod){
         return cd.getDadosCir(cod);
     }
 }

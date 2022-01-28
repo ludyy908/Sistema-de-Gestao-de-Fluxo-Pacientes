@@ -36,7 +36,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         
     setModal(true);
     setTitle("Registo");
-    setSize (500, 590); setLocation (500, 130);
+    setSize (500, 590); setLocation (500, 100);
     setIconImage(new ImageIcon("iconeprincipal.png").getImage());
     
     p1 = new JPanel ();
@@ -52,7 +52,6 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     p1.add(l1);
    
     
-    
     p2 = new JPanel (); p2.setLayout(null);
     p2.setBounds(0, 75, 700, 625);
     p2.setBackground(Color.WHITE);
@@ -64,14 +63,16 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     
     tipo = new JComboBox(new String[]{"Consulta", "Cirurgia"});
     tipo.setBackground(Color.WHITE);
-    tipo.setBounds(70, 50, 270,25);
+    tipo.setBounds(70, 47, 300,35);
+    tipo.setFocusable(false);
+    tipo.setFont(new Font("Segoe UI", Font.BOLD, 16));
     tipo.setSelectedIndex(0);
     tipo.addItemListener(this);
     
     
     medico = new JLabel ("Nome do Medico Que Realizara a Consulta:");
-    medico.setBounds(70, 85, 300, 30);
-    medico.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    medico.setBounds(70, 87, 350, 30);
+    medico.setFont(new Font("Segoe UI", Font.BOLD, 16));
     medico.setForeground(Color.GRAY);
    
     
@@ -79,7 +80,7 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
     tf1.setBounds(70, 115, 300, 30);
     tf1.setForeground(Color.GRAY);
     tf1.setText("Introduza o Nome Completo");
-    tf1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+    tf1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
     tf1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
     tf1.addMouseListener(this);
     
@@ -90,7 +91,9 @@ public class Registo extends JDialog implements ActionListener, ItemListener, Mo
         
     codigoM = new JComboBox();
     codigoM.setBackground(Color.WHITE);
-    codigoM.setBounds(70, 195, 270,25);
+    codigoM.setBounds(70, 195, 300,35);
+    codigoM.setFocusable(false);
+    codigoM.setFont(new Font("Segoe UI", Font.BOLD, 16));
     codigoM.addActionListener(this);
     
     

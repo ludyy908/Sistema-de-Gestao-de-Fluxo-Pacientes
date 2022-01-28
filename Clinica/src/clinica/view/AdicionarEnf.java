@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-//import java.lang.System.Logger;
-//import java.lang.System.Logger.Level;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Random;
@@ -29,7 +27,9 @@ public class AdicionarEnf extends JDialog implements ActionListener {
     JComboBox <String> caixa1;
     JRadioButton[] r;
     ButtonGroup g;
-    Font f = new Font("Segoe UI",Font.BOLD,15);
+    Font f = new Font("Segoe UI",Font.PLAIN,17);
+    Font f1 = new Font("Segoe UI",Font.BOLD,17);
+    
     Random random;
     String nome,sexo, end,nacio, dpt, tel, categoria;
     BorderFactory br;
@@ -70,21 +70,21 @@ public class AdicionarEnf extends JDialog implements ActionListener {
         caixa1.setForeground(Color.WHITE);
         caixa1.setBackground(null);
      
-        l2 = new JLabel("Nome de Enfermeiro:");l2.setFont(f);
+        l2 = new JLabel("Nome de Enfermeiro:");l2.setFont(f1);
         l2.setForeground(Color.GRAY);
-        l4 = new JLabel("Nacionalidade:");l4.setFont(f);
+        l4 = new JLabel("Nacionalidade:");l4.setFont(f1);
         l4.setForeground(Color.GRAY);
-        l5 = new JLabel("Telefone:");l5.setFont(f);
+        l5 = new JLabel("Telefone:");l5.setFont(f1);
         l5.setForeground(Color.GRAY);
-        l6 = new JLabel("Morada:");l6.setFont(f);
+        l6 = new JLabel("Morada:");l6.setFont(f1);
         l6.setForeground(Color.GRAY);
-        l7 = new JLabel("Categoria:");l7.setFont(f);
+        l7 = new JLabel("Categoria:");l7.setFont(f1);
         l7.setForeground(Color.GRAY);
         caixa1.setFont(f);
         caixa1.setForeground(Color.GRAY);
-        l8 = new JLabel("Departamento:");l8.setFont(f);
+        l8 = new JLabel("Departamento:");l8.setFont(f1);
         l8.setForeground(Color.GRAY);
-        l9 = new JLabel("Gênero:");l9.setFont(f);
+        l9 = new JLabel("Gênero:");l9.setFont(f1);
         l9.setForeground(Color.GRAY);
 
 
@@ -242,7 +242,7 @@ public class AdicionarEnf extends JDialog implements ActionListener {
                     r[1].setSelected(false);
                     caixa1.setSelectedIndex(0);
                     
-                }          
+                }   
                    
                 } catch (IOException ex) {
                 Logger.getLogger(AdicionarMed.class.getName()).log(Level.SEVERE, null, ex);

@@ -14,8 +14,12 @@ import clinica.controller.Validacao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
+import clinica.controller.InterControl;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 
 
@@ -35,6 +39,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
     JButton bSalvar, bCancel;
     JSpinner dia, sMes, sAno;
     MedController mc = new MedController();
+    InterControl i = new InterControl();
     PacController pc = new PacController();
     String data;
 
@@ -107,6 +112,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboMedico.setBounds(70,320,270,36);
         comboMedico.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboMedico.setForeground(Color.GRAY);
+        comboMedico.setFocusable(false);
         painel1.add(comboMedico);
         
         pacId = new String[pc.getIds().size()];
@@ -120,6 +126,7 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
         comboId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboId.setForeground(Color.GRAY);
         comboId.addItemListener(this);
+        comboId.setFocusable(false);
         painel1.add(comboId);
         
         tfPac = new JTextField();
@@ -207,12 +214,12 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
             }
         }
         if(e.getSource() == bSalvar){
-            
             int codPac = Integer.parseInt(comboId.getSelectedItem().toString());
             int codFunc, idAlta; String nomeMed;
             idAlta = va.gerarCodigo();
-            
-            try { 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+           
+            try {
                 data = va.validarData(Integer.parseInt(dia.getValue().toString()),
                         Integer.parseInt(sMes.getValue().toString()), Integer.parseInt(sAno.getValue().toString()));
             } catch (IOException ex) {
@@ -220,6 +227,14 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
             }
             
             
+            String dataInter = i.getD(codPac);
+                
+            try {
+                Date dA = (Date) sdf.parse(data);
+                Date dInter = (Date) sdf.parse(dataInter);
+            } catch (ParseException ex) {
+                Logger.getLogger(RegistoAlta.class.getName()).log(Level.SEVERE, null, ex);
+            }
             nomeMed = comboMedico.getSelectedItem().toString();
             codFunc = mc.getIdMed(nomeMed);
 
@@ -228,7 +243,9 @@ public class RegistoAlta extends JDialog implements ActionListener, ItemListener
             else{          
                 new AltaPacienteControl(idAlta, data, codPac, codFunc);
                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso ");
+                i.InterRemove(codPac);
                 tfPac.setText("");
+
             }
         }    
     }

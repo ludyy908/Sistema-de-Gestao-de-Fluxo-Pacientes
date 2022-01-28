@@ -120,6 +120,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         dia.setBounds(70,250,50,25);
         dia.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         dia.setForeground(Color.GRAY);
+        dia.setFocusable(false);
         painel1.add(dia);
         
         //sMes = new JSpinner(new SpinnerListModel(mes));
@@ -128,6 +129,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         sMes.setBounds(150,250,100,25);
         sMes.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sMes.setForeground(Color.GRAY);
+        sMes.setFocusable(false);
         painel1.add(sMes);
         
         sAno = new JSpinner(new SpinnerListModel(ano));
@@ -135,6 +137,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         sAno.setBounds(270,250,70,25);
         sAno.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         sAno.setForeground(Color.GRAY);
+        sAno.setFocusable(false);
         
         //Enfemeiro
         medico = new String[ec.getEnfs().size()];
@@ -144,11 +147,10 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
         
         comboMedico = new JComboBox(medico);
         comboMedico.setBackground(null);
-        //tfMedico = new JTextField();
-        //tfMedico.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         comboMedico.setBounds(70,320,270,30);
         comboMedico.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         comboMedico.setForeground(Color.GRAY);
+        comboMedico.setFocusable(false);
         painel1.add(comboMedico);
         
         
@@ -214,9 +216,10 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
                 dispose();
             }
         }
+         
         if(e.getSource() == bSalvar){
             int idP, idF;
-                String  nomeEnf;
+            String  nomeEnf; boolean internado = false;
                 
             try {
                 data = va.validarData(Integer.parseInt(dia.getValue().toString()), 
@@ -224,9 +227,8 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
             } catch (IOException ex) {
                 Logger.getLogger(CadastroInternamento.class.getName()).log(Level.SEVERE, null, ex);
             }
-                
-                
-                idP = Integer.parseInt(comboId.getSelectedItem().toString());
+ 
+            idP = Integer.parseInt(comboId.getSelectedItem().toString());
             try {
                 doenca = va.validarString(3, 30, tfdoenca.getText());
                 int codDoe = dc.getDoenca(doenca);
@@ -242,14 +244,21 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
                 nomeEnf = comboMedico.getSelectedItem().toString();
                 idF = ec.getIdEnf(nomeEnf);
 
+                for(int i=0; i<pc.getIds().size();i++){                  
+                    if(pc.getIds().get(i) == idP){
+                        internado = true;
+                    }
+                }
+                
             if(tfPac.getText().isEmpty() || tfdoenca.getText().isEmpty() || tfPac.getText() == null || tfdoenca.getText() == null ){
                 JOptionPane.showMessageDialog(null, "Por Favor Preencha Todos Campos.");
-            }else{
+            }else if(internado){
+                JOptionPane.showMessageDialog(null, "Paciente Internado Ja Registado.");
+            }else{                                              
                 new InterControl(data,idP, 0, idF, doenca);
-
-                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");
-                 tfdoenca.setText("");
-                 tfPac.setText("");
+                JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");
+                tfdoenca.setText("");
+                tfPac.setText("");
                  
             }
         }    
@@ -258,10 +267,10 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
     @Override
     public void itemStateChanged(ItemEvent e) {
         if(e.getSource() == comboId){
-            int id = Integer.parseInt(comboId.getSelectedItem().toString());
-            tfPac.setText(pc.getPacNomeInter(id));
+                int id = Integer.parseInt(comboId.getSelectedItem().toString());
+                tfPac.setText(pc.getPacNomeInter(id));
+            }
         }
-    }
     
     @Override
     public void mouseExited(MouseEvent e) { 
