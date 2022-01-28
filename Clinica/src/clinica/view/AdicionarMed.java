@@ -149,7 +149,7 @@ public class AdicionarMed extends JDialog implements ActionListener{
         l4.setBounds(100, 170, 250, 27); t3.setBounds(100, 200, 380, 25);t3.setFont(f);
         l5.setBounds(100, 240, 250, 27); t4.setBounds(100, 270, 380, 25);t4.setFont(f);
         l6.setBounds(100, 310, 200, 27); t5.setBounds(100, 340, 380, 25);t5.setFont(f);
-        l7.setBounds(100, 380, 250, 27); t6.setBounds(100, 410, 380, 25);t6.setFont(f);
+        l7.setBounds(100, 380, 200, 27); t6.setBounds(100, 410, 380, 25);t6.setFont(f);
         l8.setBounds(100, 450, 200, 27); t7.setBounds(100,480, 380, 25);t7.setFont(f);
         l9.setBounds(550, 100, 100, 27);
         

@@ -121,6 +121,7 @@ public class ConsultaDAO {
 
                 cons.add(c);
             } 
+             rs.close();
              stmt.close();
 
         }catch(SQLException e){

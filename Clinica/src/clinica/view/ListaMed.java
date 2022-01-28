@@ -80,7 +80,7 @@ public class ListaMed extends JDialog implements ActionListener{
     
     public void getMedicos(){
         setSize(1020, 600);
-        setLocation(160, 90);
+        setLocation(160, 115);
         setTitle("Lista de Medicos");
         setIconImage(new ImageIcon("iconeprincipal.png").getImage());
         l0 = new JLabel ("Lista de Medicos na Clinica:");

@@ -117,7 +117,7 @@ public class CirurgiaDAO {
 
                 cir.add(c);
              }
-             
+            rs.close(); 
             stmt.close();
 
         }catch(SQLException e){

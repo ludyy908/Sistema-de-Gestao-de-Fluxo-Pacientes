@@ -42,9 +42,7 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
 
         tipo = new JComboBox(new String[]{"Consulta", "Cirurgia"});
         tipo.setBackground(Color.WHITE);
-        tipo.setBounds(20, 50, 270,35);
-        tipo.setFocusable(false);
-        tipo.setFont(new Font("Segoe UI",Font.BOLD,16));
+        tipo.setBounds(20, 50, 270,25);
         tipo.addItemListener(this);
         
         String [] nomeColuna = {"Codigo","Data","Hora","Nome do Paciente",
@@ -52,7 +50,7 @@ public final class ListaReg extends JDialog implements ActionListener, ItemListe
         
         tb = new DefaultTableModel(null,nomeColuna);
         tabela = new JTable(tb);
-        tabela.setBounds(20, 100, 820, 610);
+        tabela.setBounds(20, 80, 820, 610);
         JScrollPane scrol = new JScrollPane(tabela);
         scrol.setBounds(20,80,820,430);
         inserirTabela(tb, tipo.getSelectedItem());

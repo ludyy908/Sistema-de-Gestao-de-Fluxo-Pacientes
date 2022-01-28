@@ -125,6 +125,7 @@ public class AgendaMed  extends JDialog implements ActionListener, ItemListener{
                                       agenda.get(i).getHora(),
                                       agenda.get(i).getTipoReg()});
         }
+
         }
     }
 
