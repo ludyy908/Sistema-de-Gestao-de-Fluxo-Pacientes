@@ -255,7 +255,7 @@ public class CadastroInternamento extends JDialog implements ActionListener, Ite
             }else if(internado){
                 JOptionPane.showMessageDialog(null, "Paciente Internado Ja Registado.");
             }else{                                              
-                new InterControl(data,idP, 0, idF, doenca);
+                new InterControl(data,idP, va.gerarCodigo(), idF, doenca);
                 JOptionPane.showMessageDialog(null, "Dados Salvos com Sucesso.");
                 tfdoenca.setText("");
                 tfPac.setText("");
