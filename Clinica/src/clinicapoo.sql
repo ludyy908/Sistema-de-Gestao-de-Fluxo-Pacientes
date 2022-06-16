@@ -38,7 +38,7 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
-INSERT INTO `agenda` VALUES (12,202002,'2022-01-20','15:30:00','Consulta'),(122,112,'2022-02-01','12:00:00','Cirurgia'),(378,112,'2022-01-11','10:00:00','Cirurgia'),(412,202002,'2022-01-03','08:00:00','Consulta'),(507,112,'2022-06-05','12:00:00','Consulta'),(586,112,'2022-01-01','11:00:00','Consulta'),(633,112,'2022-01-04','01:00:00','Consulta'),(738,202002,'2022-02-03','10:00:00','Consulta'),(921,112,'2022-04-03','15:30:00','Cirurgia'),(949,112,'2022-03-03','14:00:00','Cirurgia');
+INSERT INTO `agenda` VALUES (12,202002,'2022-01-20','15:30:00','Consulta'),(122,112,'2022-02-01','12:00:00','Cirurgia'),(370,112,'2022-05-05','11:00:00','Consulta'),(378,112,'2022-01-11','10:00:00','Cirurgia'),(412,202002,'2022-01-03','08:00:00','Consulta'),(507,112,'2022-06-05','12:00:00','Consulta'),(586,112,'2022-01-01','11:00:00','Consulta'),(633,112,'2022-01-04','01:00:00','Consulta'),(738,202002,'2022-02-03','10:00:00','Consulta'),(749,112,'2022-02-06','13:00:00','Consulta'),(921,112,'2022-04-03','15:30:00','Cirurgia'),(949,112,'2022-03-03','14:00:00','Cirurgia');
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `cirurgia` (
 
 LOCK TABLES `cirurgia` WRITE;
 /*!40000 ALTER TABLE `cirurgia` DISABLE KEYS */;
-INSERT INTO `cirurgia` VALUES (0,854,'Ludmila',NULL,NULL,NULL,NULL),(424,808,'Ludimila','Ana Maria da Graca','2022-04-03','15:30:00','Activo'),(443,854,'Ludmila','Ana Maria da Graca','2022-01-11','10:00:00','Activo'),(569,808,'Ludimila','Ana Maria da Graca','2022-03-03','14:00:00','Activo'),(760,808,'Ludimila','Ana Maria da Graca','2022-02-01','12:00:00','Activo'),(666662,808,'Ludimila','Kelvin','2020-01-28','01:30:00','Activa');
+INSERT INTO `cirurgia` VALUES (424,808,'Ludimila','Ana Maria da Graca','2022-04-03','15:30:00','Activo'),(443,854,'Ludmila','Ana Maria da Graca','2022-01-11','10:00:00','Activo'),(569,808,'Ludimila','Ana Maria da Graca','2022-03-03','14:00:00','Activo'),(760,808,'Ludimila','Ana Maria da Graca','2022-02-01','12:00:00','Activo'),(666662,808,'Ludimila','Kelvin','2020-01-28','01:30:00','Activa');
 /*!40000 ALTER TABLE `cirurgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-INSERT INTO `consulta` VALUES (153,854,'Ludmila','Ana Maria da Graca','2022-01-01','11:00:00','Activo'),(222,808,'Ludimila','Kelvin','2020-01-31','15:30:00','Activa'),(271,123,'Lina','Celestino','2022-01-03','08:00:00','Activo'),(431,854,'Ludmila','celestino','2022-02-03','10:00:00','Cancelado'),(832,854,'Ludmila','Ana Maria da Graca','2022-01-04','01:00:00','Cancelado'),(841,854,'Ludmila','Ana Maria da Graca','2022-06-05','12:00:00','Cancelado');
+INSERT INTO `consulta` VALUES (153,854,'Ludmila','Ana Maria da Graca','2022-01-01','11:00:00','Activo'),(222,808,'Ludimila','Kelvin','2020-01-31','15:30:00','Activa'),(271,123,'Lina','Celestino','2022-01-03','08:00:00','Activo'),(280,854,'Ludmila','Ana Maria da Graca','2022-02-06','13:00:00','Activo'),(431,854,'Ludmila','celestino','2022-02-03','10:00:00','Cancelado'),(832,854,'Ludmila','Ana Maria da Graca','2022-01-04','01:00:00','Cancelado'),(841,854,'Ludmila','Ana Maria da Graca','2022-06-05','12:00:00','Cancelado'),(983,854,'Ludmila','Ana Maria da Graca','2022-05-05','11:00:00','Activo');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +150,7 @@ CREATE TABLE `consulta_funcionario` (
 
 LOCK TABLES `consulta_funcionario` WRITE;
 /*!40000 ALTER TABLE `consulta_funcionario` DISABLE KEYS */;
-INSERT INTO `consulta_funcionario` VALUES (112,841),(202002,271),(600001,202001),(600002,202001),(600003,202005),(600004,202001),(600005,202001),(600006,202005);
+INSERT INTO `consulta_funcionario` VALUES (112,841),(280,112),(983,112),(202002,271),(600001,202001),(600002,202001),(600003,202005),(600004,202001),(600005,202001),(600006,202005);
 /*!40000 ALTER TABLE `consulta_funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +175,7 @@ CREATE TABLE `doenca` (
 
 LOCK TABLES `doenca` WRITE;
 /*!40000 ALTER TABLE `doenca` DISABLE KEYS */;
-INSERT INTO `doenca` VALUES (585,'Escoliose','Nao'),(333331,'Catarata','N Contagio'),(333332,'AVC','N Contagio'),(333333,'Diabetes','N Contagio'),(333334,'Hipertensao','N Contagio'),(333335,'Glaucoma','Contagiosa'),(333336,'Cancro','N Contagio'),(333337,'Acidente','N Contagio');
+INSERT INTO `doenca` VALUES (392,'Tumor','Nao'),(585,'Escoliose','Nao'),(333331,'Catarata','N Contagio'),(333332,'AVC','N Contagio'),(333333,'Diabetes','N Contagio'),(333334,'Hipertensao','N Contagio'),(333335,'Glaucoma','Contagiosa'),(333336,'Cancro','N Contagio'),(333337,'Acidente','N Contagio');
 /*!40000 ALTER TABLE `doenca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +273,7 @@ CREATE TABLE `internamento` (
   PRIMARY KEY (`idInternamento`),
   KEY `codPaciente` (`codPaciente`),
   CONSTRAINT `internamento_ibfk_1` FOREIGN KEY (`codPaciente`) REFERENCES `paciente` (`codPaciente`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +282,7 @@ CREATE TABLE `internamento` (
 
 LOCK TABLES `internamento` WRITE;
 /*!40000 ALTER TABLE `internamento` DISABLE KEYS */;
-INSERT INTO `internamento` VALUES ('2022-01-02',555552,3,0,'Malaria'),('2021-01-04',555551,4,0,'Tuberculose'),('2022-02-02',555551,5,0,'Malaria'),('2021-01-02',555551,6,0,'Malaria'),('2021-01-01',555552,7,0,'CoronaVirus'),('2021-01-03',555552,8,0,'TB'),('2022-01-07',808,9,0,'Malaria'),('2022-01-04',555554,10,0,'SIDA'),('2021-01-01',763,11,189,'AAAAA');
+INSERT INTO `internamento` VALUES ('2022-01-02',555552,3,0,'Malaria'),('2021-01-04',555551,4,0,'Tuberculose'),('2022-02-02',555551,5,0,'Malaria'),('2021-01-02',555551,6,0,'Malaria'),('2021-01-01',555552,7,0,'CoronaVirus'),('2021-01-03',555552,8,0,'TB'),('2022-01-07',808,9,0,'Malaria'),('2022-01-04',555554,10,0,'SIDA'),('2021-01-01',763,11,189,'AAAAA'),('2022-01-01',854,12,68,'Catarata');
 /*!40000 ALTER TABLE `internamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -533,4 +533,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-27 20:22:41
+-- Dump completed on 2022-06-16 21:55:09
