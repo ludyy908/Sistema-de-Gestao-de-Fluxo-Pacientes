@@ -3,19 +3,20 @@ package sistemadegestao.servidorOperacoes;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import sistemadegestao.servidorInterface.Output;
 
 public class Validacao {
+     Output output = new Output();
      BufferedReader x  = new BufferedReader(new InputStreamReader(System.in));
     
      
        
     public byte validarByte(byte a, byte b, String s)throws IOException{
         byte num = 0;
-        System.out.println(s);
         do{
-            num = Byte.parseByte(x.readLine());
+            num = output.mensagemByte(s);
             if(num < a || num > b){
-                System.out.println("Invalido. Introduza novamente.");
+                output.mensagem("Invalido. Introduza novamente.");
             }
         }while(num < a || num > b); 
         return num;
@@ -23,11 +24,10 @@ public class Validacao {
     
     public String validarString(int a, int b, String s) throws IOException {
         String nome;
-        System.out.println(s);
         do{
-            nome = x.readLine();
+            nome = output.mensagemString(s);
             if(nome.length() < a ||nome.length() > b){
-                System.out.println("Invalido. Introduza novamente.");
+                output.mensagem("Invalido. Introduza novamente.");
             }
         }while(nome.length() < a ||nome.length() > b);
         return nome;
@@ -35,11 +35,11 @@ public class Validacao {
     
    public int validarInt(int a, int b, String s)throws IOException{
         int i = 0;
-        System.out.println(s);
+        
         do{
-            i = Integer.parseInt(x.readLine());
+            i = output.mensagemInt(s);
             if(i < a || i > b){
-                System.out.println("Invalido. Introduza novamente.");
+                output.mensagem("Invalido. Introduza novamente.");
             }
         }while(i < a || i > b); 
         return i;
@@ -47,11 +47,10 @@ public class Validacao {
    
     public char validarChar(char a, char b, String c) throws IOException{
          char n;
-         System.out.println(c);
          do{
-            n = x.readLine().charAt(0);
+            n = output.mensagemString(c).charAt(0);
             if(n != a && n != b){
-                System.out.println("Invalido, introduza novamente... ");
+                output.mensagem("Invalido. Introduza novamente.");
             }
         }while(n != a && n != b); 
         return n;

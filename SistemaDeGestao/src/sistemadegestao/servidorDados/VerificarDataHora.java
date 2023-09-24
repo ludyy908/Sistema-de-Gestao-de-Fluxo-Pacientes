@@ -1,9 +1,10 @@
 
-package sistemadegestao.servidorOperacoes;
+package sistemadegestao.servidorDados;
 import java.io.*;
 import java.util.Vector;
 import sistemadegestao.servidorDados.Funcionario;
 import sistemadegestao.servidorDados.Medico;
+import sistemadegestao.servidorOperacoes.Validacao;
 import sistemadegestao.servidorOperacoes.Validacao;
 
 

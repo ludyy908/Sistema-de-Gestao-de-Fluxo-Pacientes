@@ -5,7 +5,7 @@ import sistemadegestao.servidorDados.Dados;
 import java.io.File;
 import java.io.IOException;
 import sistemadegestao.servidorOperacoes.Validacao;
-import sistemadegestao.servidorOperacoes.Impressoes;
+import sistemadegestao.servidorDados.Impressoes;
 
 
 public class Menu {
@@ -18,6 +18,7 @@ public class Menu {
     public Menu() throws IOException{
         dad = new Dados();
         dad.lerDados();
+        System.out.print(dad.getdados());
         byte opcao;
         
         do{
@@ -74,10 +75,10 @@ public class Menu {
             if(opcao !=0){
                 switch (opcao){
                     case 1:
-                        imp.ImprimirCons(dad.getdados());
+                        imp.ImprimirCons();
                     break;
                     case 2:
-                        imp.ImprimirCir(dad.getdados());
+                        imp.ImprimirCir();
                     break;
                     case 3:
                         dad.setInternamento();
@@ -92,7 +93,7 @@ public class Menu {
                         dad.cancelar("cirurgia");
                     break;
                     case 7:
-                        imp.getPacientes(dad.getdados());
+                        imp.getPacientes();
                     break;
                 }
                  opcao = validar.validarByte((byte) 0, (byte) 1, "\nContinuar? (1:Sim / 0:Nao)");
@@ -117,16 +118,16 @@ public class Menu {
                         dad.adicionarMed();
                     break;
                     case 2:
-                        imp.ImprimirMedico("consulta", dad.getdados());           
+                        imp.ImprimirMedico("consulta");           
                     break;
                     case 3:
-                        imp.ImprimirMedico("cirurgia", dad.getdados());
+                        imp.ImprimirMedico("cirurgia");
                     break;
                     case 4:
-                        imp.ImprimirAllMed(dad.getdados());
+                        imp.ImprimirAllMed();
                     break;
                     case 5:
-                        imp.agenda(dad.getdados());
+                        imp.agenda();
                         break;
                 }
                  opcao = validar.validarByte((byte) 0, (byte) 1, "\nContinuar? (1:Sim / 0:Nao)");
@@ -152,13 +153,13 @@ public class Menu {
                         dad.adicionarEnf();
                         break;
                     case 2:
-                        imp.EnfComPacientes(dad.getdados());
+                        imp.EnfComPacientes();
                     break;
                     case 3:
-                        imp.ImprimirEnf(dad.getdados());
+                        imp.ImprimirEnf();
                     break;
                     case 4:
-                        imp.verPacientesEnf(dad.getdados());
+                        imp.verPacientesEnf();
                         break;
                 }
                 opcao = validar.validarByte((byte) 0, (byte) 1, "\nContinuar? (1:Sim / 0:Nao)");

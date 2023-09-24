@@ -1,5 +1,42 @@
 module servidorDados{
+
+    struct Doenca {
+        string nome;
+        long id_Doenca;
+        string contagio;
+    };    
+
+    struct Paciente {
+        string nome;
+        string endereco;
+        string bi;
+        string estado;
+        long idPaciente;
+        sequence<string> telefone;
+        char sexo;
+        octet idade;
+        Doenca doenca;
+    };
+
+    typedef sequence<any> lista;
+
     interface dados{
-    
-    }
-}
+        void agendarConsulta();
+        void agendarCirurgia();
+        string verificarExistenciaMedico(in string n);
+        string verificarEnfermeiro();
+        void cancelar(in string tipo);
+        void darAlta();
+        void Alta(in Paciente p, in long i);
+        void setInternamento();
+        void registarPaciente();
+        long Id(in string tipo);
+        void Internamento(in long i);
+        void adicionarEnf();
+        void adicionarMed();
+        lista getdados();
+        void lerDados();
+        void gravarDados();
+        
+    };
+};

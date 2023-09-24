@@ -1,10 +1,11 @@
 
 package sistemadegestao.servidorDados;
-import sistemadegestao.servidorOperacoes.VerificarDataHora;
 import java.io.*;
 import java.util.Random;
 import java.util.Vector;
+import org.omg.CORBA.ORB;
 import sistemadegestao.servidorOperacoes.Validacao;
+import sistemadegestao.servidorInterface.Output;
 
 
 public class Dados {
@@ -16,6 +17,7 @@ public class Dados {
     Doenca d;
     VerificarDataHora vdh;
     Validacao validar = new Validacao();
+    Output output = new Output();
     public Dados(){
         func = new Funcionario();
         lista = new Vector();
@@ -24,7 +26,11 @@ public class Dados {
         d = new Doenca();
     }
     
-    
+    /**
+     *
+     * @throws IOException
+     */
+  
     public void agendarConsulta() throws IOException{
         Consulta cons = new Consulta(); Paciente p; int c1 = 0, c2 = 0; // c1 e c2 sao contadores. 
         String nome = verificarExistenciaMedico("Nome do medico que realizara a consulta:  "); //Ao agendar a consulta, o paciente diz com que medico deseja ter a conulta e se verica a sua existencia
@@ -46,7 +52,7 @@ public class Dados {
                             if(p.getNome().equalsIgnoreCase(nome)){
                                 cons.setPaciente(p.getNome());
                                 cons.setIdPaciente(p.getIdPaciente());
-                                System.out.println("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
+                                output.mensagem("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
                                 lista.addElement(cons); lista.trimToSize();  }
                             else c2++;}} 
                     if(c2 == c1){ 
@@ -59,7 +65,7 @@ public class Dados {
                         pac.setDoenca(d);
                         pac.setEstado("Nao Internado");
                         lista.addElement(pac); lista.addElement(cons); lista.trimToSize();
-                        System.out.println("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
+                        output.mensagem("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
                 
             }
         }
@@ -86,7 +92,7 @@ public class Dados {
                             if(p.getNome().equalsIgnoreCase(nome)){
                                 cir.setPaciente(p.getNome());
                                 cir.setIdPaciente(p.getIdPaciente());
-                                System.out.println("Paciente Ja Registado no Sistema da Clinica.\nCirurgia Registada.");
+                                output.mensagem("Paciente Ja Registado no Sistema da Clinica.\nCirurgia Registada.");
                                 lista.addElement(cir); lista.trimToSize();  }
                             else c2++;}}
                     if(c2 == c1){
@@ -100,7 +106,7 @@ public class Dados {
                         pac.setDoenca(d);
                         pac.setEstado("Nao Internado");
                         lista.addElement(pac); lista.addElement(cir); lista.trimToSize();
-                        System.out.println("Cirurgia Registada\nCodigo de Cirurgia: " +cir.getNrCirurgia());    }}}}}
+                        output.mensagem("Cirurgia Registada\nCodigo de Cirurgia: " +cir.getNrCirurgia());    }}}}}
 
      
     public String verificarExistenciaMedico(String n) throws IOException {
@@ -145,7 +151,7 @@ public class Dados {
                 }   
             }
             if(exis == false ){
-                System.out.println("Enfermeiro Nao Encontrado.");
+                output.mensagem("Enfermeiro Nao Encontrado.");
                 op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir o nome do enfermeiro novamente\n\t0. Cancelar operacao");
                 if(op == 0)
                     return "";
@@ -221,10 +227,10 @@ public class Dados {
                                                                         m.setAgenda(n,k," ");
                                                                         ci.setEstado("Cancelada");
                                                                         lista.setElementAt(m,j); lista.trimToSize();
-                                                                        System.out.println("*0*Cirurgia Cancelada.");
+                                                                        output.mensagem("*0*Cirurgia Cancelada.");
                                                    }}}}}}}}}}}}}
             if(exDH == false || exN == false){
-                System.out.println("Dados Nao Encontrados.");
+                output.mensagem("Dados Nao Encontrados.");
                 op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
                 } 
         }while(op == 1);
@@ -239,7 +245,7 @@ public class Dados {
             if(lista.elementAt(i) instanceof Paciente){
                 p = (Paciente)lista.elementAt(i);
                 if (p.getNome().equalsIgnoreCase(nome)){ 
-                    System.out.println(p.getNome() + "- Codigo de Identificacao: "+p.getIdPaciente());
+                    output.mensagem(p.getNome() + "- Codigo de Identificacao: "+p.getIdPaciente());
                     c++;
                 }}}
         if(c == 1){
@@ -259,14 +265,14 @@ public class Dados {
                      
                 }}
         if(c==0){
-            System.out.print("Paciente Nao Encontrado.");
+            output.mensagem("Paciente Nao Encontrado.");
             op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
             }
         }while(op == 1 && c == 0);
         }
     
 
-    public void Alta(Paciente p, int i){
+    public void Alta(Paciente p, int i) throws IOException{
         Enfermeiro e; Funcionario f; String pacientes[];
         if(p.getEstado().equalsIgnoreCase("Internado"))
             for(int j = 0; j < lista.size(); j++)
@@ -281,7 +287,7 @@ public class Dados {
                                 p.setEstado("Recebeu Alta");
                                 lista.setElementAt(p, i);
                                 lista.setElementAt(e,j); lista.trimToSize();
-                                System.out.println("Paciente Registado com Alta"); }}}}
+                                output.mensagem("Paciente Registado com Alta"); }}}}
     
     
     public void setInternamento() throws IOException {
@@ -318,7 +324,7 @@ public class Dados {
         
     public void registarPaciente() throws IOException{
         pac = new Paciente();
-        System.out.println("Paciente Nao Registado no Sistema.");
+        output.mensagem("Paciente Nao Registado no Sistema.");
         pac.setNome(validar.validarString(3, 20, "Introduza o Nome Do Novo Paciente:"));
         pac.setIdPaciente(Id("p"));
         pac.setSexo(validar.validarChar('M', 'F', "Sexo do Paciente (M/F)"));
@@ -326,7 +332,7 @@ public class Dados {
         pac.setEndereco(validar.validarString(5, 30, "Endereco do Paciente:"));
         pac.setBI(validar.validarString(8, 12, "Numero de BI do Paciente:"));
         pac.setIdade(validar.validarByte((byte)0,(byte) 100, "Idade da Paciente:"));
-        System.out.println("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
+        output.mensagem("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
     }
     
     public int Id(String tipo){
@@ -386,7 +392,7 @@ public class Dados {
                 } while (igual == true); break;
         } return id;
     }
-    
+   
     public void Internamento(int i) throws IOException{
         Enfermeiro e; Funcionario f;  String pacientes[]; String enfermeiro; 
         int c = 0; boolean exi = false;
@@ -423,22 +429,22 @@ public class Dados {
                                             pac.setEstado("Internado");
                                             lista.setElementAt(pac, i);
                                             lista.setElementAt(e, j); lista.trimToSize();
-                                            System.out.println("Paciente Internado."); 
+                                            output.mensagem("Paciente Internado."); 
                                             c++;}
                                     if(c == 0){
-                                        System.out.println("O Enfermeiro "+enfermeiro+" Atingiu o Limite de Pacientes Por Cuidar");
+                                        output.mensagem("O Enfermeiro "+enfermeiro+" Atingiu o Limite de Pacientes Por Cuidar");
                                         op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Outro Enfermeiro Novamente\n\t0. Cancelar Procedimento.");
                                     }}}    }                                                             
                     } while(op == 1 && c == 0);
     }
-    
+   
     public void adicionarEnf() throws IOException{
         Enfermeiro enf = new Enfermeiro();
         enf.setFuncionario(validar.validarString(3, 30, "Introduza o Nome do Enfermeiro:"));
         enf.setIdFuncionatio(Id("f"));
         enf.setCategoria(validar.validarString(3, 20, "Introduza a Categoria do Endermeiro:"));
         lista.addElement(enf); lista.trimToSize();
-        System.out.println("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getFuncionario());
+        output.mensagem("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getFuncionario());
     }  
     
     
@@ -449,16 +455,17 @@ public class Dados {
         med.setIdFuncionatio(Id("f"));
         med.setEspecialidade(validar.validarString(3, 20, "Introduza a Especialidade Do Medico:"));
         lista.addElement(med); lista.trimToSize();
-        System.out.println("\nMedico Adicionado.\nCodigo de Medico: " +med.getIdFuncionario());
+        output.mensagem("\nMedico Adicionado.\nCodigo de Medico: " +med.getIdFuncionario());
     
     }
-     
+    
+    
    public Vector getdados(){
        return lista;
    }
      
    
-   public void lerDados() {
+   public void lerDados() throws IOException {
         try{
             File clinica = new File("src/sistemadegestao/Clinica.dat"); 
             FileInputStream fis = new FileInputStream (clinica);
@@ -468,11 +475,11 @@ public class Dados {
             ois.close();
         }
         catch (ClassNotFoundException | IOException x){
-            System.out.println(x.getMessage());
+            output.mensagem(x.getMessage());
         }
     }
     
-    public void gravarDados() {
+    public void gravarDados() throws IOException {
         try{
             File clinica = new File("src/sistemadegestao/Clinica.dat"); 
             FileOutputStream fos = new FileOutputStream (clinica);
@@ -483,7 +490,7 @@ public class Dados {
         }
         
         catch(IOException x){
-            System.out.println(x.getMessage());
+            output.mensagem(x.getMessage());
         }
     }
     

@@ -1,26 +1,21 @@
 
-package sistemadegestao.servidorOperacoes;
-import sistemadegestao.servidorDados.Medico;
-import sistemadegestao.servidorDados.Registo;
-import sistemadegestao.servidorDados.Paciente;
-import sistemadegestao.servidorDados.Funcionario;
-import sistemadegestao.servidorDados.Enfermeiro;
-import sistemadegestao.servidorDados.Consulta;
-import sistemadegestao.servidorDados.Cirurgia;
+package sistemadegestao.servidorDados;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Vector;
+import sistemadegestao.servidorOperacoes.Validacao;
+import sistemadegestao.servidorInterface.Output;
 
         
 public class Impressoes {
      Validacao validar = new Validacao();
+     Dados dad;
+     Output output = new Output();
      
      
-     
-     public void getConsultas(Vector lista) {
+     public void getConsultas(Vector lista) throws IOException {
         Registo r; Consulta c; 
         int i, j = 0; String cons[][] = new String [100][7];
-        System.out.println("Pacientes Com Consultas");
+        output.mensagem("Pacientes Com Consultas");
         for(i = 0; i < lista.size(); i++)
             if(lista.elementAt(i) instanceof Registo){
                 r = (Registo) lista.elementAt(i);
@@ -37,26 +32,26 @@ public class Impressoes {
                         j++; }
                 }    
             }
-        System.out.println(String.format("|%-20s|", "Codigo de Consulta") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
+        output.mensagem(String.format("|%-20s|", "Codigo de Consulta") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
                 String.format("%-30s|", "Nome De Paciente")+String.format("%-20s|", "Codigo De Paciente")+String.format("%-30s|", "Nome De Medico")
                 +String.format("%-20s|", "Estado"));
         for (i = 0; i < j; i++){
-                System.out.print(String.format("|%-20s|", cons[i][0]));
-                System.out.print(String.format("%-15s|", cons[i][1]));
-                System.out.print(String.format("%-10s|", cons[i][2]));
-                System.out.print(String.format("%-30s|", cons[i][3]));
-                System.out.print(String.format("%-20s|", cons[i][4]));
-                System.out.print(String.format("%-30s|", cons[i][5]));
-                System.out.print(String.format("%-20s|", cons[i][6])+"\n");
+                output.mensagem(String.format("|%-20s|", cons[i][0]));
+                output.mensagem(String.format("%-15s|", cons[i][1]));
+                output.mensagem(String.format("%-10s|", cons[i][2]));
+                output.mensagem(String.format("%-30s|", cons[i][3]));
+                output.mensagem(String.format("%-20s|", cons[i][4]));
+                output.mensagem(String.format("%-30s|", cons[i][5]));
+                output.mensagem(String.format("%-20s|", cons[i][6])+"\n");
         }   
-        System.out.println(" Total De Pacientes com cirurga marcada: "+j);
+        output.mensagem(" Total De Pacientes com cirurga marcada: "+j);
         
    }
 
-    public void getCirurgias(Vector lista) {
+    public void getCirurgias(Vector lista) throws IOException {
         Registo r; Cirurgia c; 
         int j = 0, i; String cir [][] = new String[100][7];
-        System.out.println("Pacientes Com Cirurgias");
+        output.mensagem("Pacientes Com Cirurgias");
         for( i = 0; i < lista.size(); i++)
             if(lista.elementAt(i) instanceof Registo){
                 r = (Registo) lista.elementAt(i);
@@ -73,24 +68,24 @@ public class Impressoes {
                         j++; }
                 }    
             }
-        System.out.println(String.format("|%-20s|", "Codigo de Cirurgia") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
+        output.mensagem(String.format("|%-20s|", "Codigo de Cirurgia") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
                 String.format("%-30s|", "Nome De Paciente")+String.format("%-20s|", "Codigo De Paciente")+String.format("%-30s|", "Nome De Medico")
                 +String.format("%-20s|", "Estado"));
         for (i = 0; i < j; i++){
-                System.out.print(String.format("|%-20s|", cir[i][0]));
-                System.out.print(String.format("%-15s|", cir[i][1]));
-                System.out.print(String.format("%-10s|", cir[i][2]));
-                System.out.print(String.format("%-30s|", cir[i][3]));
-                System.out.print(String.format("%-20s|", cir[i][4]));
-                System.out.print(String.format("%-30s|", cir[i][5]));
-                System.out.print(String.format("%-20s|", cir[i][6])+"\n");
+                output.mensagem(String.format("|%-20s|", cir[i][0]));
+                output.mensagem(String.format("%-15s|", cir[i][1]));
+                output.mensagem(String.format("%-10s|", cir[i][2]));
+                output.mensagem(String.format("%-30s|", cir[i][3]));
+                output.mensagem(String.format("%-20s|", cir[i][4]));
+                output.mensagem(String.format("%-30s|", cir[i][5]));
+                output.mensagem(String.format("%-20s|", cir[i][6])+"\n");
         }   
-        System.out.print("Total De Pacientes Com Cirurgias: "+j);
+        output.mensagem("Total De Pacientes Com Cirurgias: "+j);
     }
 
-     public void Pacientes(Vector lista) {
+     public void Pacientes(Vector lista) throws IOException {
         Paciente p;   int j = 0; String pac[][] = new String [100][9];
-        System.out.println("Pacientes Registados");
+        output.mensagem("Pacientes Registados");
         for(int i = 0; i < lista.size(); i++){
             if(lista.elementAt(i) instanceof Paciente){
                 p = (Paciente) lista.elementAt(i);
@@ -106,26 +101,26 @@ public class Impressoes {
                         j++;
             }    
         }
-        System.out.println(String.format("|%-30s|", "Nome") +String.format("%-20s|", "Codigo de Paciente")+String.format("%-6s|", "Idade")+String.format("%-5s|", "Sexo")+
+        output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-20s|", "Codigo de Paciente")+String.format("%-6s|", "Idade")+String.format("%-5s|", "Sexo")+
                 String.format("%-30s|", "Numero de Identidade")+String.format("%-30s|", "Endereco")+String.format("%-30s|", "Telefone")
                 +String.format("%-20s|", "Estado")+String.format("%-30s|", "Doenca"));
         for (int i = 0; i < j; i++){{
-                System.out.print(String.format("|%-30s|", pac[i][0]));
-                System.out.print(String.format("%-20s|", pac[i][1]));
-                System.out.print(String.format("%-6s|", pac[i][2]));
-                System.out.print(String.format("%-5s|", pac[i][3]));
-                System.out.print(String.format("%-30s|", pac[i][4]));
-                System.out.print(String.format("%-30s|", pac[i][5]));
-                System.out.print(String.format("%-30s|", pac[i][6]));
-                System.out.println(String.format("%-20s|", pac[i][7]));
-                System.out.println(String.format("%-30s|", pac[i][8])+"\n");
+                output.mensagem(String.format("|%-30s|", pac[i][0]));
+                output.mensagem(String.format("%-20s|", pac[i][1]));
+                output.mensagem(String.format("%-6s|", pac[i][2]));
+                output.mensagem(String.format("%-5s|", pac[i][3]));
+                output.mensagem(String.format("%-30s|", pac[i][4]));
+                output.mensagem(String.format("%-30s|", pac[i][5]));
+                output.mensagem(String.format("%-30s|", pac[i][6]));
+                output.mensagem(String.format("%-20s|", pac[i][7]));
+                output.mensagem(String.format("%-30s|", pac[i][8])+"\n");
             }
         }
-        System.out.print("Total De Pacientes Nos Registos da Clinica: "+j);
+        output.mensagem("Total De Pacientes Nos Registos da Clinica: "+j);
     }
      
 
-    public  void getMedicos(String tipo, Vector lista) {
+    public  void getMedicos(String tipo, Vector lista) throws IOException {
         Registo r;  String t = "-----------------------------------------------";
         if (tipo.equalsIgnoreCase("consulta")){
             Consulta c;
@@ -145,10 +140,10 @@ public class Impressoes {
                             c = (Cirurgia) r;
                             t += "\n"+c.getMedico(); } 
                 }}}
-     System.out.print("Total De Medicos Com "+tipo+":\n"+t);   
+     output.mensagem("Total De Medicos Com "+tipo+":\n"+t);   
     }
 
-    public void getMedicos(Vector lista) {
+    public void getMedicos(Vector lista) throws IOException {
         Medico m; Funcionario f; String t = "Medicos da Clinica";
         String med[][] = new String[100][3]; int j = 0;
         for(int i = 0; i < lista.size(); i++){
@@ -163,16 +158,16 @@ public class Impressoes {
                 }
             }
         }
-        System.out.println(t);
-        System.out.println(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Especialidade"));
+        output.mensagem(t);
+        output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Especialidade"));
         for (int i = 0; i < j; i++){{
-                System.out.print(String.format("|%-30s|", med[i][0]));
-                System.out.print(String.format("%-10s|", med[i][1]));
-                System.out.println(String.format("%-30s|", med[i][2])+"\n");
+                output.mensagem(String.format("|%-30s|", med[i][0]));
+                output.mensagem(String.format("%-10s|", med[i][1]));
+                output.mensagem(String.format("%-30s|", med[i][2])+"\n");
             }
         }
         
-        System.out.print("Total De Medicos Na Clinica:  "+j);
+        output.mensagem("Total De Medicos Na Clinica:  "+j);
     }
 
     public void VerAgendaMedico(Vector lista) throws IOException{
@@ -196,9 +191,9 @@ public class Impressoes {
         }
         
             if(ex == true){
-                System.out.println("Agenda do Medico(a) "+nome+" :\n\n"+dtHoras);
+                output.mensagem("Agenda do Medico(a) "+nome+" :\n\n"+dtHoras);
             }else{
-                System.out.println("Medico Nao Encontrado. ");
+                output.mensagem("Medico Nao Encontrado. ");
             }
             
     }
@@ -217,7 +212,7 @@ public class Impressoes {
         return t;
     }
     
-    public void getEnfComPac(Vector lista) {
+    public void getEnfComPac(Vector lista) throws IOException {
         Funcionario f; Enfermeiro e; String t = "--------------------------------------------------";
         int c = 0; boolean ex = false;
         for(int i = 0; i < lista.size(); i++){
@@ -236,12 +231,12 @@ public class Impressoes {
             }}
         } 
         if(ex == false){
-            System.out.println("Nao Existe Nenhum Enfermeiro(a) Com Pacientes Por Cuidar. ");
+            output.mensagem("Nao Existe Nenhum Enfermeiro(a) Com Pacientes Por Cuidar. ");
         } else
-            System.out.println("Total De Enfermeiros Com Pacientes:\n"+t);
+            output.mensagem("Total De Enfermeiros Com Pacientes:\n"+t);
     } 
 
-    public void getEnfermeiros(Vector lista) {
+    public void getEnfermeiros(Vector lista) throws IOException {
         Funcionario f; Enfermeiro e; String t = "Enfermeiros Na Clinica";
           byte count = 0; String enf [][]= new String [100][3]; int j=0;
         for(int i = 0; i < lista.size(); i++){
@@ -256,15 +251,15 @@ public class Impressoes {
                 }
             }
         }
-        System.out.println(t);
-        System.out.println(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Categoria"));
+        output.mensagem(t);
+        output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Categoria"));
         for (int i = 0; i < j; i++){{
-                System.out.print(String.format("|%-30s|", enf[i][0]));
-                System.out.print(String.format("%-10s|", enf[i][1]));
-                System.out.println(String.format("%-30s|", enf[i][2])+"\n");
+                output.mensagem(String.format("|%-30s|", enf[i][0]));
+                output.mensagem(String.format("%-10s|", enf[i][1]));
+                output.mensagem(String.format("%-30s|", enf[i][2])+"\n");
             }
         }
-        System.out.print("Total De Enfermeiros Na Clinica: "+count);
+        output.mensagem("Total De Enfermeiros Na Clinica: "+count);
     }
     
     
@@ -300,12 +295,12 @@ public class Impressoes {
             }   
         }
         if(enf == false)
-            System.out.println("\nEnfermeiro Nao Encontrado.");
+            output.mensagem("\nEnfermeiro Nao Encontrado.");
         else{ 
             if(c == 0)
-                System.out.println("O(a) Enfermeiro(a) "+nome+" Actualmente Nao Possui Pacientes Em Cuidados.");
+                output.mensagem("O(a) Enfermeiro(a) "+nome+" Actualmente Nao Possui Pacientes Em Cuidados.");
             else
-                System.out.print("Pacientes Cuidados Por "+nome+":\n"+pacientes);
+                output.mensagem("Pacientes Cuidados Por "+nome+":\n"+pacientes);
         } 
         }    
     }
@@ -320,39 +315,39 @@ public class Impressoes {
         return imp;
     }    
     
-    public void agenda(Vector lista) throws IOException{
-        VerAgendaMedico(lista);
+    public void agenda() throws IOException{
+        VerAgendaMedico(dad.getdados());
     }
     
-    public void getPacientes(Vector lista){
-        Pacientes(lista);
+    public void getPacientes() throws IOException{
+        Pacientes(dad.getdados());
     }
-    public void ImprimirCons(Vector lista){
-        getConsultas(lista);
+    public void ImprimirCons() throws IOException{
+        getConsultas(dad.getdados());
     }
     
-    public void ImprimirCir(Vector lista){
-        getCirurgias(lista);
+    public void ImprimirCir() throws IOException{
+        getCirurgias(dad.getdados());
     }
      
-    public void ImprimirMedico(String tipo, Vector lista){
-        getMedicos(tipo, lista);
+    public void ImprimirMedico(String tipo) throws IOException{
+        getMedicos(tipo, dad.getdados());
     }
     
-     public void ImprimirEnf(Vector lista){
-         getEnfermeiros(lista);
+     public void ImprimirEnf() throws IOException{
+         getEnfermeiros(dad.getdados());
     }
     
-     public void EnfComPacientes(Vector lista){
-         getEnfComPac(lista);
+     public void EnfComPacientes() throws IOException{
+         getEnfComPac(dad.getdados());
      }
      
-    public void ImprimirAllMed(Vector lista){
-        getMedicos(lista);
+    public void ImprimirAllMed() throws IOException{
+        getMedicos(dad.getdados());
     }
     
-    public void verPacientesEnf(Vector lista)throws IOException{
-       verPacEnf(lista);
+    public void verPacientesEnf()throws IOException{
+       verPacEnf(dad.getdados());
    } 
     
 }
