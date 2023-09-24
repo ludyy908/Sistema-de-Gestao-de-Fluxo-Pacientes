@@ -1,11 +1,11 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 import java.io.*;
 import java.util.Vector;
-import sistemadegestao.servidorDados.Funcionario;
-import sistemadegestao.servidorDados.Medico;
-import sistemadegestao.servidorOperacoes.Validacao;
-import sistemadegestao.servidorOperacoes.Validacao;
+import sistemadegestao.servidorOperacoes.Funcionario;
+import sistemadegestao.servidorOperacoes.Medico;
+import sistemadegestao.servidorValidacao.Validacao;
+import sistemadegestao.servidorValidacao.Validacao;
 
 
 public class VerificarDataHora {

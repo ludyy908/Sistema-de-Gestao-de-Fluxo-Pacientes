@@ -1,10 +1,10 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 import java.io.*;
 import java.util.Random;
 import java.util.Vector;
 import org.omg.CORBA.ORB;
-import sistemadegestao.servidorOperacoes.Validacao;
+import sistemadegestao.servidorValidacao.Validacao;
 import sistemadegestao.servidorInterface.Output;
 
 

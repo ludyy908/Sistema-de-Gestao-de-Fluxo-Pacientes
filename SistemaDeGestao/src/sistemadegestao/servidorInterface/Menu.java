@@ -1,11 +1,11 @@
 
 package sistemadegestao.servidorInterface;
 
-import sistemadegestao.servidorDados.Dados;
+import sistemadegestao.servidorOperacoes.Dados;
 import java.io.File;
 import java.io.IOException;
-import sistemadegestao.servidorOperacoes.Validacao;
-import sistemadegestao.servidorDados.Impressoes;
+import sistemadegestao.servidorValidacao.Validacao;
+import sistemadegestao.servidorOperacoes.Impressoes;
 
 
 public class Menu {

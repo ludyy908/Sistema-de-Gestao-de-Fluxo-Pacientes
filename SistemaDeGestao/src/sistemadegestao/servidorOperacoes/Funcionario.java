@@ -1,5 +1,5 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 
 import java.io.Serializable;
 

@@ -1,5 +1,5 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 
 public class Cirurgia extends Registo {
     private  int nrCirurgia;

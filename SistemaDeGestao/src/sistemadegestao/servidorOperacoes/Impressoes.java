@@ -1,8 +1,8 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 import java.io.*;
 import java.util.Vector;
-import sistemadegestao.servidorOperacoes.Validacao;
+import sistemadegestao.servidorValidacao.Validacao;
 import sistemadegestao.servidorInterface.Output;
 
         

@@ -1,5 +1,5 @@
 
-package sistemadegestao.servidorDados;
+package sistemadegestao.servidorOperacoes;
 
 public class Consulta extends Registo {
     private  int nrConsulta;
