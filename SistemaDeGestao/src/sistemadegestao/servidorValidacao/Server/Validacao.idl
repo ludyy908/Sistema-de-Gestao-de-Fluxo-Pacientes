@@ -1,0 +1,12 @@
+module validacao{
+    typedef sequence<string> Array;
+        interface Validacao {
+            octet validarByte(in octet a, in octet b, in string s);
+            string validarString(in long a, in long b, in string s);
+            long validarInt(in long a, in long b, in string s);
+            char validarChar(in char a, in char b, in string c);
+            string validarData();
+            string validarHora();
+            Array validarTelefone();
+        };
+};
