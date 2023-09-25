@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>SistemaDeGestao</title>
+        <vendor>ludmi</vendor>
+        <homepage href=""/>
+        <description>SistemaDeGestao</description>
+        <description kind="short">SistemaDeGestao</description>
+    </information>
+    <update check="always"/>
+    <resources>
+        <j2se version="1.8+"/>
+        <jar href="SistemaDeGestao.jar" main="true"/>
+    </resources>
+    <application-desc main-class="sistemadegestao.servidorInterface.SistemaDeGestao">
+    </application-desc>
+</jnlp>

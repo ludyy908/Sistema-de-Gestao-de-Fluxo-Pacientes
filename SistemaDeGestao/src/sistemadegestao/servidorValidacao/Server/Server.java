@@ -2,6 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import java.util.Properties;
+import java.util.stream.Stream;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.Object;
 import org.omg.CosNaming.NameComponent;
@@ -14,10 +16,11 @@ import sistemadegestao.servidorValidacao.Server.validacao.ValidacaoHelper;
 
 public class Server {
     public static void main(String[] args) {
-        String argv[] = { "-ORBInitialPort", "900", "-ORBInitialHost", "192.168.157.1" };
+        args = Stream.of("-ORBInitialPort", "1000", "-ORBInitialHost", "localhost").toArray(String[]::new);
+   
         try {
             // Create and initialize the ORB
-            ORB orb = ORB.init(argv, null);
+            ORB orb = ORB.init(args, null);
 
             // Create the servant object
             Validacao servidorValidacao = new Validacao(); // Replace with your actual implementation class

@@ -9,6 +9,8 @@ package sistemadegestao.servidorValidacao.Client;
  * @author ludmi
  */
 
+import java.util.Properties;
+import java.util.stream.Stream;
 import sistemadegestao.servidorValidacao.Server.validacao.Validacao;
 import org.omg.CosNaming.*;
 import org.omg.CORBA.*;
@@ -16,10 +18,10 @@ import sistemadegestao.servidorValidacao.Server.validacao.ValidacaoHelper;
 
 public class Client {
     public static void main(String[] args) {
-        String argv[] = { "-ORBInitialPort", "900", "-ORBInitialHost", "192.168.157.1" };
+        args = Stream.of("-ORBInitialPort", "1000", "-ORBInitialHost", "localhost").toArray(String[]::new);
         try {
             // Initialize the ORB
-            ORB orb = ORB.init(argv, null);
+            ORB orb = ORB.init(args, null);
 
             // Get the Naming Service (CosNaming) context
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
