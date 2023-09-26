@@ -12,6 +12,8 @@
         <j2se version="1.8+"/>
         <jar href="SistemaDeGestao.jar" main="true"/>
     </resources>
-    <application-desc main-class="sistemadegestao.servidorInterface.SistemaDeGestao">
+    <application-desc main-class="Server">
+        <argument>-ORBInitialPort</argument>
+        <argument>900</argument>
     </application-desc>
 </jnlp>

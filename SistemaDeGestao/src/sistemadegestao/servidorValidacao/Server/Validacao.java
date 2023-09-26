@@ -3,13 +3,48 @@ package sistemadegestao.servidorValidacao.Server;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import sistemadegestao.servidorInterface.Output;
+import org.omg.CORBA.ORB;
+import org.omg.CosNaming.NamingContextExt;
+import org.omg.CosNaming.NamingContextExtHelper;
+import sistemadegestao.servidorValidacao.App.Output.Output;
+import sistemadegestao.servidorValidacao.App.Output.OutputHelper;
 
-public class Validacao extends sistemadegestao.servidorValidacao.Server.validacao.ValidacaoPOA{
-     Output output = new Output();
-     BufferedReader x  = new BufferedReader(new InputStreamReader(System.in));
-    
+public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.ValidacaoPOA{
      
+     BufferedReader x  = new BufferedReader(new InputStreamReader(System.in));
+     private ORB orb;
+     private ORB OrbOutput;
+     private Output output;
+     
+     public void setOrb(ORB orb_val){
+         orb = orb_val;
+     }
+     
+    public Validacao(){
+        try {
+            String[] args = new String[0];
+            // Initialize the ORB
+            OrbOutput = ORB.init(args, null);
+
+            // Get the Naming Service (CosNaming) context
+            org.omg.CORBA.Object objRef = OrbOutput.resolve_initial_references("NameService");
+            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+
+            // Resolve the CORBA server object reference using its name
+            String serverName = "OutputService";
+            output = OutputHelper.narrow(ncRef.resolve_str(serverName));
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void shutdownORB() {
+        // Shutdown the ORB when you're done
+        OrbOutput.shutdown(false);
+    }
+  
        
      @Override
     public byte validarByte(byte a, byte b, String s)throws IOException{
@@ -90,6 +125,5 @@ public class Validacao extends sistemadegestao.servidorValidacao.Server.validaca
         return tel; 
         
     }
-    
-}    
+}
 

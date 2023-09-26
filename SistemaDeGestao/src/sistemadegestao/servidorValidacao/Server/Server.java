@@ -12,26 +12,28 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import sistemadegestao.servidorValidacao.Server.Validacao;
-import sistemadegestao.servidorValidacao.Server.validacao.ValidacaoHelper;
+import sistemadegestao.servidorValidacao.App.Validacao.ValidacaoHelper;
 
 public class Server {
     public static void main(String[] args) {
-        args = Stream.of("-ORBInitialPort", "1000", "-ORBInitialHost", "localhost").toArray(String[]::new);
+        //args = Stream.of("-ORBInitialPort", "1000", "-ORBInitialHost", "localhost").toArray(String[]::new);
    
         try {
             // Create and initialize the ORB
             ORB orb = ORB.init(args, null);
 
-            // Create the servant object
-            Validacao servidorValidacao = new Validacao(); // Replace with your actual implementation class
 
             // Get the root POA (Portable Object Adapter)
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootPOA.the_POAManager().activate();
+            
+            // Create the servant object
+            Validacao servidorValidacao = new Validacao();
+            servidorValidacao.setOrb(orb);
 
             // Activate the servant object
             org.omg.CORBA.Object ref = rootPOA.servant_to_reference(servidorValidacao);
-            sistemadegestao.servidorValidacao.Server.validacao.Validacao href = ValidacaoHelper.narrow(ref);
+            sistemadegestao.servidorValidacao.App.Validacao.Validacao href = ValidacaoHelper.narrow(ref);
 
             // Get the Naming Service (CosNaming) context
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
@@ -45,8 +47,11 @@ public class Server {
 
             System.out.println("Servidor pronto...");
 
-            // Run the ORB
-            orb.run();
+            // Run the ORB & wait for invocations from client
+            for(;;){
+                orb.run();
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
