@@ -3,6 +3,8 @@ package sistemadegestao.servidorValidacao.Server;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+import java.util.stream.Stream;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
@@ -16,15 +18,22 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
      private ORB OrbOutput;
      private Output output;
      
+     public Validacao(){
+         output = null;
+     }
+     
      public void setOrb(ORB orb_val){
          orb = orb_val;
      }
      
-    public Validacao(){
+    public void activarOutput(){
         try {
-            String[] args = new String[0];
+            Properties props = new Properties();
+            props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+            props.put("org.omg.CORBA.ORBInitialPort", "1050");
+            
             // Initialize the ORB
-            OrbOutput = ORB.init(args, null);
+            OrbOutput = ORB.init(new String[0], props);
 
             // Get the Naming Service (CosNaming) context
             org.omg.CORBA.Object objRef = OrbOutput.resolve_initial_references("NameService");
@@ -48,6 +57,9 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
        
      @Override
     public byte validarByte(byte a, byte b, String s)throws IOException{
+        if (output._non_existent()){
+            activarOutput();
+        }
         byte num = 0;
         do{
             num = output.mensagemByte(s);
@@ -125,5 +137,8 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
         return tel; 
         
     }
+    
+    public void mensagem(String text) throws IOException {
+        output.mensagem(text);
+    }
 }
-

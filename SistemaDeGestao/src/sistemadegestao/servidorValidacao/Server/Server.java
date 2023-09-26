@@ -1,3 +1,5 @@
+package sistemadegestao.servidorValidacao.Server;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -16,11 +18,12 @@ import sistemadegestao.servidorValidacao.App.Validacao.ValidacaoHelper;
 
 public class Server {
     public static void main(String[] args) {
-        //args = Stream.of("-ORBInitialPort", "1000", "-ORBInitialHost", "localhost").toArray(String[]::new);
-   
+        Properties props = new Properties();
+        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialPort", "1050");
         try {
             // Create and initialize the ORB
-            ORB orb = ORB.init(args, null);
+            ORB orb = ORB.init(args, props);
 
 
             // Get the root POA (Portable Object Adapter)
