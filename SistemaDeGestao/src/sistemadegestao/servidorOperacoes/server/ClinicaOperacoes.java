@@ -60,9 +60,9 @@ public class ClinicaOperacoes extends DadosPOA {
     public void  conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
             //this.orb = Orb;
                     Properties props = new Properties();
-        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
         props.put("org.omg.CORBA.ORBInitialPort", "1050");
-            String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
+            //String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "192.168.14.216" };
             ORB orb = ORB.init(new String[0], props);
 
             // obtém a referência para o serviço de nomes
@@ -604,7 +604,7 @@ public class ClinicaOperacoes extends DadosPOA {
         try {
               
            //Usando o serviço de nomes
-           String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.21.34.93" };
+           String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "192.168.15.88" };
             ORB orb = ORB.init(argv, null);
 
             // Obtém referência a rootpoa (Portable Object Adapter) e ativa o Gerenciador POA

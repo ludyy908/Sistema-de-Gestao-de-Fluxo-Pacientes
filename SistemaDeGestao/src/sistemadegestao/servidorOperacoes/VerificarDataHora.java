@@ -26,10 +26,10 @@ public class VerificarDataHora {
      
     public void conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
         Properties props = new Properties();
-        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
         props.put("org.omg.CORBA.ORBInitialPort", "1050");
        
-        String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
+        //String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "192.168.14.216" };
         ORB orb = ORB.init(new String[0], props);
         // obtém a referência para o serviço de nomes
         org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 

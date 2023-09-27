@@ -47,20 +47,20 @@ public class ClinicaImpressoes extends ImpressoesPOA{
     public void conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
             //this.orb = orb;
             
-                    Properties props = new Properties();
-        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        Properties props = new Properties();
+        props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
         props.put("org.omg.CORBA.ORBInitialPort", "1050");
-            String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
-            ORB orb = ORB.init(new String[0], props);
+          //  String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "192.168.14.216" };
+        orb = ORB.init(new String[0], props);
 
-            // obtém a referência para o serviço de nomes
-            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 
-            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+        // obtém a referência para o serviço de nomes
+        org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 
+        NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 
-            // Obtém a referência para o Objeto do servidor (IOR), através do serviço de nomes 
-            String objNome = "ValidacaoService";
-            org.omg.CORBA.Object obj = ncRef.resolve_str(objNome);
-            validar = ValidacaoHelper.narrow(obj);
+        // Obtém a referência para o Objeto do servidor (IOR), através do serviço de nomes 
+        String objNome = "ValidacaoService";
+        org.omg.CORBA.Object obj = ncRef.resolve_str(objNome);
+        validar = ValidacaoHelper.narrow(obj);
 
     }
     
@@ -472,7 +472,7 @@ public class ClinicaImpressoes extends ImpressoesPOA{
     
     public static void main(String[] args) {
         try {
-             String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.21.34.93" };
+             String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "192.168.15.88" };
             ORB orb = ORB.init(argv, null);
 
             // Obtém referência a rootpoa (Portable Object Adapter) e ativa o Gerenciador POA
