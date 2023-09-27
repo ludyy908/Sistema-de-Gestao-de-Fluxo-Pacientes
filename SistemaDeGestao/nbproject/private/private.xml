@@ -4,9 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/Server/Server.java</file>
-            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Output/OutputPOA.java</file>
-            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Output/OutputOperations.java</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Validacao/ValidacaoOperations.java</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Validacao/SequenceHolder.java</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/Server/Validacao.idl</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Validacao/SequenceHelper.java</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Validacao/ValidacaoPOA.java</file>
             <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/Server/Validacao.java</file>
+            <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Validacao/ArrayHelper.java</file>
             <file>file:/C:/Users/ludmi/OneDrive/Documents/GitHub/Sistema-de-Gestao-de-Fluxo-Pacientes/SistemaDeGestao/src/sistemadegestao/servidorValidacao/App/Output/Output.java</file>
         </group>
     </open-files>

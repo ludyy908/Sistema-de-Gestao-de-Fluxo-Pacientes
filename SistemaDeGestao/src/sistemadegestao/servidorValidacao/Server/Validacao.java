@@ -19,18 +19,15 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
      private Output output;
      
      public Validacao(){
-         output = null;
+        output = null;
      }
      
-     public void setOrb(ORB orb_val){
-         orb = orb_val;
-     }
      
     public void activarOutput(){
         try {
             Properties props = new Properties();
-            props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
-            props.put("org.omg.CORBA.ORBInitialPort", "1050");
+            props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
+            props.put("org.omg.CORBA.ORBInitialPort", "1055");
             
             // Initialize the ORB
             OrbOutput = ORB.init(new String[0], props);
@@ -43,6 +40,7 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
             String serverName = "OutputService";
             output = OutputHelper.narrow(ncRef.resolve_str(serverName));
             
+            System.out.println("Em Conexao com Servidor de Interface.");
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +55,7 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
        
      @Override
     public byte validarByte(byte a, byte b, String s)throws IOException{
-        if (output._non_existent()){
+        if (output == null){
             activarOutput();
         }
         byte num = 0;
@@ -141,4 +139,9 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
     public void mensagem(String text) throws IOException {
         output.mensagem(text);
     }
+    
+    public void setOrb(ORB orb_val){
+         orb = orb_val;
+     }
 }
+
