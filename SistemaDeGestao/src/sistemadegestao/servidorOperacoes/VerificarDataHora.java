@@ -1,18 +1,47 @@
 
 package sistemadegestao.servidorOperacoes;
 import java.io.*;
+import java.util.Properties;
 import java.util.Vector;
+import org.omg.CORBA.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NameComponent;
+import org.omg.CosNaming.NamingContextExt;
+import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import sistemadegestao.servidorOperacoes.Funcionario;
 import sistemadegestao.servidorOperacoes.Medico;
 import sistemadegestao.servidorValidacao.Validacao;
-import sistemadegestao.servidorValidacao.Validacao;
+import sistemadegestao.servidorValidacao.ValidacaoHelper;
 
 
 public class VerificarDataHora {
     
-     Validacao validar = new Validacao();
+    Validacao validar;
      
-      public String verificarData (String nome, Vector lista) throws IOException{
+    public VerificarDataHora() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+        conectValidacao();
+    }
+     
+    public void conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+        Properties props = new Properties();
+        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialPort", "1050");
+       
+        String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
+        ORB orb = ORB.init(new String[0], props);
+        // obtém a referência para o serviço de nomes
+        org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 
+        NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+
+        // Obtém a referência para o Objeto do servidor (IOR), através do serviço de nomes 
+        String objNome = "ValidacaoService";
+        org.omg.CORBA.Object obj = ncRef.resolve_str(objNome);
+        validar = ValidacaoHelper.narrow(obj);
+    }
+       
+    public String verificarData (String nome, Vector lista) throws IOException{
         String data, dt = ""; int pos = 0, c1= 0, c2= 0, i, j,l;  byte opcao = 0; 
         Funcionario f; Medico m;  
         String agenda[][];

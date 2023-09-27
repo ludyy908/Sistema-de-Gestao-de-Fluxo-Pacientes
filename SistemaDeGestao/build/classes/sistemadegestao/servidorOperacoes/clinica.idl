@@ -11,22 +11,21 @@ module services{
       void registarPaciente();
       void registarEnf();
       void registarMed();
-      Lista getdados();
       void lerDados();
       void gravarDados();
         
     };
 
-    interface ImprimirDados{
-        void getConsultas(in Lista lista);
-        void getCirurgias(in Lista lista);
-        void getPacientes(in Lista lista);
-        void getMedicosConsulta(in string tipo, in  Lista lista);
-        void getMedicos(in Lista lista);
-        void VerAgendaMedico(in Lista lista);
-        void getEnfComPac(in Lista lista);
-        void getEnfermeiros(in Lista lista);
-        void verPacEnf(in Lista lista);
+    interface Impressoes{
+        void ImprimirCons();
+        void ImprimirCir();
+        void getPacientes();
+        void ImprimirMedico(in string tipo);
+        void ImprimirAllMed();
+        void agenda();
+        void EnfComPacientes();
+        void ImprimirEnf();
+        void verPacientesEnf();
      
     };
 

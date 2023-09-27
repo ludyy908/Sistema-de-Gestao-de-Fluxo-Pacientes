@@ -5,57 +5,75 @@
 package sistemadegestao.servidorOperacoes.server;
 
 import java.io.IOException;
+import java.util.Properties;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.Any;
 import org.omg.CORBA.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
-import sistemadegestao.servidorInterface.Output;
 import sistemadegestao.servidorOperacoes.Cirurgia;
 import sistemadegestao.servidorOperacoes.Consulta;
-import sistemadegestao.servidorOperacoes.Dados;
 import sistemadegestao.servidorOperacoes.Enfermeiro;
 import sistemadegestao.servidorOperacoes.Funcionario;
 import sistemadegestao.servidorOperacoes.Medico;
 import sistemadegestao.servidorOperacoes.Paciente;
 import sistemadegestao.servidorOperacoes.Registo;
-import sistemadegestao.servidorOperacoes.services.DadosHelper;
-import sistemadegestao.servidorOperacoes.services.ImprimirDadosHelper;
-import sistemadegestao.servidorOperacoes.services.ImprimirDadosPOA;
+import sistemadegestao.servidorOperacoes.services.ImpressoesPOA;
+import sistemadegestao.servidorOperacoes.services.ImpressoesHelper;
 import sistemadegestao.servidorValidacao.Validacao;
-// sistemadegestao.servidorOperacoes.services.L
+import sistemadegestao.servidorValidacao.ValidacaoHelper;
 
 /**
  *
  * @author HP
  */
-public class ClinicaImpressoes extends ImprimirDadosPOA{
-    Validacao validar = new Validacao();
+public class ClinicaImpressoes extends ImpressoesPOA{
+    Validacao validar;
     ClinicaOperacoes cOp;
     Vector dados;
     private ORB orb;
-    Output output = new Output();
 
-    
-    public void setOrb(ORB orb) {
-            this.orb = orb;
+    public ClinicaImpressoes() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+        conectValidacao();
     }
     
-    public Vector<Object> convertToVector(Any[] corbaLista){
-        Vector<Object> vector = new Vector<>();
-         if (corbaLista != null) {
-            for (Any any : corbaLista) {
-                Object obj = any.extract_Object();
-                vector.add(obj);
-            }
-        }
-        return vector;
+    public void conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+            //this.orb = orb;
+            
+                    Properties props = new Properties();
+        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialPort", "1050");
+            String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
+            ORB orb = ORB.init(new String[0], props);
+
+            // obtém a referência para o serviço de nomes
+            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 
+            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+
+            // Obtém a referência para o Objeto do servidor (IOR), através do serviço de nomes 
+            String objNome = "ValidacaoService";
+            org.omg.CORBA.Object obj = ncRef.resolve_str(objNome);
+            validar = ValidacaoHelper.narrow(obj);
+
     }
+    
+//    public Vector<Object> convertToVector(Any[] corbaLista){
+//        Vector<Object> vector = new Vector<>();
+//         if (corbaLista != null) {
+//            for (Any any : corbaLista) {
+//                Object obj = any.extract_Object();
+//                vector.add(obj);
+//            }
+//        }
+//        return vector;
+//    }
     
     
 //    public static Any[] vectorToCorbaLista(Vector<Object> vector) {
@@ -68,13 +86,12 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
 //        return corbaLista;
 //    }
     
-    @Override
-    public void getConsultas(Any[] lista) {
-        dados = convertToVector(lista);
+    public void getConsultas(Vector lista) {
+        //dados = convertToVector(lista);
         Registo r; Consulta c; 
         int i, j = 0; String cons[][] = new String [100][7];
         try {
-            output.mensagem("Pacientes Com Consultas");
+            validar.mensagem("Pacientes Com Consultas");
         } catch (IOException ex) {
             Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,13 +113,12 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
         }
     }
     
-    @Override
-    public void getCirurgias(Any[] lista) {
-        dados = convertToVector(lista);
+    public void getCirurgias(Vector lista) {
+        //dados = convertToVector(lista);
         Registo r; Cirurgia c; 
         int j = 0, i; String cir [][] = new String[100][7];
         try{
-            output.mensagem("Pacientes Com Cirurgias");
+            validar.mensagem("Pacientes Com Cirurgias");
             for( i = 0; i < dados.size(); i++)
                 if(dados.elementAt(i) instanceof Registo){
                     r = (Registo) dados.elementAt(i);
@@ -119,30 +135,30 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
                             j++; }
                     }    
                 }
-            output.mensagem(String.format("|%-20s|", "Codigo de Cirurgia") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
+            validar.mensagem(String.format("|%-20s|", "Codigo de Cirurgia") +String.format("%-15s|", "Data")+String.format("%-10s|", "Hora")+
                     String.format("%-30s|", "Nome De Paciente")+String.format("%-20s|", "Codigo De Paciente")+String.format("%-30s|", "Nome De Medico")
                     +String.format("%-20s|", "Estado"));
             for (i = 0; i < j; i++){
-                    output.mensagem(String.format("|%-20s|", cir[i][0]));
-                    output.mensagem(String.format("%-15s|", cir[i][1]));
-                    output.mensagem(String.format("%-10s|", cir[i][2]));
-                    output.mensagem(String.format("%-30s|", cir[i][3]));
-                    output.mensagem(String.format("%-20s|", cir[i][4]));
-                    output.mensagem(String.format("%-30s|", cir[i][5]));
-                    output.mensagem(String.format("%-20s|", cir[i][6])+"\n");
+                    validar.mensagem(String.format("|%-20s|", cir[i][0]));
+                    validar.mensagem(String.format("%-15s|", cir[i][1]));
+                    validar.mensagem(String.format("%-10s|", cir[i][2]));
+                    validar.mensagem(String.format("%-30s|", cir[i][3]));
+                    validar.mensagem(String.format("%-20s|", cir[i][4]));
+                    validar.mensagem(String.format("%-30s|", cir[i][5]));
+                    validar.mensagem(String.format("%-20s|", cir[i][6])+"\n");
             }   
-            output.mensagem("Total De Pacientes Com Cirurgias: "+j);
+            validar.mensagem("Total De Pacientes Com Cirurgias: "+j);
         } catch (IOException ex) {
             Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    public void getPacientes(Any[] lista) {
-        dados = convertToVector(lista);
+
+    public void getPacientes(Vector lista) {
+        //dados = convertToVector(lista);
         Paciente p;   int j = 0; String pac[][] = new String [100][9];
         try{
-            output.mensagem("Pacientes Registados");
+            validar.mensagem("Pacientes Registados");
             for(int i = 0; i < dados.size(); i++){
                 if(dados.elementAt(i) instanceof Paciente){
                     p = (Paciente) dados.elementAt(i);
@@ -158,30 +174,30 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
                             j++;
                 }    
             }
-            output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-20s|", "Codigo de Paciente")+String.format("%-6s|", "Idade")+String.format("%-5s|", "Sexo")+
+            validar.mensagem(String.format("|%-30s|", "Nome") +String.format("%-20s|", "Codigo de Paciente")+String.format("%-6s|", "Idade")+String.format("%-5s|", "Sexo")+
                     String.format("%-30s|", "Numero de Identidade")+String.format("%-30s|", "Endereco")+String.format("%-30s|", "Telefone")
                     +String.format("%-20s|", "Estado")+String.format("%-30s|", "Doenca"));
             for (int i = 0; i < j; i++){{
-                    output.mensagem(String.format("|%-30s|", pac[i][0]));
-                    output.mensagem(String.format("%-20s|", pac[i][1]));
-                    output.mensagem(String.format("%-6s|", pac[i][2]));
-                    output.mensagem(String.format("%-5s|", pac[i][3]));
-                    output.mensagem(String.format("%-30s|", pac[i][4]));
-                    output.mensagem(String.format("%-30s|", pac[i][5]));
-                    output.mensagem(String.format("%-30s|", pac[i][6]));
-                    output.mensagem(String.format("%-20s|", pac[i][7]));
-                    output.mensagem(String.format("%-30s|", pac[i][8])+"\n");
+                    validar.mensagem(String.format("|%-30s|", pac[i][0]));
+                    validar.mensagem(String.format("%-20s|", pac[i][1]));
+                    validar.mensagem(String.format("%-6s|", pac[i][2]));
+                    validar.mensagem(String.format("%-5s|", pac[i][3]));
+                    validar.mensagem(String.format("%-30s|", pac[i][4]));
+                    validar.mensagem(String.format("%-30s|", pac[i][5]));
+                    validar.mensagem(String.format("%-30s|", pac[i][6]));
+                    validar.mensagem(String.format("%-20s|", pac[i][7]));
+                    validar.mensagem(String.format("%-30s|", pac[i][8])+"\n");
                 }
             }
-            output.mensagem("Total De Pacientes Nos Registos da Clinica: "+j);
+            validar.mensagem("Total De Pacientes Nos Registos da Clinica: "+j);
         }catch (IOException ex) {
             Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    public void getMedicosConsulta(String tipo, Any[] lista) {
-        dados = convertToVector(lista);
+  
+    public void getMedicosAll(String tipo, Vector lista) {
+        //dados = convertToVector(lista);
         try{
             Registo r;  String t = "-----------------------------------------------";
         if (tipo.equalsIgnoreCase("consulta")){
@@ -202,15 +218,15 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
                             c = (Cirurgia) r;
                             t += "\n"+c.getMedico(); } 
                 }}}
-     output.mensagem("Total De Medicos Com "+tipo+":\n"+t);   
+     validar.mensagem("Total De Medicos Com "+tipo+":\n"+t);   
         }catch (IOException ex) {
            Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
     
-    @Override
-    public void getMedicos(Any[] lista) {
-        dados = convertToVector(lista);
+  
+    public void getMedicos(Vector lista) {
+        //dados = convertToVector(lista);
        try{
            Medico m; Funcionario f; String t = "Medicos da Clinica";
         String med[][] = new String[100][3]; int j = 0;
@@ -226,24 +242,24 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
                 }
             }
         }
-        output.mensagem(t);
-        output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Especialidade"));
+        validar.mensagem(t);
+        validar.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Especialidade"));
         for (int i = 0; i < j; i++){{
-                output.mensagem(String.format("|%-30s|", med[i][0]));
-                output.mensagem(String.format("%-10s|", med[i][1]));
-                output.mensagem(String.format("%-30s|", med[i][2])+"\n");
+                validar.mensagem(String.format("|%-30s|", med[i][0]));
+                validar.mensagem(String.format("%-10s|", med[i][1]));
+                validar.mensagem(String.format("%-30s|", med[i][2])+"\n");
             }
         }
         
-        output.mensagem("Total De Medicos Na Clinica:  "+j);
+        validar.mensagem("Total De Medicos Na Clinica:  "+j);
         }catch (IOException ex) {
            Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
        } 
     }
 
-    @Override
-    public void VerAgendaMedico(Any[] lista) {
-        dados = convertToVector(lista);
+  
+    public void VerAgendaMedico(Vector lista) {
+        //dados = convertToVector(lista);
        try{
             String nome, dtHoras = " "; Funcionario f; Medico m;
         String agenda[][];
@@ -264,9 +280,9 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
         }
         
             if(ex == true){
-                output.mensagem("Agenda do Medico(a) "+nome+" :\n\n"+dtHoras);
+                validar.mensagem("Agenda do Medico(a) "+nome+" :\n\n"+dtHoras);
             }else{
-                output.mensagem("Medico Nao Encontrado. ");
+                validar.mensagem("Medico Nao Encontrado. ");
             }
         }catch (IOException ex) {
            Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
@@ -288,9 +304,9 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
         return t;
     }
     
-    @Override
-    public void getEnfComPac(Any[] lista) {
-        dados = convertToVector(lista);
+   
+    public void getEnfComPac(Vector lista) {
+        //dados = convertToVector(lista);
        try{
            Funcionario f; Enfermeiro e; String t = "--------------------------------------------------";
         int c = 0; boolean ex = false;
@@ -310,17 +326,17 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
             }}
         } 
         if(ex == false){
-            output.mensagem("Nao Existe Nenhum Enfermeiro(a) Com Pacientes Por Cuidar. ");
+            validar.mensagem("Nao Existe Nenhum Enfermeiro(a) Com Pacientes Por Cuidar. ");
         } else
-            output.mensagem("Total De Enfermeiros Com Pacientes:\n"+t);
+            validar.mensagem("Total De Enfermeiros Com Pacientes:\n"+t);
         }catch (IOException ex) {
            Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
        }
     }
 
-    @Override
-    public void getEnfermeiros(Any[] lista) {
-        dados = convertToVector(lista);
+ 
+    public void getEnfermeiros(Vector lista) {
+        //dados = convertToVector(lista);
         try{
             Funcionario f; Enfermeiro e; String t = "Enfermeiros Na Clinica";
           byte count = 0; String enf [][]= new String [100][3]; int j=0;
@@ -336,23 +352,23 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
                 }
             }
         }
-        output.mensagem(t);
-        output.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Categoria"));
+        validar.mensagem(t);
+        validar.mensagem(String.format("|%-30s|", "Nome") +String.format("%-10s|", "Codigo")+String.format("%-30s|", "Categoria"));
         for (int i = 0; i < j; i++){{
-                output.mensagem(String.format("|%-30s|", enf[i][0]));
-                output.mensagem(String.format("%-10s|", enf[i][1]));
-                output.mensagem(String.format("%-30s|", enf[i][2])+"\n");
+                validar.mensagem(String.format("|%-30s|", enf[i][0]));
+                validar.mensagem(String.format("%-10s|", enf[i][1]));
+                validar.mensagem(String.format("%-30s|", enf[i][2])+"\n");
             }
         }
-        output.mensagem("Total De Enfermeiros Na Clinica: "+count);
+        validar.mensagem("Total De Enfermeiros Na Clinica: "+count);
         }catch (IOException ex) {
            Logger.getLogger(ClinicaImpressoes.class.getName()).log(Level.SEVERE, null, ex);
        }
     }
 
-    @Override
-    public void verPacEnf(Any[] lista) {
-        dados = convertToVector(lista);
+ 
+    public void verPacEnf(Vector lista) {
+        //dados = convertToVector(lista);
         try{
              String nome, p[], pacientes = null; boolean enf = false; int id, c = 0;
         Funcionario f; Enfermeiro e;
@@ -384,12 +400,12 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
             }   
         }
         if(enf == false)
-            output.mensagem("\nEnfermeiro Nao Encontrado.");
+            validar.mensagem("\nEnfermeiro Nao Encontrado.");
         else{ 
             if(c == 0)
-                output.mensagem("O(a) Enfermeiro(a) "+nome+" Actualmente Nao Possui Pacientes Em Cuidados.");
+                validar.mensagem("O(a) Enfermeiro(a) "+nome+" Actualmente Nao Possui Pacientes Em Cuidados.");
             else
-                output.mensagem("Pacientes Cuidados Por "+nome+":\n"+pacientes);
+                validar.mensagem("Pacientes Cuidados Por "+nome+":\n"+pacientes);
         } 
         }    
         }catch (IOException ex) {
@@ -407,44 +423,56 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
         return imp;
     }    
     
-    public void agenda() throws IOException{
-        VerAgendaMedico(cOp.getdados());
-    }
-    
-    public void getPacientes() throws IOException{
-        getPacientes(cOp.getdados());
-    }
-    public void ImprimirCons() throws IOException{
+     @Override
+    public void ImprimirCons() {
         getConsultas(cOp.getdados());
     }
-    
-    public void ImprimirCir() throws IOException{
+
+    @Override
+    public void ImprimirCir() {
         getCirurgias(cOp.getdados());
     }
-     
-    public void ImprimirMedico(String tipo) throws IOException{
-        getMedicosConsulta(tipo, cOp.getdados());
+
+    @Override
+    public void getPacientes() {
+        getPacientes(cOp.getdados());
+    }
+
+    @Override
+    public void ImprimirMedico(String tipo) {
+        getMedicosAll(tipo, cOp.getdados()); 
+    }
+
+    @Override
+    public void ImprimirAllMed() {
+       getMedicos(cOp.getdados());
+    }
+
+    @Override
+    public void EnfComPacientes() {
+        getEnfComPac(cOp.getdados());
     }
     
-     public void ImprimirEnf() throws IOException{
-         getEnfermeiros(cOp.getdados());
+    @Override
+    public void ImprimirEnf() {
+       getEnfermeiros(cOp.getdados()); 
+    }
+
+    @Override
+    public void verPacientesEnf() {
+        verPacEnf(cOp.getdados());
+    }
+
+    @Override
+    public void agenda() {
+        VerAgendaMedico(cOp.getdados());
+       
     }
     
-     public void EnfComPacientes() throws IOException{
-         getEnfComPac(cOp.getdados());
-     }
-     
-    public void ImprimirAllMed() throws IOException{
-        getMedicos(cOp.getdados());
-    }
-    
-    public void verPacientesEnf()throws IOException{
-       verPacEnf(cOp.getdados());
-   } 
     
     public static void main(String[] args) {
         try {
-             String[] argv = { "-ORBInitialPort", "900", "-ORBInitialHost", "127.0.0.1" };
+             String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.21.34.93" };
             ORB orb = ORB.init(argv, null);
 
             // Obtém referência a rootpoa (Portable Object Adapter) e ativa o Gerenciador POA
@@ -457,7 +485,7 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
 
             // obtém a referência do serviço a ser disponibilizado pelo servidor
             org.omg.CORBA.Object ref = rootpoa.servant_to_reference(ServidorImp);
-            sistemadegestao.servidorOperacoes.services.ImprimirDados href = ImprimirDadosHelper.narrow(ref);
+            sistemadegestao.servidorOperacoes.services.Impressoes href = ImpressoesHelper.narrow(ref);
 
             // Obtém a referência para o serviço de nomes
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
@@ -475,5 +503,6 @@ public class ClinicaImpressoes extends ImprimirDadosPOA{
             e.printStackTrace();
         }
     }
+
     
 }

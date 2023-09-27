@@ -11,19 +11,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.Any;
-import org.omg.CORBA.AnySeqHolder;
 import org.omg.CORBA.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
-import sistemadegestao.servidorInterface.Output;
 import sistemadegestao.servidorOperacoes.Cirurgia;
 import sistemadegestao.servidorOperacoes.Consulta;
 import sistemadegestao.servidorOperacoes.Doenca;
@@ -36,8 +37,7 @@ import sistemadegestao.servidorOperacoes.VerificarDataHora;
 import sistemadegestao.servidorOperacoes.services.Dados;
 import sistemadegestao.servidorOperacoes.services.DadosHelper;
 import sistemadegestao.servidorOperacoes.services.DadosPOA;
-import sistemadegestao.servidorOperacoes.services.ListaHolder;
-import sistemadegestao.servidorValidacao.Validacao;
+import sistemadegestao.servidorValidacao.ValidacaoHelper;
 
 
 /**
@@ -47,17 +47,32 @@ import sistemadegestao.servidorValidacao.Validacao;
 public class ClinicaOperacoes extends DadosPOA {
     
     Vector lista = new Vector();
-    Funcionario func = new Funcionario();
     Paciente pac;
     Doenca d  = new Doenca();
     VerificarDataHora vdh = new VerificarDataHora();
-    Validacao validar = new Validacao();
-    Output output = new Output();
+    sistemadegestao.servidorValidacao.Validacao validar;
     private ORB orb;
        
+    public ClinicaOperacoes() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+        conectValidacao();
+    }
     
-    public void setOrb(ORB orb) {
-            this.orb = orb;
+    public void  conectValidacao() throws InvalidName, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
+            //this.orb = Orb;
+                    Properties props = new Properties();
+        props.put("org.omg.CORBA.ORBInitialHost", "172.21.34.78");
+        props.put("org.omg.CORBA.ORBInitialPort", "1050");
+            String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.20.10.2" };
+            ORB orb = ORB.init(new String[0], props);
+
+            // obtém a referência para o serviço de nomes
+            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService"); 
+            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+
+            // Obtém a referência para o Objeto do servidor (IOR), através do serviço de nomes 
+            String objNome = "ValidacaoService";
+            org.omg.CORBA.Object obj = ncRef.resolve_str(objNome);
+            validar = ValidacaoHelper.narrow(obj);
     }
     
     @Override
@@ -84,7 +99,7 @@ public class ClinicaOperacoes extends DadosPOA {
                             if(p.getNome().equalsIgnoreCase(nome)){
                                 cons.setPaciente(p.getNome());
                                 cons.setIdPaciente(p.getIdPaciente());
-                                output.mensagem("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
+                                validar.mensagem("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
                                 lista.addElement(cons); lista.trimToSize();  }
                             else c2++;}} 
                     if(c2 == c1){ 
@@ -97,7 +112,7 @@ public class ClinicaOperacoes extends DadosPOA {
                         pac.setDoenca(d);
                         pac.setEstado("Nao Internado");
                         lista.addElement(pac); lista.addElement(cons); lista.trimToSize();
-                        output.mensagem("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
+                        validar.mensagem("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
                 
             }
         }
@@ -149,7 +164,7 @@ public class ClinicaOperacoes extends DadosPOA {
                 }   
             }
             if(exis == false ){
-                output.mensagem("Enfermeiro Nao Encontrado.");
+                validar.mensagem("Enfermeiro Nao Encontrado.");
                 op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir o nome do enfermeiro novamente\n\t0. Cancelar operacao");
                 if(op == 0)
                     return "";
@@ -182,7 +197,7 @@ public class ClinicaOperacoes extends DadosPOA {
                                 if(p.getNome().equalsIgnoreCase(nome)){
                                     cons.setPaciente(p.getNome());
                                     cons.setIdPaciente(p.getIdPaciente());
-                                    output.mensagem("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
+                                    validar.mensagem("Paciente Ja Registado no Sistema da Clinica.\nConsulta Registada."); 
                                     lista.addElement(cons); lista.trimToSize();  }
                                 else c2++;}} 
                         if(c2 == c1){ 
@@ -195,7 +210,7 @@ public class ClinicaOperacoes extends DadosPOA {
                             pac.setDoenca(d);
                             pac.setEstado("Nao Internado");
                             lista.addElement(pac); lista.addElement(cons); lista.trimToSize();
-                            output.mensagem("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
+                            validar.mensagem("Consulta Registada\nCodigo de Consulta: " + cons.getNrConsulta());  }}
 
                 }
             }
@@ -270,10 +285,10 @@ public class ClinicaOperacoes extends DadosPOA {
                                                                         m.setAgenda(n,k," ");
                                                                         ci.setEstado("Cancelada");
                                                                         lista.setElementAt(m,j); lista.trimToSize();
-                                                                        output.mensagem("*0*Cirurgia Cancelada.");
+                                                                        validar.mensagem("*0*Cirurgia Cancelada.");
                                                    }}}}}}}}}}}}}
             if(exDH == false || exN == false){
-                output.mensagem("Dados Nao Encontrados.");
+                validar.mensagem("Dados Nao Encontrados.");
                 op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
                 } 
             }while(op == 1); 
@@ -293,7 +308,7 @@ public class ClinicaOperacoes extends DadosPOA {
             if(lista.elementAt(i) instanceof Paciente){
                 p = (Paciente)lista.elementAt(i);
                 if (p.getNome().equalsIgnoreCase(nome)){ 
-                    output.mensagem(p.getNome() + "- Codigo de Identificacao: "+p.getIdPaciente());
+                    validar.mensagem(p.getNome() + "- Codigo de Identificacao: "+p.getIdPaciente());
                     c++;
                 }}}
         if(c == 1){
@@ -313,7 +328,7 @@ public class ClinicaOperacoes extends DadosPOA {
                      
                 }}
         if(c==0){
-            output.mensagem("Paciente Nao Encontrado.");
+            validar.mensagem("Paciente Nao Encontrado.");
             op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Nome Novamente\n0. Cancelar Procedimento.");
             }
         }while(op == 1 && c == 0);
@@ -338,7 +353,7 @@ public class ClinicaOperacoes extends DadosPOA {
                                 p.setEstado("Recebeu Alta");
                                 lista.setElementAt(p, i);
                                 lista.setElementAt(e,j); lista.trimToSize();
-                                output.mensagem("Paciente Registado com Alta"); }}}}
+                                validar.mensagem("Paciente Registado com Alta"); }}}}
     
     
     @Override
@@ -472,10 +487,10 @@ public class ClinicaOperacoes extends DadosPOA {
                                             pac.setEstado("Internado");
                                             lista.setElementAt(pac, i);
                                             lista.setElementAt(e, j); lista.trimToSize();
-                                            output.mensagem("Paciente Internado."); 
+                                            validar.mensagem("Paciente Internado."); 
                                             c++;}
                                     if(c == 0){
-                                        output.mensagem("O Enfermeiro "+enfermeiro+" Atingiu o Limite de Pacientes Por Cuidar");
+                                        validar.mensagem("O Enfermeiro "+enfermeiro+" Atingiu o Limite de Pacientes Por Cuidar");
                                         op = validar.validarByte((byte)0,(byte)1, "\t1. Introduzir Outro Enfermeiro Novamente\n\t0. Cancelar Procedimento.");
                                     }}}    }                                                             
                     } while(op == 1 && c == 0);
@@ -494,7 +509,7 @@ public class ClinicaOperacoes extends DadosPOA {
             pac.setEndereco(validar.validarString(5, 30, "Endereco do Paciente:"));
             pac.setBI(validar.validarString(8, 12, "Numero de BI do Paciente:"));
             pac.setIdade(validar.validarByte((byte)0,(byte) 100, "Idade da Paciente:"));
-            output.mensagem("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
+            validar.mensagem("Codigo De identificacao De Paciente: " +pac.getIdPaciente());
         }catch (IOException ex) {
             Logger.getLogger(ClinicaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -509,7 +524,7 @@ public class ClinicaOperacoes extends DadosPOA {
             enf.setIdFuncionatio(Id("f"));
             enf.setCategoria(validar.validarString(3, 20, "Introduza a Categoria do Endermeiro:"));
             lista.addElement(enf); lista.trimToSize();
-            output.mensagem("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getFuncionario());
+            validar.mensagem("\nEnfermeiro Adicionado.\nCodigo de Enfermeiro: " +enf.getFuncionario());
         }catch (IOException ex) {
             Logger.getLogger(ClinicaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -524,7 +539,7 @@ public class ClinicaOperacoes extends DadosPOA {
             med.setIdFuncionatio(Id("f"));
             med.setEspecialidade(validar.validarString(3, 20, "Introduza a Especialidade Do Medico:"));
             lista.addElement(med); lista.trimToSize();
-            output.mensagem("\nMedico Adicionado.\nCodigo de Medico: " +med.getIdFuncionario());
+            validar.mensagem("\nMedico Adicionado.\nCodigo de Medico: " +med.getIdFuncionario());
         }catch (IOException ex) {
             Logger.getLogger(ClinicaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -542,7 +557,7 @@ public class ClinicaOperacoes extends DadosPOA {
         }
         catch (ClassNotFoundException | IOException x){
             try {
-                output.mensagem(x.getMessage());
+                validar.mensagem(x.getMessage());
             } catch (IOException ex) {
                 Logger.getLogger(ClinicaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -562,35 +577,34 @@ public class ClinicaOperacoes extends DadosPOA {
         
         catch(IOException x){
             try {
-                output.mensagem(x.getMessage());
+                validar.mensagem(x.getMessage());
             } catch (IOException ex) {
                 Logger.getLogger(ClinicaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public Any[] convertVectorToCorbaList(Vector vector){
-        Any[] myArray = (Any[]) vector.toArray(new Any[vector.size()]);
-        ORB orb = ORB.init();
-        ListaHolder corbaSeq  = new ListaHolder();
-        corbaSeq.value = new Any[myArray.length];
-        for(int i=0; i<myArray.length; i++){
-            corbaSeq.value[i] = myArray[i];
-        }
-       return corbaSeq.value;
-    }
+//    public Any[] convertVectorToCorbaList(Vector vector){
+//        Any[] myArray = (Any[]) vector.toArray(new Any[vector.size()]);
+//        ORB orb = ORB.init();
+//        ListaHolder corbaSeq  = new ListaHolder();
+//        corbaSeq.value = new Any[myArray.length];
+//        for(int i=0; i<myArray.length; i++){
+//            corbaSeq.value[i] = myArray[i];
+//        }
+//       return corbaSeq.value;
+//    }
     
-
-    @Override
-    public Any[] getdados() {
-        return convertVectorToCorbaList(lista);
-    }
-    
+     
+   public Vector getdados(){
+       return lista;
+   }
+       
      public static void main(String[] args) {
         try {
               
            //Usando o serviço de nomes
-           String[] argv = { "-ORBInitialPort", "900", "-ORBInitialHost", "127.0.0.1" };
+           String[] argv = { "-ORBInitialPort", "1050", "-ORBInitialHost", "172.21.34.93" };
             ORB orb = ORB.init(argv, null);
 
             // Obtém referência a rootpoa (Portable Object Adapter) e ativa o Gerenciador POA
@@ -615,7 +629,7 @@ public class ClinicaOperacoes extends DadosPOA {
             ncRef.rebind(path, href);
             //ncRef.rebind(path, ref);
 
-            System.out.println("Servidor de impressoes pronto e aguardando ...");
+            System.out.println("Servidor de Operacoes pronto e aguardando ...");
             orb.run();
             
             
