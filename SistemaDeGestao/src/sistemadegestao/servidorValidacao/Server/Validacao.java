@@ -26,7 +26,7 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
     public void activarOutput(){
         try {
             Properties props = new Properties();
-            props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
+            props.put("org.omg.CORBA.ORBInitialHost", "192.168.168.7");
             props.put("org.omg.CORBA.ORBInitialPort", "1055");
             
             // Initialize the ORB
@@ -110,7 +110,7 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
         String data; int dia, mes, ano;
         dia = validarInt(1,31,"Introduza o Dia:  ");
         mes = validarInt(1, 12, "Introduza o mes (O numero correspondente):  ");
-        ano = validarInt(2021, 2022,"Introduza o Ano:  ");
+        ano = validarInt(2023, 2024,"Introduza o Ano:  ");
         data = dia+"-"+mes+"-"+ano;
         return data;
     }

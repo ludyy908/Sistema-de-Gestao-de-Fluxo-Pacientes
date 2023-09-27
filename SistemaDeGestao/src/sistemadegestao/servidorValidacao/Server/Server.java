@@ -19,7 +19,7 @@ import sistemadegestao.servidorValidacao.App.Validacao.ValidacaoHelper;
 public class Server {
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("org.omg.CORBA.ORBInitialHost", "192.168.14.216");
+        props.put("org.omg.CORBA.ORBInitialHost", "192.168.168.7");
         props.put("org.omg.CORBA.ORBInitialPort", "1050");
         try {
             // Create and initialize the ORB
