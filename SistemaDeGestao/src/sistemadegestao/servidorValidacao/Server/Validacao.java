@@ -26,7 +26,7 @@ public class Validacao extends sistemadegestao.servidorValidacao.App.Validacao.V
     public void activarOutput(){
         try {
             Properties props = new Properties();
-            props.put("org.omg.CORBA.ORBInitialHost", "192.168.168.7");
+            props.put("org.omg.CORBA.ORBInitialHost", "172.20.10.4");
             props.put("org.omg.CORBA.ORBInitialPort", "1055");
             
             // Initialize the ORB
